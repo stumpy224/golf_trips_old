@@ -9,7 +9,7 @@ function setupDefaultOptions() {
         "newestOnTop": false,
         "progressBar": false,
         "positionClass": "toast-top-center",
-        "preventDuplicates": false,
+        "preventDuplicates": true,
         "onclick": null,
         "showDuration": "300",
         "hideDuration": "1000",
@@ -23,8 +23,9 @@ function setupDefaultOptions() {
 }
 
 function notifyOfError(message) {
+    console.log('within notifyOfError()');
     setupDefaultOptions();
-    toastr.error(message,
+    toastr.error(message, '',
         {
             "closeButton": true,
             "timeOut": 0,

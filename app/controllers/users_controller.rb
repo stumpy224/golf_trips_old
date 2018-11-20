@@ -16,7 +16,7 @@ class UsersController < ApplicationController
       ## user dashboard
     else
       # flash.now[:error] = "Whoops!"
-      render 'new'
+      render "users/new"
     end
 
   end
