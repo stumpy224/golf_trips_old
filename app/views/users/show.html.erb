@@ -1,0 +1,44 @@
+<% provide(:title, "My Profile") %>
+
+<div class="mdl-grid center-items">
+  <div class="mdl-card mdl-shadow--6dp">
+    <div class="mdl-card__title mdl-color--primary mdl-color-text--white">
+      <div class="mdl-card__title-text">My Profile</div>
+    </div>
+    <%= form_with model: @user, local: true do |form| %>
+      <%= render partial: 'common/error_messages', locals: { object: @user } %>
+      <div class="mdl-card__supporting-text">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <%= form.text_field :first_name, class: "mdl-textfield__input", pattern: "[A-Z,a-z']*" %>
+          <%= form.label :first_name, class: "mdl-textfield__label" %>
+          <span class="mdl-textfield__error">Whoa, what kind of name is that?!</span>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <%= form.text_field :last_name, class: "mdl-textfield__input", pattern: "[A-Z,a-z']*" %>
+          <%= form.label :last_name, class: "mdl-textfield__label" %>
+          <span class="mdl-textfield__error">Whoa, what kind of name is that?!</span>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <%= form.text_field :nickname, class: "mdl-textfield__input" %>
+          <%= form.label "Nickname (optional)", class: "mdl-textfield__label" %>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <%= form.text_field :email, class: "mdl-textfield__input" %>
+          <%= form.label :email, class: "mdl-textfield__label" %>
+          <span class="mdl-textfield__error">Email is invalid</span>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <%= form.text_field :password, class: "mdl-textfield__input", type: "password" %>
+          <%= form.label :password, class: "mdl-textfield__label" %>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <%= form.text_field :password_confirmation, class: "mdl-textfield__input", type: "password" %>
+          <%= form.label :password_confirmation, class: "mdl-textfield__label" %>
+        </div>
+      </div>
+      <div class="mdl-card__actions mdl-card--border mdl-typography--text-right">
+        <%= form.submit "Register", class: "mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" %>
+      </div>
+    <% end %>
+  </div>
+</div>

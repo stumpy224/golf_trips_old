@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
+  ActiveAdmin.routes(self)
 
+  resources :golfers
+  resources :users
 
   get 'home/index'
 

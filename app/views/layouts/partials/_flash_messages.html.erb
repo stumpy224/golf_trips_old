@@ -1,0 +1,18 @@
+<% if flash.present? %>
+  <div id='flash'>
+    <script>
+        <% if flash[:success] %>
+        notifyOfSuccess($('<span><%= flash[:success] %></span>'));
+        <% end %>
+        <% if flash[:info] %>
+        notifyOfInfo($('<span><%= flash[:info] %></span>'));
+        <% end %>
+        <% if flash[:warning] %>
+        notifyOfWarning($('<span><%= flash[:warning] %></span>'));
+        <% end %>
+        <% if flash[:error] %>
+        notifyOfError($('<span><%= flash[:error] %></span>'));
+        <% end %>
+    </script>
+  </div>
+<% end %>

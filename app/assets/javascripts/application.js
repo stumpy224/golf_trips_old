@@ -16,6 +16,29 @@
 //= require turbolinks
 //= require_tree .
 
-$(document).ready(function(){
-
+$(document).ready(function () {
+    enableBlockUI();
+    upgradeDomOnTurboLinksLoad();
 });
+
+function enableBlockUI() {
+    $.blockUI.defaults.message = '<h3>Please wait...</h3>';
+    $.blockUI.defaults.css.border = 'none';
+    $.blockUI.defaults.css.opacity = '.8';
+    $.blockUI.defaults.css.padding = '1em';
+    $.blockUI.defaults.baseZ = '10000';
+
+    // enable on all ajax calls
+    $(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
+
+    // enable on all form submissions
+    $("form").submit(function() {
+        $.blockUI();
+    });
+}
+
+function upgradeDomOnTurboLinksLoad() {
+    document.addEventListener('turbolinks:load', function() {
+        componentHandler.upgradeDom();
+    });
+}

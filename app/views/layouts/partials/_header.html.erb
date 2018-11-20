@@ -1,0 +1,17 @@
+<header class="mdl-layout__header mdl-color--black mdl-color-text--white">
+  <div class="mdl-layout__header-row">
+    <!-- Title -->
+    <span class="mdl-layout-title">Golf Trips</span>
+    <!-- Add spacer, to align navigation to the right -->
+    <div class="mdl-layout-spacer"></div>
+    <!-- Navigation. We hide it in small screens. -->
+    <nav class="mdl-navigation mdl-layout--large-screen-only">
+      <%= render partial: "layouts/partials/nav_links" %>
+    </nav>
+  </div>
+</header>
+<div class="mdl-layout__drawer">
+  <nav class="mdl-navigation">
+    <%= render partial: "layouts/partials/nav_links" %>
+  </nav>
+</div>
