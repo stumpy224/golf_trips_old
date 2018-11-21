@@ -11,14 +11,15 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      flash[:success] = "You are now registered!"
-      redirect_to @user
-      ## user dashboard
+      # mark the golfer as registered if the email address matches
+      golfer = Golfer.find_by(email: @user.email)
+      golfer.update(is_registered: true) if golfer.present?
+
+      flash[:success] = "You are now registered, please login!"
+      redirect_to login_path
     else
-      # flash.now[:error] = "Whoops!"
       render "users/new"
     end
-
   end
 
   private

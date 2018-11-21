@@ -1,16 +1,6 @@
-<%#= render partial: 'common/login_card' %>
-
-<!--<div class="mdl-grid center-items">-->
-<!--  <div class="mdl-cell mdl-cell--4-col mdl-typography--text-center">-->
-<!--  </div>-->
-<!--</div>-->
-
-<!-- Accent-colored raised button with ripple -->
-<!--<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">-->
-<!--  Button-->
-<!--</button>-->
-
-<!-- Colored FAB button -->
-<!--<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">-->
-<!--  <i class="material-icons">add</i>-->
-<!--</button>-->
+<% if logged_in? %>
+  <p>Cards displaying outings to choose from will go here.</p>
+  <p>If only one outing, then display that outing.</p>
+<% else %>
+  <%= render partial: 'common/login' %>
+<% end %>
