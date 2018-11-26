@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+  before_action :logged_in_user, only: [:show, :update]
+  before_action :correct_user, only: [:show, :update]
+
   def new
     @user = User.new
   end
@@ -11,7 +14,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      # mark the golfer as registered if the email address matches
+      # mark the Golfer as registered if the email address matches
       golfer = Golfer.find_by(email: @user.email)
       golfer.update(is_registered: true) if golfer.present?
 
@@ -22,9 +25,39 @@ class UsersController < ApplicationController
     end
   end
 
+  def update
+    @user = User.find(params[:id])
+    orig_email = @user.email
+
+    if @user.update(user_params)
+      # update the Golfer email if the email address matches
+      golfer = Golfer.find_by(email: orig_email)
+      golfer.update(email: user_params[:email]) if golfer.present?
+      flash.now[:success] = "Account updated"
+    end
+
+    render 'users/show'
+  end
+
   private
 
   def user_params
     params.require(:user).permit(:first_name, :last_name, :nickname, :email, :password, :password_confirmation, :is_admin)
+    # params.delete(:password) if params[:password].blank?
+    # params.delete(:password_confirmation) if params[:password_confirmation].blank?
+  end
+
+  # Before filters
+
+  def correct_user
+    @user = User.find(params[:id])
+    redirect_to root_path unless current_user?(@user)
+  end
+
+  def logged_in_user
+    unless logged_in?
+      flash[:error] = "Please login"
+      redirect_to login_path
+    end
   end
 end

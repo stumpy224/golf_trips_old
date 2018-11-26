@@ -23,46 +23,32 @@ function setupDefaultOptions() {
 }
 
 function notifyOfError(message) {
-    console.log('within notifyOfError()');
     setupDefaultOptions();
-    toastr.error(message, '',
-        {
-            "closeButton": true,
-            "timeOut": 0,
-            "extendedTimeOut": 0
-        }
-    );
+    toastr.options.closeButton = true;
+    toastr.options.timeOut = 0;
+    toastr.options.extendedTimeOut = 0;
+    toastr.error(message);
 }
 
 function notifyOfInfo(message) {
     setupDefaultOptions();
-    toastr.info(message,
-        {
-            "closeButton": true,
-            "timeOut": 0,
-            "extendedTimeOut": 0
-        }
-    );
+    toastr.options.closeButton = true;
+    toastr.options.timeOut = 0;
+    toastr.options.extendedTimeOut = 0;
+    toastr.info(message);
 }
 
 function notifyOfSuccess(message) {
     setupDefaultOptions();
-    toastr.success(message,
-        {
-            "closeButton": false,
-            "timeOut": 5000,
-            "extendedTimeOut": 1000
-        }
-    );
+    toastr.options.closeButton = false;
+    toastr.options.timeOut = 3000;
+    toastr.success(message);
 }
 
 function notifyOfWarning(message) {
     setupDefaultOptions();
-    toastr.warning(message,
-        {
-            "closeButton": true,
-            "timeOut": 0,
-            "extendedTimeOut": 0
-        }
-    );
+    toastr.options.closeButton = true;
+    toastr.options.timeOut = 0;
+    toastr.options.extendedTimeOut = 0;
+    toastr.warning(message);
 }

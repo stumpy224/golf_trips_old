@@ -1,5 +1,5 @@
 <% if logged_in? %>
-  <%= link_to "Profile", current_user, class: "mdl-navigation__link" %>
+  <%= link_to "My Account", user_path(current_user), class: "mdl-navigation__link" %>
   <%= link_to "Logout", logout_path, class: "mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-button--accent", method: :delete %>
 
   <% if current_user.is_admin? %>
