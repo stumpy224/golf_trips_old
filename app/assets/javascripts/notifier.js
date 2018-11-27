@@ -27,7 +27,7 @@ function notifyOfError(message) {
     toastr.options.closeButton = true;
     toastr.options.timeOut = 0;
     toastr.options.extendedTimeOut = 0;
-    toastr.error(message);
+    toastr.error(message[0].innerText);
 }
 
 function notifyOfInfo(message) {
@@ -35,14 +35,14 @@ function notifyOfInfo(message) {
     toastr.options.closeButton = true;
     toastr.options.timeOut = 0;
     toastr.options.extendedTimeOut = 0;
-    toastr.info(message);
+    toastr.info(message[0].innerText);
 }
 
 function notifyOfSuccess(message) {
     setupDefaultOptions();
     toastr.options.closeButton = false;
     toastr.options.timeOut = 3000;
-    toastr.success(message);
+    toastr.success(message[0].innerText);
 }
 
 function notifyOfWarning(message) {
@@ -50,5 +50,5 @@ function notifyOfWarning(message) {
     toastr.options.closeButton = true;
     toastr.options.timeOut = 0;
     toastr.options.extendedTimeOut = 0;
-    toastr.warning(message);
+    toastr.warning(message[0].innerText);
 }

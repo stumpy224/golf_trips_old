@@ -4,7 +4,7 @@ module ApplicationHelper
   end
 
   def full_title(page_title)
-    base_title = 'Golf Trips'
+    base_title = 'Golf Hacker Club'
     page_title.empty? ? base_title : base_title + " | " + page_title
   end
 end

@@ -18,8 +18,11 @@ class UsersController < ApplicationController
       golfer = Golfer.find_by(email: @user.email)
       golfer.update(is_registered: true) if golfer.present?
 
-      flash[:success] = "You are now registered, please login!"
-      redirect_to login_path
+      @user.send_activation_email
+
+      flash[:info] = "Please check your email to activate your account."
+
+      redirect_to root_path
     else
       render "users/new"
     end
@@ -43,8 +46,6 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:first_name, :last_name, :nickname, :email, :password, :password_confirmation, :is_admin)
-    # params.delete(:password) if params[:password].blank?
-    # params.delete(:password_confirmation) if params[:password_confirmation].blank?
   end
 
   # Before filters
