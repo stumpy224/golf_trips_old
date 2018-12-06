@@ -13,14 +13,13 @@
           <%= form.text_field :password, class: "mdl-textfield__input", type: "password" %>
           <%= form.label :password, class: "mdl-textfield__label" %>
         </div>
-      </div>
-      <div class="mdl-grid mdl-card__actions mdl-card--border">
-        <%= link_to "New user?", new_user_path, class: "mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised" %>
-        <div class="mdl-layout-spacer"></div>
-        <div class="mdl-typography--text-right">
-          <%= form.submit "Login", class: "mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" %>
-        </div>
+        <%= form.submit "Login", class: "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored mdl-color-text--white", style: "width: 100%;" %>
       </div>
     <% end %>
+    <div class="mdl-grid mdl-card__actions mdl-card--border">
+      <%= link_to "New user?", new_user_path, class: "mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" %>
+      <div class="mdl-layout-spacer"></div>
+      <%= link_to "Forgot Password?", new_password_reset_path, class: "mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" %>
+    </div>
   </div>
 </div>

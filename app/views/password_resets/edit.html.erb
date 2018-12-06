@@ -1,0 +1,33 @@
+<% provide(:title, "Reset Password") %>
+
+<div class="mdl-grid center-items">
+  <div class="mdl-card mdl-shadow--6dp">
+
+    <div class="mdl-card__title mdl-color--primary mdl-color-text--white">
+      <div class="mdl-card__title-text">Reset password</div>
+    </div>
+
+    <%= form_with model: @user, url: password_reset_path(params[:id]), local: true do |form| %>
+      <%= render partial: 'common/error_messages', locals: { object: @user } %>
+
+      <%= hidden_field_tag :email, @user.email %>
+
+      <div class="mdl-card__supporting-text">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <%= form.text_field :password, class: "mdl-textfield__input", type: "password" %>
+          <%= form.label "Password (minimum 6 characters)", class: "mdl-textfield__label" %>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <%= form.text_field :password_confirmation, class: "mdl-textfield__input", type: "password" %>
+          <%= form.label :password_confirmation, class: "mdl-textfield__label" %>
+        </div>
+      </div>
+      <div class="mdl-grid mdl-card__actions mdl-card--border">
+        <%= link_to "Cancel", root_path, class: "mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" %>
+        <div class="mdl-layout-spacer"></div>
+        <%= form.submit "Update", class: "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored mdl-color-text--white" %>
+      </div>
+    <% end %>
+
+  </div>
+</div>

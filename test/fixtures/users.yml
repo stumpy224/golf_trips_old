@@ -1,5 +1,6 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 jeremiah:
+  id: 1
   first_name: Jeremiah
   last_name: Stump
   nickname: Stumpy

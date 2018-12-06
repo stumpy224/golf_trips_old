@@ -54,6 +54,8 @@ group :development, :test do
   # IRB tools
   gem 'irbtools', require: 'irbtools/binding'
   gem 'irbtools-more', require: 'irbtools/binding'
+
+  gem 'rspec-rails', '~> 3.8'
 end
 
 group :development do
