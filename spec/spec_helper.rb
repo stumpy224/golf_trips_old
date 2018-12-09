@@ -44,16 +44,6 @@ RSpec.configure do |config|
   # triggering implicit auto-inclusion in groups with matching metadata.
   config.shared_context_metadata_behavior = :apply_to_host_groups
 
-  # Returns true if a test user is logged in.
-  def is_logged_in?
-    !session[:user_id].nil?
-  end
-
-  # Log in as a particular user.
-  def log_in_as(user)
-    session[:user_id] = user.id if user.is_activated?
-  end
-
 # The settings below are suggested to provide a good initial experience
 # with RSpec, but feel free to customize to your heart's content.
 =begin
