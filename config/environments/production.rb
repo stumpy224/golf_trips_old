@@ -93,7 +93,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # EMAIL
-  config.action_mailer.default_url_options = { host: "domainGoesHere" }
+  config.action_mailer.default_url_options = { host: "golf-hacker-club.herokuapp.com" }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.raise_delivery_errors = true
 
