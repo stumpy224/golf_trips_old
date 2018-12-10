@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Password reset", type: :request do
+RSpec.describe "Password reset" do
   let(:jeremiah) {users(:jeremiah)}
 
   before(:each) do

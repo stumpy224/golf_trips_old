@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "User registering", type: :request do
+RSpec.describe "User registering" do
 
   before(:each) do
     ActionMailer::Base.deliveries.clear
