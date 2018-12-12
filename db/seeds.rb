@@ -1,3 +1,5 @@
+AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+
 Golfer.create(first_name: "JT", last_name: "Brennemen", email: "jtbrenneman@bailey-weiler.com", is_active: true, nickname: "JT")
 Golfer.create(first_name: "Randy", last_name: "Brennemen", email: "randybrenneman@yahoo.com", is_active: true)
 Golfer.create(first_name: "Bob", last_name: "Corbin", email: "bcorbin@mdlogistics.com", is_active: true)

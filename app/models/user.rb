@@ -22,6 +22,10 @@ class User < ApplicationRecord
     self.is_activated
   end
 
+  def is_admin?
+    AdminUser.find_by(email: self.email).present?
+  end
+
   def is_authenticated?(attribute, token)
     digest = send("#{attribute}_digest")
     return false if digest.nil?

@@ -35,6 +35,7 @@ gem 'jbuilder', '~> 2.5'
 
 # Use Active Admin for administration
 gem 'activeadmin'
+gem 'devise'
 
 # Use bcrypt for password encryption
 gem 'bcrypt', '3.1.12'
