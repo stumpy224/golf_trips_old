@@ -33,7 +33,7 @@ rescue ActiveRecord::PendingMigrationError => e
 end
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-  config.fixture_path = "#{::Rails.root}/test/fixtures"
+  config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   config.global_fixtures = :all

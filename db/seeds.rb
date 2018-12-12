@@ -1,11 +1,3 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
-
 Golfer.create(first_name: "JT", last_name: "Brennemen", email: "jtbrenneman@bailey-weiler.com", is_active: true, nickname: "JT")
 Golfer.create(first_name: "Randy", last_name: "Brennemen", email: "randybrenneman@yahoo.com", is_active: true)
 Golfer.create(first_name: "Bob", last_name: "Corbin", email: "bcorbin@mdlogistics.com", is_active: true)
@@ -42,3 +34,119 @@ Golfer.create(first_name: "Jeremiah", last_name: "Stump", email: "stumpy224@gmai
 Golfer.create(first_name: "Scott", last_name: "Troxell", email: "ta25@msn.com", is_active: true)
 Golfer.create(first_name: "Rick", last_name: "Wheeler", email: "rwheeler@flutesinc.com", is_active: true, nickname: "Wheels")
 Golfer.create(first_name: "Allen", last_name: "Yeagle", email: "minisprint@hotmail.com", is_active: true)
+
+peninsula = Course.create(name: "Peninsula Golf Resort", address: "136 Clubhouse Dr, Lancaster, KY 40444", phone: "859.548.5055", url: "https://peninsulagolfky.com")
+
+hole_01 = Hole.create(course_id: peninsula.id, number: 1, par: 4, handicap: 7)
+hole_02 = Hole.create(course_id: peninsula.id, number: 2, par: 5, handicap: 1)
+hole_03 = Hole.create(course_id: peninsula.id, number: 3, par: 4, handicap: 17)
+hole_04 = Hole.create(course_id: peninsula.id, number: 4, par: 3, handicap: 9)
+hole_05 = Hole.create(course_id: peninsula.id, number: 5, par: 4, handicap: 11)
+hole_06 = Hole.create(course_id: peninsula.id, number: 6, par: 5, handicap: 15)
+hole_07 = Hole.create(course_id: peninsula.id, number: 7, par: 3, handicap: 13)
+hole_08 = Hole.create(course_id: peninsula.id, number: 8, par: 4, handicap: 3)
+hole_09 = Hole.create(course_id: peninsula.id, number: 9, par: 4, handicap: 5)
+hole_10 = Hole.create(course_id: peninsula.id, number: 10, par: 4, handicap: 14)
+hole_11 = Hole.create(course_id: peninsula.id, number: 11, par: 4, handicap: 8)
+hole_12 = Hole.create(course_id: peninsula.id, number: 12, par: 4, handicap: 18)
+hole_13 = Hole.create(course_id: peninsula.id, number: 13, par: 3, handicap: 12)
+hole_14 = Hole.create(course_id: peninsula.id, number: 14, par: 5, handicap: 10)
+hole_15 = Hole.create(course_id: peninsula.id, number: 15, par: 3, handicap: 4)
+hole_16 = Hole.create(course_id: peninsula.id, number: 16, par: 4, handicap: 16)
+hole_17 = Hole.create(course_id: peninsula.id, number: 17, par: 5, handicap: 6)
+hole_18 = Hole.create(course_id: peninsula.id, number: 18, par: 4, handicap: 2)
+
+# gold_tees = Tee.create(course_id: peninsula.id, name: "Gold", rating: 71.5, slope: 124)
+# blue_tees = Tee.create(course_id: peninsula.id, name: "Blue", rating: 68.9, slope: 119)
+# white_tees = Tee.create(course_id: peninsula.id, name: "White", rating: 68.7, slope: 117)
+# red_tees = Tee.create(course_id: peninsula.id, name: "Red", rating: 68.5, slope: 115)
+
+# Yardage.create(hole_id: hole_01.id, tee_id: gold_tees.id, yards: 425)
+# Yardage.create(hole_id: hole_01.id, tee_id: blue_tees.id, yards: 392)
+# Yardage.create(hole_id: hole_01.id, tee_id: white_tees.id, yards: 385)
+# Yardage.create(hole_id: hole_01.id, tee_id: red_tees.id, yards: 308)
+#
+# Yardage.create(hole_id: hole_02.id, tee_id: gold_tees.id, yards: 575)
+# Yardage.create(hole_id: hole_02.id, tee_id: blue_tees.id, yards: 538)
+# Yardage.create(hole_id: hole_02.id, tee_id: white_tees.id, yards: 424)
+# Yardage.create(hole_id: hole_02.id, tee_id: red_tees.id, yards: 424)
+#
+# Yardage.create(hole_id: hole_03.id, tee_id: gold_tees.id, yards: 299)
+# Yardage.create(hole_id: hole_03.id, tee_id: blue_tees.id, yards: 284)
+# Yardage.create(hole_id: hole_03.id, tee_id: white_tees.id, yards: 280)
+# Yardage.create(hole_id: hole_03.id, tee_id: red_tees.id, yards: 275)
+#
+# Yardage.create(hole_id: hole_04.id, tee_id: gold_tees.id, yards: 185)
+# Yardage.create(hole_id: hole_04.id, tee_id: blue_tees.id, yards: 144)
+# Yardage.create(hole_id: hole_04.id, tee_id: white_tees.id, yards: 128)
+# Yardage.create(hole_id: hole_04.id, tee_id: red_tees.id, yards: 108)
+#
+# Yardage.create(hole_id: hole_05.id, tee_id: gold_tees.id, yards: 393)
+# Yardage.create(hole_id: hole_05.id, tee_id: blue_tees.id, yards: 373)
+# Yardage.create(hole_id: hole_05.id, tee_id: white_tees.id, yards: 355)
+# Yardage.create(hole_id: hole_05.id, tee_id: red_tees.id, yards: 285)
+#
+# Yardage.create(hole_id: hole_06.id, tee_id: gold_tees.id, yards: 476)
+# Yardage.create(hole_id: hole_06.id, tee_id: blue_tees.id, yards: 466)
+# Yardage.create(hole_id: hole_06.id, tee_id: white_tees.id, yards: 456)
+# Yardage.create(hole_id: hole_06.id, tee_id: red_tees.id, yards: 412)
+#
+# Yardage.create(hole_id: hole_07.id, tee_id: gold_tees.id, yards: 191)
+# Yardage.create(hole_id: hole_07.id, tee_id: blue_tees.id, yards: 170)
+# Yardage.create(hole_id: hole_07.id, tee_id: white_tees.id, yards: 150)
+# Yardage.create(hole_id: hole_07.id, tee_id: red_tees.id, yards: 123)
+#
+# Yardage.create(hole_id: hole_08.id, tee_id: gold_tees.id, yards: 366)
+# Yardage.create(hole_id: hole_08.id, tee_id: blue_tees.id, yards: 354)
+# Yardage.create(hole_id: hole_08.id, tee_id: white_tees.id, yards: 275)
+# Yardage.create(hole_id: hole_08.id, tee_id: red_tees.id, yards: 270)
+#
+# Yardage.create(hole_id: hole_09.id, tee_id: gold_tees.id, yards: 423)
+# Yardage.create(hole_id: hole_09.id, tee_id: blue_tees.id, yards: 378)
+# Yardage.create(hole_id: hole_09.id, tee_id: white_tees.id, yards: 366)
+# Yardage.create(hole_id: hole_09.id, tee_id: red_tees.id, yards: 300)
+#
+# Yardage.create(hole_id: hole_10.id, tee_id: gold_tees.id, yards: 349)
+# Yardage.create(hole_id: hole_10.id, tee_id: blue_tees.id, yards: 309)
+# Yardage.create(hole_id: hole_10.id, tee_id: white_tees.id, yards: 298)
+# Yardage.create(hole_id: hole_10.id, tee_id: red_tees.id, yards: 275)
+#
+# Yardage.create(hole_id: hole_11.id, tee_id: gold_tees.id, yards: 378)
+# Yardage.create(hole_id: hole_11.id, tee_id: blue_tees.id, yards: 329)
+# Yardage.create(hole_id: hole_11.id, tee_id: white_tees.id, yards: 315)
+# Yardage.create(hole_id: hole_11.id, tee_id: red_tees.id, yards: 267)
+#
+# Yardage.create(hole_id: hole_12.id, tee_id: gold_tees.id, yards: 305)
+# Yardage.create(hole_id: hole_12.id, tee_id: blue_tees.id, yards: 298)
+# Yardage.create(hole_id: hole_12.id, tee_id: white_tees.id, yards: 292)
+# Yardage.create(hole_id: hole_12.id, tee_id: red_tees.id, yards: 268)
+#
+# Yardage.create(hole_id: hole_13.id, tee_id: gold_tees.id, yards: 166)
+# Yardage.create(hole_id: hole_13.id, tee_id: blue_tees.id, yards: 157)
+# Yardage.create(hole_id: hole_13.id, tee_id: white_tees.id, yards: 147)
+# Yardage.create(hole_id: hole_13.id, tee_id: red_tees.id, yards: 118)
+#
+# Yardage.create(hole_id: hole_14.id, tee_id: gold_tees.id, yards: 540)
+# Yardage.create(hole_id: hole_14.id, tee_id: blue_tees.id, yards: 494)
+# Yardage.create(hole_id: hole_14.id, tee_id: white_tees.id, yards: 461)
+# Yardage.create(hole_id: hole_14.id, tee_id: red_tees.id, yards: 457)
+#
+# Yardage.create(hole_id: hole_15.id, tee_id: gold_tees.id, yards: 211)
+# Yardage.create(hole_id: hole_15.id, tee_id: blue_tees.id, yards: 166)
+# Yardage.create(hole_id: hole_15.id, tee_id: white_tees.id, yards: 127)
+# Yardage.create(hole_id: hole_15.id, tee_id: red_tees.id, yards: 125)
+#
+# Yardage.create(hole_id: hole_16.id, tee_id: gold_tees.id, yards: 332)
+# Yardage.create(hole_id: hole_16.id, tee_id: blue_tees.id, yards: 308)
+# Yardage.create(hole_id: hole_16.id, tee_id: white_tees.id, yards: 300)
+# Yardage.create(hole_id: hole_16.id, tee_id: red_tees.id, yards: 279)
+#
+# Yardage.create(hole_id: hole_17.id, tee_id: gold_tees.id, yards: 568)
+# Yardage.create(hole_id: hole_17.id, tee_id: blue_tees.id, yards: 501)
+# Yardage.create(hole_id: hole_17.id, tee_id: white_tees.id, yards: 420)
+# Yardage.create(hole_id: hole_17.id, tee_id: red_tees.id, yards: 415)
+#
+# Yardage.create(hole_id: hole_18.id, tee_id: gold_tees.id, yards: 465)
+# Yardage.create(hole_id: hole_18.id, tee_id: blue_tees.id, yards: 421)
+# Yardage.create(hole_id: hole_18.id, tee_id: white_tees.id, yards: 340)
+# Yardage.create(hole_id: hole_18.id, tee_id: red_tees.id, yards: 340)

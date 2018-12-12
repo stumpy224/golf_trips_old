@@ -1,0 +1,125 @@
+peninsula_hole_1:
+  id: 1
+  course_id: 1
+  number: 1
+  par: 4
+  handicap: 7
+
+peninsula_hole_2:
+  id: 2
+  course_id: 1
+  number: 2
+  par: 5
+  handicap: 1
+
+peninsula_hole_3:
+  id: 3
+  course_id: 1
+  number: 3
+  par: 4
+  handicap: 17
+
+peninsula_hole_4:
+  id: 4
+  course_id: 1
+  number: 4
+  par: 3
+  handicap: 9
+
+peninsula_hole_5:
+  id: 5
+  course_id: 1
+  number: 5
+  par: 4
+  handicap: 11
+
+peninsula_hole_6:
+  id: 6
+  course_id: 1
+  number: 6
+  par: 5
+  handicap: 15
+
+peninsula_hole_7:
+  id: 7
+  course_id: 1
+  number: 7
+  par: 3
+  handicap: 13
+
+peninsula_hole_8:
+  id: 8
+  course_id: 1
+  number: 8
+  par: 4
+  handicap: 3
+
+peninsula_hole_9:
+  id: 9
+  course_id: 1
+  number: 9
+  par: 4
+  handicap: 5
+
+peninsula_hole_10:
+  id: 10
+  course_id: 1
+  number: 10
+  par: 4
+  handicap: 14
+
+peninsula_hole_11:
+  id: 11
+  course_id: 1
+  number: 11
+  par: 4
+  handicap: 8
+
+peninsula_hole_12:
+  id: 12
+  course_id: 1
+  number: 12
+  par: 4
+  handicap: 18
+
+peninsula_hole_13:
+  id: 13
+  course_id: 1
+  number: 13
+  par: 3
+  handicap: 12
+
+peninsula_hole_14:
+  id: 14
+  course_id: 1
+  number: 14
+  par: 5
+  handicap: 10
+
+peninsula_hole_15:
+  id: 15
+  course_id: 1
+  number: 15
+  par: 3
+  handicap: 4
+
+peninsula_hole_16:
+  id: 16
+  course_id: 1
+  number: 16
+  par: 4
+  handicap: 16
+
+peninsula_hole_17:
+  id: 17
+  course_id: 1
+  number: 17
+  par: 5
+  handicap: 6
+
+peninsula_hole_18:
+  id: 18
+  course_id: 1
+  number: 18
+  par: 4
+  handicap: 2
