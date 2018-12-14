@@ -1,4 +1,4 @@
-AdminUser.create!(email: 'stumpy224@gmail.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+AdminUser.create(email: 'stumpy224@gmail.com', password: 'password', password_confirmation: 'password')
 
 david_amberger = Golfer.create(first_name: "David", last_name: "Amberger", email: "tntamberger@att.net", is_active: true, nickname: "Preacher")
 bob_blackedge = Golfer.create(first_name: "Bob", last_name: "Blackedge", email: "xstixhdx@aol.com", is_active: false, nickname: "Sticks")
@@ -68,30 +68,130 @@ outing_peninsula_2018_wednesday = Date.strptime("05/23/2018", '%m/%d/%Y')
 
 outing_peninsula_2018 = Outing.create(course_id: peninsula.id, name: "2018 Peninsula", start_date: outing_peninsula_2018_sunday, end_date: outing_peninsula_2018_wednesday)
 
-# Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: jt_brennemen.id, attend_date: outing_peninsula_2018_sunday)
-# Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: jt_brennemen.id, attend_date: outing_peninsula_2018_monday)
-# Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: jt_brennemen.id, attend_date: outing_peninsula_2018_tuesday)
-# Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: jt_brennemen.id, attend_date: outing_peninsula_2018_wednesday)
-#
-# Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: randy_brennemen.id, attend_date: outing_peninsula_2018_sunday)
-# Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: randy_brennemen.id, attend_date: outing_peninsula_2018_monday)
-# Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: randy_brennemen.id, attend_date: outing_peninsula_2018_tuesday)
-# Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: randy_brennemen.id, attend_date: outing_peninsula_2018_wednesday)
-#
-# Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: duane_dale.id, attend_date: outing_peninsula_2018_sunday)
-# Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: duane_dale.id, attend_date: outing_peninsula_2018_monday)
-# Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: duane_dale.id, attend_date: outing_peninsula_2018_tuesday)
-# Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: duane_dale.id, attend_date: outing_peninsula_2018_wednesday)
-#
-# Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: brian_davidson.id, attend_date: outing_peninsula_2018_sunday)
-# Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: brian_davidson.id, attend_date: outing_peninsula_2018_monday)
-# Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: brian_davidson.id, attend_date: outing_peninsula_2018_tuesday)
-# Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: brian_davidson.id, attend_date: outing_peninsula_2018_wednesday)
-#
-# Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: greg_davidson.id, attend_date: outing_peninsula_2018_sunday)
-# Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: greg_davidson.id, attend_date: outing_peninsula_2018_monday)
-# Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: greg_davidson.id, attend_date: outing_peninsula_2018_tuesday)
-# Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: greg_davidson.id, attend_date: outing_peninsula_2018_wednesday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: jt_brennemen.id, attend_date: outing_peninsula_2018_sunday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: jt_brennemen.id, attend_date: outing_peninsula_2018_monday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: jt_brennemen.id, attend_date: outing_peninsula_2018_tuesday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: jt_brennemen.id, attend_date: outing_peninsula_2018_wednesday)
+
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: randy_brennemen.id, attend_date: outing_peninsula_2018_sunday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: randy_brennemen.id, attend_date: outing_peninsula_2018_monday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: randy_brennemen.id, attend_date: outing_peninsula_2018_tuesday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: randy_brennemen.id, attend_date: outing_peninsula_2018_wednesday)
+
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: duane_dale.id, attend_date: outing_peninsula_2018_sunday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: duane_dale.id, attend_date: outing_peninsula_2018_monday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: duane_dale.id, attend_date: outing_peninsula_2018_tuesday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: duane_dale.id, attend_date: outing_peninsula_2018_wednesday)
+
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: brian_davidson.id, attend_date: outing_peninsula_2018_sunday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: brian_davidson.id, attend_date: outing_peninsula_2018_monday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: brian_davidson.id, attend_date: outing_peninsula_2018_tuesday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: brian_davidson.id, attend_date: outing_peninsula_2018_wednesday)
+
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: greg_davidson.id, attend_date: outing_peninsula_2018_sunday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: greg_davidson.id, attend_date: outing_peninsula_2018_monday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: greg_davidson.id, attend_date: outing_peninsula_2018_tuesday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: greg_davidson.id, attend_date: outing_peninsula_2018_wednesday)
+
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: mike_davidson.id, attend_date: outing_peninsula_2018_sunday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: mike_davidson.id, attend_date: outing_peninsula_2018_monday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: mike_davidson.id, attend_date: outing_peninsula_2018_tuesday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: mike_davidson.id, attend_date: outing_peninsula_2018_wednesday)
+
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: don_duvall.id, attend_date: outing_peninsula_2018_sunday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: don_duvall.id, attend_date: outing_peninsula_2018_monday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: don_duvall.id, attend_date: outing_peninsula_2018_tuesday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: don_duvall.id, attend_date: outing_peninsula_2018_wednesday)
+
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: scott_eakins.id, attend_date: outing_peninsula_2018_sunday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: scott_eakins.id, attend_date: outing_peninsula_2018_monday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: scott_eakins.id, attend_date: outing_peninsula_2018_tuesday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: scott_eakins.id, attend_date: outing_peninsula_2018_wednesday)
+
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: todd_hacker.id, attend_date: outing_peninsula_2018_sunday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: todd_hacker.id, attend_date: outing_peninsula_2018_monday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: todd_hacker.id, attend_date: outing_peninsula_2018_tuesday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: todd_hacker.id, attend_date: outing_peninsula_2018_wednesday)
+
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: dave_harris.id, attend_date: outing_peninsula_2018_sunday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: dave_harris.id, attend_date: outing_peninsula_2018_monday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: dave_harris.id, attend_date: outing_peninsula_2018_tuesday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: dave_harris.id, attend_date: outing_peninsula_2018_wednesday)
+
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: mike_hawkins.id, attend_date: outing_peninsula_2018_sunday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: mike_hawkins.id, attend_date: outing_peninsula_2018_monday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: mike_hawkins.id, attend_date: outing_peninsula_2018_tuesday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: mike_hawkins.id, attend_date: outing_peninsula_2018_wednesday)
+
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: mike_hopkins.id, attend_date: outing_peninsula_2018_sunday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: mike_hopkins.id, attend_date: outing_peninsula_2018_monday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: mike_hopkins.id, attend_date: outing_peninsula_2018_tuesday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: mike_hopkins.id, attend_date: outing_peninsula_2018_wednesday)
+
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: paul_hunt.id, attend_date: outing_peninsula_2018_sunday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: paul_hunt.id, attend_date: outing_peninsula_2018_monday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: paul_hunt.id, attend_date: outing_peninsula_2018_tuesday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: paul_hunt.id, attend_date: outing_peninsula_2018_wednesday)
+
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: dan_johnson.id, attend_date: outing_peninsula_2018_sunday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: dan_johnson.id, attend_date: outing_peninsula_2018_monday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: dan_johnson.id, attend_date: outing_peninsula_2018_tuesday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: dan_johnson.id, attend_date: outing_peninsula_2018_wednesday)
+
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: mark_kivett.id, attend_date: outing_peninsula_2018_sunday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: mark_kivett.id, attend_date: outing_peninsula_2018_monday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: mark_kivett.id, attend_date: outing_peninsula_2018_tuesday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: mark_kivett.id, attend_date: outing_peninsula_2018_wednesday)
+
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: mike_norton.id, attend_date: outing_peninsula_2018_sunday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: mike_norton.id, attend_date: outing_peninsula_2018_monday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: mike_norton.id, attend_date: outing_peninsula_2018_tuesday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: mike_norton.id, attend_date: outing_peninsula_2018_wednesday)
+
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: jeff_obenchain.id, attend_date: outing_peninsula_2018_sunday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: jeff_obenchain.id, attend_date: outing_peninsula_2018_monday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: jeff_obenchain.id, attend_date: outing_peninsula_2018_tuesday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: jeff_obenchain.id, attend_date: outing_peninsula_2018_wednesday)
+
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: dewayne_pennington.id, attend_date: outing_peninsula_2018_sunday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: dewayne_pennington.id, attend_date: outing_peninsula_2018_monday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: dewayne_pennington.id, attend_date: outing_peninsula_2018_tuesday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: dewayne_pennington.id, attend_date: outing_peninsula_2018_wednesday)
+
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: john_schneider.id, attend_date: outing_peninsula_2018_sunday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: john_schneider.id, attend_date: outing_peninsula_2018_monday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: john_schneider.id, attend_date: outing_peninsula_2018_tuesday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: john_schneider.id, attend_date: outing_peninsula_2018_wednesday)
+
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: phil_sergi.id, attend_date: outing_peninsula_2018_sunday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: phil_sergi.id, attend_date: outing_peninsula_2018_monday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: phil_sergi.id, attend_date: outing_peninsula_2018_tuesday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: phil_sergi.id, attend_date: outing_peninsula_2018_wednesday)
+
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: jim_sides.id, attend_date: outing_peninsula_2018_sunday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: jim_sides.id, attend_date: outing_peninsula_2018_monday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: jim_sides.id, attend_date: outing_peninsula_2018_tuesday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: jim_sides.id, attend_date: outing_peninsula_2018_wednesday)
+
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: dan_sitton.id, attend_date: outing_peninsula_2018_sunday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: dan_sitton.id, attend_date: outing_peninsula_2018_monday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: dan_sitton.id, attend_date: outing_peninsula_2018_tuesday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: dan_sitton.id, attend_date: outing_peninsula_2018_wednesday)
+
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: jeremiah_stump.id, attend_date: outing_peninsula_2018_sunday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: jeremiah_stump.id, attend_date: outing_peninsula_2018_monday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: jeremiah_stump.id, attend_date: outing_peninsula_2018_tuesday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: jeremiah_stump.id, attend_date: outing_peninsula_2018_wednesday)
+
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: rick_wheeler.id, attend_date: outing_peninsula_2018_sunday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: rick_wheeler.id, attend_date: outing_peninsula_2018_monday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: rick_wheeler.id, attend_date: outing_peninsula_2018_tuesday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: rick_wheeler.id, attend_date: outing_peninsula_2018_wednesday)
+
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: allen_yeagle.id, attend_date: outing_peninsula_2018_sunday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: allen_yeagle.id, attend_date: outing_peninsula_2018_monday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: allen_yeagle.id, attend_date: outing_peninsula_2018_tuesday)
+Attendee.create(outing_id: outing_peninsula_2018.id, golfer_id: allen_yeagle.id, attend_date: outing_peninsula_2018_wednesday)
 
 # gold_tees = Tee.create(course_id: peninsula.id, name: "Gold", rating: 71.5, slope: 124)
 # blue_tees = Tee.create(course_id: peninsula.id, name: "Blue", rating: 68.9, slope: 119)
