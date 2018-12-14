@@ -13,6 +13,7 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'mini_racer', platforms: :ruby
 
@@ -53,6 +54,9 @@ group :development, :test do
   # IRB tools
   gem 'irbtools', require: 'irbtools/binding'
   gem 'irbtools-more', require: 'irbtools/binding'
+
+  # build relation model diagram
+  gem "rails-erd"
 
   gem 'rspec-rails', '~> 3.8'
 

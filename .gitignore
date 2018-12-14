@@ -31,3 +31,6 @@
 /config/master.key
 
 /.idea/*
+
+# For now, ignore the erd generated diagram based on models via 'rake erd'
+erd.pdf
