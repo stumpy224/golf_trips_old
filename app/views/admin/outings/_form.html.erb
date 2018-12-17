@@ -1,0 +1,70 @@
+<%= semantic_form_for [:admin, @outing] do |f| %>
+  <%= f.inputs do %>
+    <%= f.input :course  %>
+    <%= f.input :name %>
+    <%= f.input :start_date, as: :string, input_html: {class: "datepicker"} %>
+    <%= f.input :end_date, as: :string, input_html: {class: "datepicker"} %>
+  <% end %>
+
+  <%= f.actions do %>
+    <%= f.action :submit %>
+    <%= f.action :cancel, label: 'Cancel', wrapper_html: {class: :cancel} %>
+  <% end %>
+
+  <% if !@outing.id.nil? %>
+    <%= f.inputs "Attendees" do %>
+      <table>
+        <tr>
+          <th>Golfer</th>
+          <th>Date Attending</th>
+          <th>Team</th>
+          <th>Rank Number</th>
+          <th>Rank Letter</th>
+          <th>Expected Points</th>
+        </tr>
+
+        <%= f.semantic_fields_for :attendees, @outing.attendees.order(attend_date: :desc) do |a| %>
+          <tr>
+            <td><%= a.input :golfer_id, label: false, as: :select, collection: Golfer.where(is_active: true).order(:last_name).map{ |g| ["#{g.full_name_with_nickname}", g.id] }, input_html: {disabled: true} %></td>
+            <td><%= a.input :attend_date, label: false, as: :string, input_html: {disabled: true} %></td>
+            <td><%= a.input :team_number, label: false %></td>
+            <td><%= a.input :rank_number, label: false %></td>
+            <td><%= a.input :rank_letter, label: false, as: :select, collection: ["A", "B", "C", "D"] %></td>
+            <td><%= a.input :points_expected, label: false %></td>
+            <td><%= link_to "Remove", "#", class: "button", onclick: "if (confirm('Are you sure you want to delete this?')) {
+                $.ajax({url: '#{admin_golfer_attendee_path(golfer_id: a.object.golfer_id, id: a.object.id)}', type: 'DELETE'});
+                $(this).closest('tr').remove(); return false;
+              }" %></td>
+          </tr>
+        <% end %>
+
+        <% js = f.semantic_fields_for :attendees, Attendee.new do |a| %>
+          <tr>
+            <td><%= a.input :golfer_id, label: false, as: :select, collection: Golfer.where(is_active: true).order(:last_name).map{ |g| ["#{g.full_name_with_nickname}", g.id] } %></td>
+            <td><%= a.input :attend_date, label: false, as: :string, input_html: {class: "datepicker"} %></td>
+            <td><%= a.input :team_number, label: false %></td>
+            <td><%= a.input :rank_number, label: false %></td>
+            <td><%= a.input :rank_letter, label: false, as: :select, collection: ["A", "B", "C", "D"] %></td>
+            <td><%= a.input :points_expected, label: false %></td>
+            <td><%= link_to "Remove", "#", onclick: "$(this).closest('tr').remove(); return false;", class: "button" %></td>
+          </tr>
+        <% end %>
+      </table>
+
+      <span class="add-child">
+        <% js = escape_javascript(js) %>
+        <%= link_to I18n.t('active_admin.has_many_new', model: @attendee.to_s.singularize.titlecase), "#",
+                    onclick: "$('table tr').last().after(
+                      '#{js}'.replace(/[0-9]+(?=[\\\]_])/g, new Date().getTime())
+                    ); return false;",
+                    class: "button" %>
+      </span>
+    <% end %>
+  <% end %>
+
+  <%= f.actions do %>
+    <%= f.action :submit %>
+    <%= f.action :cancel, label: 'Cancel', wrapper_html: {class: :cancel} %>
+  <% end %>
+
+<% end %>

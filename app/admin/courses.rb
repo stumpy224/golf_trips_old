@@ -10,28 +10,7 @@ ActiveAdmin.register Course do
 
   config.sort_order = 'name_asc'
 
-  form do |f|
-    f.inputs do
-      f.input :name
-      f.input :address
-      f.input :phone
-      f.input :url
-
-      f.inputs do
-        f.has_many :holes,
-                   heading: "Holes",
-                   new_record: false do |h|
-          # h.input :course_id, as: :select, collection: Course.select(:id, :name).order(:name)
-          h.input :course_id, as: :hidden
-          h.input :number
-          h.input :par
-          h.input :handicap
-        end
-      end
-    end
-
-    f.actions
-  end
+  form partial: 'form'
 
   show do
     attributes_table do

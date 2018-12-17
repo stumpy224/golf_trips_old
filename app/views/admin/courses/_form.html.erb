@@ -1,0 +1,39 @@
+<%= semantic_form_for [:admin, @course] do |f| %>
+  <%= f.inputs do %>
+    <%= f.input :name  %>
+    <%= f.input :address %>
+    <%= f.input :phone %>
+    <%= f.input :url %>
+  <% end %>
+
+  <%= f.actions do %>
+    <%= f.action :submit %>
+    <%= f.action :cancel, label: 'Cancel', wrapper_html: {class: :cancel} %>
+  <% end %>
+
+  <% if !@course.id.nil? %>
+    <%= f.inputs "Holes" do %>
+      <table>
+        <tr>
+          <th>Hole Number</th>
+          <th>Par</th>
+          <th>Handicap</th>
+        </tr>
+
+        <%= f.semantic_fields_for :holes do |h| %>
+          <tr>
+            <td><%= h.input :number, label: false, as: :string, input_html: {disabled: true} %></td>
+            <td><%= h.input :par, label: false %></td>
+            <td><%= h.input :handicap, label: false %></td>
+          </tr>
+        <% end %>
+      </table>
+    <% end %>
+  <% end %>
+
+  <%= f.actions do %>
+    <%= f.action :submit %>
+    <%= f.action :cancel, label: 'Cancel', wrapper_html: {class: :cancel} %>
+  <% end %>
+
+<% end %>

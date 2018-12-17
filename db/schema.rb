@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_14_144518) do
+ActiveRecord::Schema.define(version: 2018_12_14_200423) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -28,6 +28,11 @@ ActiveRecord::Schema.define(version: 2018_12_14_144518) do
     t.integer "outing_id"
     t.integer "golfer_id"
     t.date "attend_date"
+    t.integer "team_number"
+    t.integer "rank_number"
+    t.string "rank_letter"
+    t.integer "points_expected"
+    t.integer "points_actual"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["golfer_id"], name: "index_attendees_on_golfer_id"
