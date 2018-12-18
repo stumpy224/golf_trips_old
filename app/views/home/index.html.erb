@@ -1,6 +1,54 @@
 <% if logged_in? %>
-  <p>Cards displaying outings to choose from will go here.</p>
-  <p>If only one outing, then display that outing.</p>
+    <% @outings.each do |outing| %>
+  <div class="mdl-grid center-items">
+      <div class="mdl-cell mdl-cell--5-col-desktop mdl-cell--4-col-phone">
+        <div class="mdl-card mdl-shadow--6dp outing-card">
+          <div class="mdl-card__title">
+            <div class="mdl-card__title-text" style="padding-right: 1em;">
+              <%= outing.name %>
+            </div>
+
+            <div class="mdl-layout-spacer"></div>
+
+            <div class="mdl-card__subtitle-text" style="margin-right: 2em;">
+              <div>
+                <%= outing.course.name %>
+              </div>
+              <div>
+                <%= outing.course.address %>
+              </div>
+            </div>
+          </div>
+
+          <div class="mdl-card__media">
+            <img class="<%= outing.course.name.include?('Peninsula') ? 'peninsula-image-background' : 'generic-image-background' %>" height="300" width="100%">
+          </div>
+
+          <div class="mdl-card__supporting-text">
+            <div>
+              <%= outing.start_date.strftime("%a") %> (<%= outing.start_date.strftime("%m/%d/%y") %>)
+              through
+              <%= outing.end_date.strftime("%a") %> (<%= outing.end_date.strftime("%m/%d/%y") %>)
+            </div>
+            <div>
+              <%= outing.outing_golfers.size %> Golfers
+            </div>
+          </div>
+
+          <div class="mdl-grid mdl-card__actions mdl-card--border">
+            <div class="mdl-layout-spacer"></div>
+            <%= link_to "View Outing", outing_path(outing.id), class: "mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" %>
+          </div>
+
+          <div class="mdl-card__menu">
+            <a class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" href="https://maps.google.com/?q=<%= outing.course.address %>" target="_blank">
+              <i class="material-icons">place</i>
+            </a>
+          </div>
+        </div>
+      </div>
+  </div>
+    <% end %>
 <% else %>
   <%= render partial: 'common/login' %>
 <% end %>

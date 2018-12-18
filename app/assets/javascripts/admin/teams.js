@@ -9,13 +9,17 @@ var selectors = {
 };
 
 $(document).ready(function () {
-    setupDialog();
-    setupOutingOnChangeEvent();
+    var dialog = document.querySelector('dialog');
+
+    if (dialog != undefined) {
+        setupDialog(dialog);
+        setupOutingOnChangeEvent();
+    }
 });
 
-function setupDialog() {
-    var dialog = document.querySelector('dialog');
+function setupDialog(dialog) {
     var showDialogButton = document.querySelector(selectors.generateTeamsDialogButton);
+
     if (!dialog.showModal) {
         dialogPolyfill.registerDialog(dialog);
     }

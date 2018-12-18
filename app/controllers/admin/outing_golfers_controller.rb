@@ -12,7 +12,7 @@ module Admin
       if params[:order]
         resources = order.apply(resources)
       else
-        resources = resources.joins(:outing, :golfer).order("outings.start_date", "golfers.last_name")
+        resources = resources.joins(:outing, :golfer).order("outings.start_date desc", "golfers.last_name")
       end
 
       resources = resources.page(params[:page]).per(records_per_page)

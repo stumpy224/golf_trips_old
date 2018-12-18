@@ -91,6 +91,8 @@ order by teams.points_actual desc, HDCP_1_PTS desc, HDCP_2_PTS desc, HDCP_3_PTS 
 
   def get_teams_placing_by_date(outing_id, team_date)
     sql = "select teams.*,
+       sum(teams.points_expected)                                                       AS team_points_expected,
+       sum(teams.points_actual)                                                         AS team_points_actual,
        sum(teams.points_actual) - sum(teams.points_expected)                            AS team_points_plus_minus,
        (select sum(scores.points)
         from scores

@@ -71,7 +71,7 @@ RSpec.describe "User registering" do
       expect(is_logged_in?).to be_falsey
     end
 
-    describe "with clicking activation url from email" do
+    describe "then clicking activation url from email" do
       before(:each) do
         get edit_account_activation_path(@user.activation_token, email: @user.email)
       end

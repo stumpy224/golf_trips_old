@@ -1,3 +1,26 @@
 // Place all the styles related to the Home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.outing-card {
+  background-size: 100% 100% !important;
+  width: 100% !important;
+}
+
+.outing-card-title {
+  padding-bottom: 5em !important;
+}
+
+.generic-image-background {
+  background-image: image_url('golf_ball.jpg');
+}
+
+.peninsula-image-background {
+  background-image: image_url('peninsula/18_to_clubhouse.jpg');
+}
+
+[class$="image-background"] {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}

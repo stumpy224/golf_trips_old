@@ -6,3 +6,11 @@ jeremiah_stump:
   email: stumpy@test.com
   is_active: true
   is_registered: true
+
+registration:
+  id: 2
+  first_name: Valid
+  last_name: User
+  email: user@valid.com
+  is_active: true
+  is_registered: false

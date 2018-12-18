@@ -1,0 +1,107 @@
+<div class="mdl-grid center-items">
+  <h3><%= @outing.name %></h3>
+
+  <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+    <div class="mdl-tabs__tab-bar">
+      <a href="#tab-for-golfers" class="mdl-tabs__tab is-active">
+        Golfers
+      </a>
+      <a href="#tab-for-lodging" class="mdl-tabs__tab">
+        Lodging
+      </a>
+    </div>
+    <div class="mdl-tabs__tab-bar">
+      <% @outing.get_dates.each do |outing_date| %>
+        <a href="#tab-for-<%= outing_date %>" class="mdl-tabs__tab">
+          <%= outing_date.strftime("%a") %>
+        </a>
+      <% end %>
+    </div>
+
+    <div class="mdl-tabs__panel is-active" id="tab-for-golfers">
+      <div class="mdl-grid center-items">
+        <h5><%= @outing_golfers.size %> Golfers</h5>
+      </div>
+      <div class="mdl-grid center-items">
+        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+          <thead>
+          <tr>
+            <th class="mdl-data-table__cell--non-numeric">Name</th>
+            <th class="mdl-data-table__cell--non-numeric">Room</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @outing_golfers.each do |outing_golfer| %>
+            <tr>
+              <td class="mdl-data-table__cell--non-numeric"><%= "#{outing_golfer.golfer.first_name} #{outing_golfer.golfer.last_name}" %></td>
+              <td class="mdl-data-table__cell--non-numeric"><%= outing_golfer.lodging.room if !outing_golfer.lodging.nil? %></td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="mdl-tabs__panel" id="tab-for-lodging">
+      <div class="mdl-grid center-items">
+        <% @outing_golfers_lodgings.each do |outing_golfer| %>
+          <div class="mdl-card mdl-shadow--6dp lodging-card">
+            <div class="mdl-card__title">
+              <div class="mdl-card__title-text">
+                <%= "#{outing_golfer.lodging.lodging_type.name} #{outing_golfer.lodging.room}" if !outing_golfer.lodging.nil? %>
+              </div>
+            </div>
+
+            <div class="mdl-card__supporting-text">
+              <ul class="mdl-list">
+                <% @outing_golfers.where("lodging_id = ?", outing_golfer.lodging_id).order("golfers.last_name").each do |outing_golfer_lodging| %>
+                  <li class="mdl-list__item">
+                    <span class="mdl-list__item-primary-content">
+                      <%= "#{outing_golfer_lodging.golfer.first_name} #{outing_golfer_lodging.golfer.last_name}" %>
+                    </span>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <% @outing.get_dates.each do |outing_date| %>
+      <% teams = get_teams_placing_by_date(@outing.id, outing_date) %>
+
+      <div class="mdl-tabs__panel" id="tab-for-<%= outing_date %>">
+        <div class="mdl-grid center-items">
+          <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+            <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Team</th>
+              <th>Expected Pts</th>
+              <th>Actual Pts</th>
+              <th>+/-</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% teams.each.with_index do |team, index| %>
+              <% points_color = team.team_points_plus_minus.nil? ? '' : (team.team_points_plus_minus > 0 ? 'green' : (team.team_points_plus_minus < 0 ? 'red' : '')) %>
+              <tr>
+                <td class="center-text"><%= index + 1 %></td>
+                <td class="center-text"><%= team.team_number %></td>
+                <td><%= team.team_points_expected %></td>
+                <td><%= team.team_points_actual %></td>
+                <%= content_tag(:td, style: "color: #{points_color}") do %>
+                  <%= "#{'+' if team.team_points_plus_minus.to_i > 0}#{team.team_points_plus_minus}" %>
+                <% end %>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    <% end %>
+
+  </div>
+
+</div>

@@ -112,7 +112,9 @@ module Admin
     end
 
     def create_team_for_tomorrow_and_scores(team)
-      next_day_team = Team.create(outing_golfer_id: team.outing_golfer_id, team_number: team.team_number, rank_number: team.rank_number, rank_letter: team.rank_letter, points_expected: team.points_actual, team_date: team.team_date + 1)
+      next_day_team = Team.create(outing_golfer_id: team.outing_golfer_id, team_number: team.team_number,
+                                  rank_number: team.rank_number, rank_letter: team.rank_letter,
+                                  points_expected: team.points_actual, team_date: team.team_date + 1)
 
       next_day_team.outing_golfer.outing.course.holes.each do |hole|
         Score.create(team_id: next_day_team.id, hole_id: hole.id)
