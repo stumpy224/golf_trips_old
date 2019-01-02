@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_14_200423) do
+ActiveRecord::Schema.define(version: 2018_12_20_131553) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -22,21 +22,6 @@ ActiveRecord::Schema.define(version: 2018_12_14_200423) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
-  end
-
-  create_table "attendees", force: :cascade do |t|
-    t.integer "outing_id"
-    t.integer "golfer_id"
-    t.date "attend_date"
-    t.integer "team_number"
-    t.integer "rank_number"
-    t.string "rank_letter"
-    t.integer "points_expected"
-    t.integer "points_actual"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["golfer_id"], name: "index_attendees_on_golfer_id"
-    t.index ["outing_id"], name: "index_attendees_on_outing_id"
   end
 
   create_table "courses", force: :cascade do |t|
@@ -71,6 +56,35 @@ ActiveRecord::Schema.define(version: 2018_12_14_200423) do
     t.index ["course_id"], name: "index_holes_on_course_id"
   end
 
+  create_table "lodging_types", force: :cascade do |t|
+    t.string "name"
+    t.string "address"
+    t.string "phone"
+    t.string "url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "lodgings", force: :cascade do |t|
+    t.integer "lodging_type_id"
+    t.string "room"
+    t.integer "sort_order"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lodging_type_id"], name: "index_lodgings_on_lodging_type_id"
+  end
+
+  create_table "outing_golfers", force: :cascade do |t|
+    t.integer "outing_id"
+    t.integer "golfer_id"
+    t.integer "lodging_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["golfer_id"], name: "index_outing_golfers_on_golfer_id"
+    t.index ["lodging_id"], name: "index_outing_golfers_on_lodging_id"
+    t.index ["outing_id"], name: "index_outing_golfers_on_outing_id"
+  end
+
   create_table "outings", force: :cascade do |t|
     t.integer "course_id"
     t.string "name"
@@ -79,6 +93,31 @@ ActiveRecord::Schema.define(version: 2018_12_14_200423) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["course_id"], name: "index_outings_on_course_id"
+  end
+
+  create_table "scores", force: :cascade do |t|
+    t.integer "team_id"
+    t.integer "hole_id"
+    t.integer "strokes"
+    t.integer "points"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["hole_id"], name: "index_scores_on_hole_id"
+    t.index ["team_id"], name: "index_scores_on_team_id"
+  end
+
+  create_table "teams", force: :cascade do |t|
+    t.integer "outing_golfer_id"
+    t.integer "team_number"
+    t.integer "rank_number"
+    t.string "rank_letter"
+    t.integer "points_expected"
+    t.integer "points_actual"
+    t.date "team_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "points_plus_minus"
+    t.index ["outing_golfer_id"], name: "index_teams_on_outing_golfer_id"
   end
 
   create_table "users", force: :cascade do |t|

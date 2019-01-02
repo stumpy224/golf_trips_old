@@ -1,6 +1,18 @@
 Rails.application.routes.draw do
-  devise_for :admin_users, ActiveAdmin::Devise.config
-  ActiveAdmin.routes(self)
+  namespace :admin do
+    resources :golfers
+    resources :courses
+    resources :holes
+    resources :lodging_types
+    resources :lodgings
+    resources :outings
+    resources :outing_golfers
+    resources :teams
+    resources :scores
+    resources :users
+
+    root to: "golfers#index"
+  end
 
   root 'home#index'
 

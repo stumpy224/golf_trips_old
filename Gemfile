@@ -34,9 +34,8 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-# Use Active Admin for administration
-gem 'activeadmin'
-gem 'devise'
+# Use Administrate for administration
+gem 'administrate'
 
 # Use bcrypt for password encryption
 gem 'bcrypt', '3.1.12'

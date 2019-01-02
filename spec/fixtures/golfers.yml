@@ -1,1 +1,8 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+jeremiah_stump:
+  id: 1
+  first_name: Jeremiah
+  last_name: Stump
+  nickname: Stumpy
+  email: stumpy@test.com
+  is_active: true
+  is_registered: true

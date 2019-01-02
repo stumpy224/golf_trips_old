@@ -7,4 +7,32 @@ module ApplicationHelper
     base_title = 'Golf Hacker Club'
     page_title.empty? ? base_title : base_title + " | " + page_title
   end
+
+  def get_points(par, strokes)
+    if !strokes.nil? && strokes > 0
+      result = strokes - par
+
+      if result == -3
+        # albatross
+        return 5
+      elsif result == -2
+        # eagle
+        return 4
+      elsif result == -1
+        # birdie
+        return 3
+      elsif result == 0
+        # par
+        return 2
+      elsif result == 1
+        # bogey
+        return 1
+      else
+        # double-bogey+
+        return 0
+      end
+    end
+
+    return 0
+  end
 end
