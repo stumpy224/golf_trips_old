@@ -11,6 +11,9 @@ Rails.application.routes.draw do
     resources :scores
     resources :users
 
+    get 'outings/:id/get_dates', to: 'outings#get_dates', as: 'get_outing_dates'
+    get 'outings/:id/teams/:team_date/generate', to: 'teams#generate', as: 'generate_teams'
+
     root to: "golfers#index"
   end
 

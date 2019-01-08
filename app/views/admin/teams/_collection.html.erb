@@ -46,13 +46,15 @@ to display a collection of resources in an HTML table.
         </th>
       <% end %>
 
-      <th class="cell-label cell-label--number cell-label--false" scope="col" role="columnheader" aria-sort="none">
-        +/-
-      </th>
+      <% if show_action?(:index, collection_presenter.resource_name) && collection_presenter.resource_name == "team" -%>
+        <th class="cell-label cell-label--number cell-label--false" scope="col" role="columnheader" aria-sort="none">
+          +/-
+        </th>
 
-      <th class="cell-label cell-label--number cell-label--false" scope="col" role="columnheader" aria-sort="none">
-        Strokes
-      </th>
+        <th class="cell-label cell-label--number cell-label--false" scope="col" role="columnheader" aria-sort="none">
+          Strokes
+        </th>
+      <% end -%>
 
       <% [valid_action?(:edit, collection_presenter.resource_name),
           valid_action?(:destroy, collection_presenter.resource_name)].count(true).times do %>
@@ -81,22 +83,27 @@ to display a collection of resources in an HTML table.
           </td>
         <% end %>
 
-        <!-- +/- Points expected vs. Points actual -->
-        <% points_plus_minus_class = resource.points_plus_minus.nil? ? '' : (resource.points_plus_minus > 0 ? 'green' : (resource.points_plus_minus < 0 ? 'red' : '')) %>
-        <td class="cell-data cell-data--number" style="color: <%= points_plus_minus_class %>">
-          <a href="<%= polymorphic_path([namespace, resource]) -%>" class="action-show">
-            <% if resource.points_plus_minus.nil? %>
-              -
-            <% else %>
-              <%= "#{'+' if resource.points_plus_minus > 0}#{resource.points_plus_minus}" %>
-            <% end %>
-          </a>
-        </td>
+        <% if (show_action?(:index, resource) && !resource.is_a?(Score)) -%>
 
-        <!-- Total strokes -->
-        <td class="cell-data cell-data--number">
-          <%= resource.scores.sum(:strokes) %>
-        </td>
+          <!-- +/- Points expected vs. Points actual -->
+          <% points_plus_minus_class = resource.points_plus_minus.nil? ? '' : (resource.points_plus_minus > 0 ? 'green' : (resource.points_plus_minus < 0 ? 'red' : '')) %>
+          <td class="cell-data cell-data--number" style="color: <%= points_plus_minus_class %>">
+            <a href="<%= polymorphic_path([namespace, resource]) -%>" class="action-show">
+              <% if resource.points_plus_minus.nil? %>
+                -
+              <% else %>
+                <%= "#{'+' if resource.points_plus_minus > 0}#{resource.points_plus_minus}" %>
+              <% end %>
+            </a>
+          </td>
+
+          <!-- Total strokes -->
+          <td class="cell-data cell-data--number">
+            <%= resource.scores.sum(:strokes) %>
+          </td>
+
+        <% end -%>
+
 
         <% if valid_action? :edit, collection_presenter.resource_name %>
           <td><%= link_to(

@@ -12,7 +12,7 @@ module Admin
       if params[:order]
         resources = order.apply(resources)
       else
-        resources = resources.joins(:lodging_type).order("lodging_types.name", :sort_order)
+        resources = resources.includes(:lodging_type).order("lodging_types.name", :sort_order)
       end
 
       resources = resources.page(params[:page]).per(records_per_page)

@@ -7,6 +7,7 @@
 module Admin
   class ApplicationController < Administrate::ApplicationController
     include ApplicationHelper
+    include TeamsHelper
 
     before_action :authenticate_admin
 

@@ -8,7 +8,10 @@ class TeamDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-      outing_golfer: Field::BelongsTo,
+      outing_golfer: Field::BelongsTo.with_options(
+          searchable: true,
+          searchable_field: 'id'
+      ),
       scores: Field::HasMany.with_options(
           limit: 18
       ),
@@ -16,12 +19,16 @@ class TeamDashboard < Administrate::BaseDashboard
       team_number: Field::Number,
       rank_number: Field::Number,
       rank_letter: Field::Select.with_options(
-          collection: ["", "A", "B", "C", "D"]
+          collection: ["", "A", "B", "C", "D"],
+          searchable: false
       ),
       points_expected: Field::Number,
       points_actual: Field::Number,
       points_plus_minus: Field::Number,
-      team_date: DateField,
+      team_date: DateField.with_options(
+          searchable: true,
+          searchable_field: 'team_date'
+      ),
       created_at: Field::DateTime,
       updated_at: Field::DateTime,
   }.freeze
@@ -51,6 +58,7 @@ class TeamDashboard < Administrate::BaseDashboard
       :rank_letter,
       :points_expected,
       :points_actual,
+      :points_plus_minus,
       :created_at,
       :updated_at,
       :scores,
@@ -66,7 +74,6 @@ class TeamDashboard < Administrate::BaseDashboard
       :rank_number,
       :rank_letter,
       :points_expected,
-      # :scores,
   ].freeze
 
   # Overwrite this method to customize how teams are displayed

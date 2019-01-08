@@ -38,6 +38,7 @@ class OutingGolferDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = [
       :outing,
       :golfer,
+      :id,
       :lodging,
       :created_at,
       :updated_at,

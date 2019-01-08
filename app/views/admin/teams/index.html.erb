@@ -28,6 +28,8 @@ It renders the `_table` partial to display details about the resources.
 <% end %>
 
 <header class="main-content__header" role="banner">
+  <%= javascript_include_tag 'admin/teams' %>
+
   <h1 class="main-content__page-title" id="page-title">
     <%= content_for(:title) %>
   </h1>
@@ -41,6 +43,8 @@ It renders the `_table` partial to display details about the resources.
   <% end %>
 
   <div>
+    <button id="generate_teams_dialog_button" type="button" class="button">Generate Teams</button>
+
     <%= link_to(
       t(
         "administrate.actions.new_resource",
@@ -50,9 +54,46 @@ It renders the `_table` partial to display details about the resources.
       class: "button",
     ) if valid_action?(:new) && show_action?(:new, new_resource) %>
   </div>
+
+  <style>
+    dialog {
+      border: 1px solid rgba(0, 0, 0, 0.3);
+      border-radius: 6px;
+      box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+    }
+  </style>
 </header>
 
 <section class="main-content__body main-content__body--flush">
+
+  <dialog class="mdl-dialog">
+    <h4 class="mdl-dialog__title">
+      Select which outing and date that has been completed:
+    </h4>
+    <div class="mdl-dialog__content">
+      <br/>
+      <div>
+        <label>Outing</label>
+        <%= collection_select(:outing, :id, Outing.all.order(start_date: :desc), :id, :name, { prompt: true }, { id: "outing_select" }) %>
+        <%#= collection_select(:outing, :id, Outing.where("end_date >= ?", DateTime.now).order(start_date: :desc), :id, :name, { prompt: true }, { id: "outing_select" }) %>
+      </div>
+      <br/>
+      <div id="outing_dates_div" style="display: none;">
+        <label>Date</label>
+        <select id="outing_dates_select"></select>
+        <br/>
+        <p>
+          Teams will then be generated for the next day.
+        </p>
+      </div>
+      <br/>
+    </div>
+    <div class="mdl-dialog__actions">
+      <button type="button" class="button" id="generate_teams_button">Generate Teams</button>
+      <button type="button" class="button close">Cancel</button>
+    </div>
+  </dialog>
+
   <%= render(
     "collection",
     collection_presenter: page,

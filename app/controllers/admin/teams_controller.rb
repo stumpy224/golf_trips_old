@@ -15,7 +15,7 @@ module Admin
         redirect_to(
             [namespace, resource],
             notice: translate_with_resource("create.success"),
-            )
+        )
       else
         render :new, locals: {
             page: Administrate::Page::Form.new(dashboard, resource),
@@ -35,7 +35,7 @@ module Admin
       if params[:order]
         resources = order.apply(resources)
       else
-        resources = resources.order(:team_date, :team_number, :rank_letter)
+        resources = resources.order("team_date desc", :team_number, :rank_letter)
       end
 
       resources = resources.page(params[:page]).per(records_per_page)
@@ -45,13 +45,14 @@ module Admin
           resources: resources,
           search_term: search_term,
           page: page,
+          show_search_bar: false,
           show_search_bar: show_search_bar?,
       }
     end
 
     def update
-      team = Team.find(params[:id])
       total_points = 0
+      team = Team.find(params[:id])
 
       params[:team][:scores].each do |score|
         par = score[:par].to_i
@@ -70,6 +71,26 @@ module Admin
       redirect_to admin_teams_path
     end
 
+    def generate
+      teams_by_date = get_teams_by_date_ordered_by_points(params[:id], params[:team_date])
+
+      number_of_groups = (teams_by_date.size / 4.to_f).ceil
+
+      # A players
+      create_players(teams_by_date.first(number_of_groups), "A")
+
+      # B players
+      create_players(teams_by_date.slice(number_of_groups, number_of_groups).reverse, "B")
+
+      # C players
+      create_players(teams_by_date.slice(number_of_groups * 2, number_of_groups), "C")
+
+      # D players
+      create_players(teams_by_date.slice(number_of_groups * 3, (teams_by_date.size - number_of_groups * 3)).reverse, "D")
+
+      flash[:notice] = "Teams generated for #{(params[:team_date].to_date + 1).strftime("%a %b %d, %Y")}"
+    end
+
     private
 
     def team_params
@@ -77,7 +98,25 @@ module Admin
     end
 
     def score_needs_updated?(existing_scores, score)
-      !existing_scores.any? { |existing_score| existing_score.id == score[:id] && existing_score.strokes == score[:strokes] }
+      !existing_scores.any? {|existing_score| existing_score.id == score[:id] && existing_score.strokes == score[:strokes]}
+    end
+
+    def create_players(players, rank_letter)
+      players.each.with_index do |team, index|
+        team.rank_letter = rank_letter
+        team.rank_number = rank_letter == "B" || rank_letter == "D" ? (players.size - index) : (index + 1)
+        team.team_number = index + 1
+
+        create_team_for_tomorrow_and_scores(team)
+      end
+    end
+
+    def create_team_for_tomorrow_and_scores(team)
+      next_day_team = Team.create(outing_golfer_id: team.outing_golfer_id, team_number: team.team_number, rank_number: team.rank_number, rank_letter: team.rank_letter, points_expected: team.points_actual, team_date: team.team_date + 1)
+
+      next_day_team.outing_golfer.outing.course.holes.each do |hole|
+        Score.create(team_id: next_day_team.id, hole_id: hole.id)
+      end
     end
   end
 end

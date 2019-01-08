@@ -50,5 +50,11 @@ module Admin
           show_search_bar: show_search_bar?,
       }
     end
+
+    def get_dates
+      @outing = Outing.find(params[:id])
+      @outing_dates = (@outing.start_date..@outing.end_date - 1).to_a
+      render json: @outing_dates
+    end
   end
 end
