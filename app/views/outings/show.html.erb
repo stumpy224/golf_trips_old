@@ -3,19 +3,14 @@
 
   <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
     <div class="mdl-tabs__tab-bar">
-      <a href="#tab-for-golfers" class="mdl-tabs__tab is-active">
-        Golfers
-      </a>
-      <a href="#tab-for-lodging" class="mdl-tabs__tab">
-        Lodging
-      </a>
+      <a href="#tab-for-golfers" class="mdl-tabs__tab is-active">Golfers</a>
+      <a href="#tab-for-lodging" class="mdl-tabs__tab">Lodging</a>
     </div>
     <div class="mdl-tabs__tab-bar">
       <% @outing.get_dates.each do |outing_date| %>
-        <a href="#tab-for-<%= outing_date %>" class="mdl-tabs__tab">
-          <%= outing_date.strftime("%a") %>
-        </a>
+        <a href="#tab-for-<%= outing_date %>" class="mdl-tabs__tab"><%= outing_date.strftime("%a") %></a>
       <% end %>
+      <a href="#tab-for-overall" class="mdl-tabs__tab">Overall</a>
     </div>
 
     <div class="mdl-tabs__panel is-active" id="tab-for-golfers">
@@ -69,38 +64,85 @@
     </div>
 
     <% @outing.get_dates.each do |outing_date| %>
-      <% teams = get_teams_placing_by_date(@outing.id, outing_date) %>
-
       <div class="mdl-tabs__panel" id="tab-for-<%= outing_date %>">
         <div class="mdl-grid center-items">
-          <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
-            <thead>
-            <tr>
-              <th>Rank</th>
-              <th>Team</th>
-              <th>Expected Pts</th>
-              <th>Actual Pts</th>
-              <th>+/-</th>
-            </tr>
-            </thead>
-            <tbody>
-            <% teams.each.with_index do |team, index| %>
-              <% points_color = team.team_points_plus_minus.nil? ? '' : (team.team_points_plus_minus > 0 ? 'green' : (team.team_points_plus_minus < 0 ? 'red' : '')) %>
+          <% teams_ranking = get_teams_ranking_by_date(@outing.id, outing_date) %>
+
+          <% if teams_ranking.size > 0 %>
+            <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+              <thead>
               <tr>
-                <td class="center-text"><%= index + 1 %></td>
-                <td class="center-text"><%= team.team_number %></td>
-                <td><%= team.team_points_expected %></td>
-                <td><%= team.team_points_actual %></td>
-                <%= content_tag(:td, style: "color: #{points_color}") do %>
-                  <%= "#{'+' if team.team_points_plus_minus.to_i > 0}#{team.team_points_plus_minus}" %>
-                <% end %>
+                <th>Rank</th>
+                <th>Team</th>
+                <th>Expected Pts</th>
+                <th>Actual Pts</th>
+                <th>+/-</th>
               </tr>
-            <% end %>
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+              <% teams_ranking.each.with_index do |team, index| %>
+                <tr>
+                  <td class="center-text"><%= index + 1 %></td>
+                  <td class="center-text"><%= team.team_number %></td>
+                  <td><%= team.team_points_expected %></td>
+                  <td><%= team.team_points_actual %></td>
+                  <%= content_tag(:td, style: "color: #{get_points_plus_minus_color(team.team_points_plus_minus)}") do %>
+                    <%= "#{'+' if team.team_points_plus_minus.to_i > 0}#{team.team_points_plus_minus}" %>
+                  <% end %>
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
+          <% else %>
+            <h6>No teams for <%= outing_date.strftime("%A") %> yet, please check back later.</h6>
+          <% end %>
         </div>
       </div>
     <% end %>
+
+    <div class="mdl-tabs__panel" id="tab-for-overall">
+      <div class="mdl-grid center-items">
+        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+          <thead>
+          <tr>
+            <th>Rank</th>
+            <th class="mdl-data-table__cell--non-numeric">Golfer</th>
+            <% @outing.get_dates.each do |outing_date| %>
+              <th><%= outing_date.strftime("%a") %></th>
+            <% end %>
+            <th>Totals</th>
+            <th>Averages</th>
+            <th>+/-</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @teams_overall.each.with_index do |team, index| %>
+            <tr>
+              <td class="center-text"><%= index + 1 %></td>
+              <td class="mdl-data-table__cell--non-numeric"><%= team.golfer_name %></td>
+
+              <% teams_by_golfer = get_teams_by_golfer(team.outing_golfer_id) %>
+              <% (0..@outing.get_dates.size - 1).each do |index| %>
+                <% if teams_by_golfer[index].nil? || teams_by_golfer[index].points_actual.nil? %>
+                  <td>-</td>
+                <% else %>
+                  <% daily_points = teams_by_golfer[index].scores.sum("scores.points") %>
+                  <% daily_strokes = teams_by_golfer[index].scores.sum("scores.strokes") %>
+                  <td><%= "#{daily_points} / #{daily_strokes}" %></td>
+                <% end %>
+              <% end %>
+
+              <td><%= "#{team.total_points_actual} / #{team.total_strokes}" %></td>
+              <td><%= "#{team.avg_points_actual} / #{team.avg_strokes}" %></td>
+              <%= content_tag(:td, style: "color: #{get_points_plus_minus_color(team.total_points_plus_minus)}") do %>
+                <%= "#{'+' if team.total_points_plus_minus.to_i > 0}#{team.total_points_plus_minus}" %>
+              <% end %>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
   </div>
 

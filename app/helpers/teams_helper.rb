@@ -1,4 +1,12 @@
 module TeamsHelper
+  def get_points_plus_minus_color(points_plus_minus)
+    points_plus_minus.nil? ? '' : (points_plus_minus > 0 ? 'green' : (points_plus_minus < 0 ? 'red' : ''))
+  end
+
+  def get_teams_by_golfer(outing_golfer_id)
+    Team.where(outing_golfer_id: outing_golfer_id).includes(:scores).references(:scores)
+  end
+
   def get_teams_by_date_ordered_by_points(outing_id, team_date)
     sql = "select teams.*,
        golfers.first_name,
@@ -89,7 +97,7 @@ order by teams.points_actual desc, HDCP_1_PTS desc, HDCP_2_PTS desc, HDCP_3_PTS 
     Team.find_by_sql([sql, {outing_id: outing_id, team_date: team_date}])
   end
 
-  def get_teams_placing_by_date(outing_id, team_date)
+  def get_teams_ranking_by_date(outing_id, team_date)
     sql = "select teams.*,
        sum(teams.points_expected)                                                       AS team_points_expected,
        sum(teams.points_actual)                                                         AS team_points_actual,
@@ -180,5 +188,35 @@ order by team_points_plus_minus desc, HDCP_1_PTS desc, HDCP_2_PTS desc, HDCP_3_P
          HDCP_17_PTS desc, HDCP_18_PTS desc"
 
     Team.find_by_sql([sql, {outing_id: outing_id, team_date: team_date}])
+  end
+
+  def get_overall_stats_by_outing(outing_id)
+    sql = "select teams.*,
+       golfers.first_name || ' ' || golfers.last_name                                                          AS golfer_name,
+       sum(teams.points_expected)                                                                              AS total_points_expected,
+       sum(teams.points_actual)                                                                                AS total_points_actual,
+       sum(teams.points_plus_minus)                                                                            AS total_points_plus_minus,
+       avg(teams.points_actual)                                                                                AS avg_points_actual,
+       (select sum(scores.strokes)
+        from scores
+        where scores.team_id in (select id
+                                 from teams t2
+                                 where t2.outing_golfer_id = teams.outing_golfer_id))                          AS total_strokes,
+       (select sum(scores.strokes)
+        from scores
+        where scores.team_id in (select id
+                                 from teams t2
+                                 where t2.outing_golfer_id = teams.outing_golfer_id)) /
+       count(teams.team_date)                                                                                  AS avg_strokes
+from teams
+       join outing_golfers on teams.outing_golfer_id = outing_golfers.id
+       join outings on outing_golfers.outing_id = outings.id
+       join golfers on outing_golfers.golfer_id = golfers.id
+where outings.id = :outing_id
+  and teams.points_actual is not null
+group by teams.outing_golfer_id
+order by total_points_actual desc, total_strokes"
+
+    Team.find_by_sql([sql, {outing_id: outing_id}])
   end
 end
