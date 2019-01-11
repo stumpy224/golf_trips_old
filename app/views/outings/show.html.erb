@@ -133,7 +133,7 @@
               <% end %>
 
               <td><%= "#{team.total_points_actual} / #{team.total_strokes}" %></td>
-              <td><%= "#{team.avg_points_actual} / #{team.avg_strokes}" %></td>
+              <td><%= "#{team.avg_points_actual} / #{team.total_strokes/team.outing_days_counted.to_f}" %></td>
               <%= content_tag(:td, style: "color: #{get_points_plus_minus_color(team.total_points_plus_minus)}") do %>
                 <%= "#{'+' if team.total_points_plus_minus.to_i > 0}#{team.total_points_plus_minus}" %>
               <% end %>
