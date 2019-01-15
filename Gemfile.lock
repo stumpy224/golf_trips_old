@@ -117,8 +117,6 @@ GEM
       paint (>= 0.9, < 3.0)
       unicode-display_width (~> 1.1)
     ffi (1.9.25)
-    font-awesome-rails (4.7.0.4)
-      railties (>= 3.2, < 6.0)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
     hirb (0.7.3)
@@ -338,7 +336,6 @@ DEPENDENCIES
   capybara (>= 2.15)
   chromedriver-helper
   coffee-rails (~> 4.2)
-  font-awesome-rails
   irbtools
   irbtools-more
   jbuilder (~> 2.5)
