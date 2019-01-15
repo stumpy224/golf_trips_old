@@ -1,4 +1,4 @@
-<% if object.errors.any? %>
+<% if !object.nil? && object.errors.any? %>
   <div class="mdl-grid center-items">
     <div class="mdl-card">
       <div class="mdl-card__title mdl-color--red-600 mdl-color-text--white">

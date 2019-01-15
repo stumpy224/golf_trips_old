@@ -3,8 +3,24 @@ module TeamsHelper
     points_plus_minus.nil? ? '' : (points_plus_minus > 0 ? 'green' : (points_plus_minus < 0 ? 'red' : ''))
   end
 
+  def get_strokes_class(points)
+    if points == 1
+      return "bogey"
+    elsif points == 3
+      return "birdie"
+    elsif points == 4
+      return "eagle"
+    elsif points == 0
+      return "double-bogey"
+    end
+  end
+
   def get_teams_by_golfer(outing_golfer_id)
     Team.where(outing_golfer_id: outing_golfer_id).includes(:scores).references(:scores)
+  end
+
+  def get_golfers_by_team_and_date(team_number, team_date)
+    Team.where(team_number: team_number, team_date: team_date).includes(scores: :hole).references(scores: :hole).order(:rank_letter)
   end
 
   def get_teams_by_date_ordered_by_points(outing_id, team_date)
@@ -210,7 +226,7 @@ from teams
 where outings.id = :outing_id
   and teams.points_actual is not null
 group by teams.outing_golfer_id
-order by total_points_actual desc, total_strokes"
+order by total_points_actual desc, avg_points_actual desc, total_strokes"
 
     Team.find_by_sql([sql, {outing_id: outing_id}])
   end

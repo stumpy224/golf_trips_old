@@ -10,15 +10,19 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require jquery
+//= require popper.min
+//= require bootstrap.min
+//= require mdb
+//= require datatables.min
 //= require rails-ujs
 //= require activestorage
-//= require jquery
 //= require turbolinks
 //= require_tree .
 
 $(document).ready(function () {
     enableBlockUI();
-    upgradeDomOnTurboLinksLoad();
+    enablePopoversAndTooltips();
 });
 
 function enableBlockUI() {
@@ -38,8 +42,13 @@ function enableBlockUI() {
     });
 }
 
-function upgradeDomOnTurboLinksLoad() {
-    document.addEventListener('turbolinks:load', function() {
-        componentHandler.upgradeDom();
+function enablePopoversAndTooltips() {
+    $('[data-toggle="popover"]').popover({
+        html: true,
+        // trigger: "focus"
+    });
+
+    $('[data-toggle="tooltip"]').tooltip({
+        html: true
     });
 }

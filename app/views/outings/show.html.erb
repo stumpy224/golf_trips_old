@@ -1,149 +1,276 @@
-<div class="mdl-grid center-items">
-  <h3><%= @outing.name %></h3>
+<div class="row justify-content-center">
+  <div class="col-sm-4 col-md-10">
+    <div class="card">
+      <h3 class="card-title text-center pt-2">
+        <%= @outing.name %>
+      </h3>
 
-  <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
-    <div class="mdl-tabs__tab-bar">
-      <a href="#tab-for-golfers" class="mdl-tabs__tab is-active">Golfers</a>
-      <a href="#tab-for-lodging" class="mdl-tabs__tab">Lodging</a>
-    </div>
-    <div class="mdl-tabs__tab-bar">
-      <% @outing.get_dates.each do |outing_date| %>
-        <a href="#tab-for-<%= outing_date %>" class="mdl-tabs__tab"><%= outing_date.strftime("%a") %></a>
-      <% end %>
-      <a href="#tab-for-overall" class="mdl-tabs__tab">Overall</a>
-    </div>
-
-    <div class="mdl-tabs__panel is-active" id="tab-for-golfers">
-      <div class="mdl-grid center-items">
-        <h5><%= @outing_golfers.size %> Golfers</h5>
-      </div>
-      <div class="mdl-grid center-items">
-        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
-          <thead>
-          <tr>
-            <th class="mdl-data-table__cell--non-numeric">Name</th>
-            <th class="mdl-data-table__cell--non-numeric">Room</th>
-          </tr>
-          </thead>
-          <tbody>
-          <% @outing_golfers.each do |outing_golfer| %>
-            <tr>
-              <td class="mdl-data-table__cell--non-numeric"><%= "#{outing_golfer.golfer.first_name} #{outing_golfer.golfer.last_name}" %></td>
-              <td class="mdl-data-table__cell--non-numeric"><%= outing_golfer.lodging.room if !outing_golfer.lodging.nil? %></td>
-            </tr>
+      <div class="card-body outing-details-card">
+        <ul class="nav nav-pills nav-fill">
+          <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" role="tab" href="#tab-for-golfers">
+              <i class="fas fa-users fa-2x pl-1"></i><br/>Golfers
+            </a>
+          </li>
+          <% if @outing.get_dates.size > 1 %>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-calendar-week fa-2x pl-1"></i><br/>Days
+              </a>
+              <div class="dropdown-menu">
+                <% @outing.get_dates.each do |outing_date| %>
+                  <a class="dropdown-item" data-toggle="tab" role="tab" href="#tab-for-<%= outing_date %>">
+                    <%= outing_date.strftime("%A, %b %d") %>
+                  </a>
+                <% end %>
+              </div>
+            </li>
+          <% else %>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" role="tab" href="#tab-for-<%= @outing.start_date %>">
+                <i class="fas fa-calendar-day fa-2x pl-1"></i><br/><%= @outing.start_date.strftime("%a") %>
+              </a>
+            </li>
           <% end %>
-          </tbody>
-        </table>
-      </div>
-    </div>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" role="tab" href="#tab-for-overall">
+              <i class="fas fa-list-ol fa-2x pl-1"></i><br/>Overall
+            </a>
+          </li>
+        </ul>
 
-    <div class="mdl-tabs__panel" id="tab-for-lodging">
-      <div class="mdl-grid center-items">
-        <% @outing_golfers_lodgings.each do |outing_golfer| %>
-          <div class="mdl-card mdl-shadow--6dp lodging-card">
-            <div class="mdl-card__title">
-              <div class="mdl-card__title-text">
-                <%= "#{outing_golfer.lodging.lodging_type.name} #{outing_golfer.lodging.room}" if !outing_golfer.lodging.nil? %>
+        <div class="tab-content">
+          <div class="tab-pane active" id="tab-for-golfers" role="tabpanel">
+            <h5 class="text-center"><%= @outing_golfers.size %> Golfers</h5>
+            <div class="row d-flex justify-content-center">
+              <div class="col-md-6">
+                <table id="golfersTable" class="table table-hover">
+                  <thead>
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Room</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <% @outing_golfers.each do |outing_golfer| %>
+                    <tr>
+                      <td><%= "#{outing_golfer.golfer.full_name_with_nickname}" %></td>
+                      <td><%= outing_golfer.lodging.room if !outing_golfer.lodging.nil? %></td>
+                    </tr>
+                  <% end %>
+                  </tbody>
+                </table>
               </div>
             </div>
+          </div> <!-- Golfers tab -->
 
-            <div class="mdl-card__supporting-text">
-              <ul class="mdl-list">
-                <% @outing_golfers.where("lodging_id = ?", outing_golfer.lodging_id).order("golfers.last_name").each do |outing_golfer_lodging| %>
-                  <li class="mdl-list__item">
-                    <span class="mdl-list__item-primary-content">
-                      <%= "#{outing_golfer_lodging.golfer.first_name} #{outing_golfer_lodging.golfer.last_name}" %>
-                    </span>
-                  </li>
-                <% end %>
-              </ul>
-            </div>
-          </div>
-        <% end %>
-      </div>
-    </div>
+          <% @outing.get_dates.each do |outing_date| %>
+            <div class="tab-pane" id="tab-for-<%= outing_date %>" role="tabpanel">
+              <h5 class="text-center"><%= outing_date.strftime("%A, %b %d") %></h5>
+              <% teams_ranking = get_teams_ranking_by_date(@outing.id, outing_date) %>
+              <div class="row d-flex justify-content-center">
+                <div class="col-md-9">
+                  <% if teams_ranking.size > 0 %>
+                    <table class="table table-sm">
+                      <thead>
+                      <tr>
+                        <th class="text-center"></th>
+                        <th class="text-center">Rank</th>
+                        <th class="text-center">Team</th>
+                        <th class="text-center">Expected</th>
+                        <th class="text-center">Actual</th>
+                        <th class="text-right">+/-</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <% teams_ranking.each.with_index do |team, index| %>
+                        <tr class="team-row">
+                          <td class="text-center">
+                            <a class="expansion-button" data-toggle="collapse" aria-expanded="false"
+                               href="#team_<%= team.team_number %>_on_<%= outing_date %>"
+                               aria-controls="team_<%= team.team_number %>_on_<%= outing_date %>">
+                              <i class="fas fa-angle-right pl-sm-1"></i>
+                            </a>
+                          </td>
+                          <td class="text-center"><%= index + 1 %></td>
+                          <td class="text-center"><%= team.team_number %></td>
+                          <td class="text-center"><%= team.team_points_expected %></td>
+                          <td class="text-center"><%= team.team_points_actual %></td>
+                          <td class="text-right" style="color: <%= get_points_plus_minus_color(team.team_points_plus_minus) %>">
+                            <%= "#{'+' if team.team_points_plus_minus.to_i > 0}#{team.team_points_plus_minus}" %>
+                          </td>
+                        </tr>
+                        <!-- Collapsible element for team -->
+                        <tr class="collapse golfer-table-collapse border border-top-0 border-grey" role="row" id="team_<%= team.team_number %>_on_<%= outing_date %>">
+                          <td colspan="6">
+                            <h6 class="text-center"><%= "#{(index + 1).ordinalize} Place: Team #{team.team_number}" %></h6>
+                            <table class="table table-sm">
+                              <thead class="black white-text">
+                              <tr>
+                                <th></th>
+                                <th>Golfer</th>
+                                <th class="text-center">Rank</th>
+                                <th class="text-center">Pts/Str</th>
+                                <th class="text-right">+/-</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              <% golfer_team_records = get_golfers_by_team_and_date(team.team_number, outing_date) %>
+                              <% golfer_team_records.each do |golfer_team_record| %>
+                                <tr>
+                                  <td>
+                                    <a class="expansion-button" data-toggle="collapse" aria-expanded="false"
+                                       href="#team_<%= golfer_team_record.id %>"
+                                       aria-controls="team_<%= golfer_team_record.id %>">
+                                      <i class="fas fa-angle-right pl-sm-1 pr-1"></i>
+                                    </a>
+                                  </td>
+                                  <td width="50%">
+                                    <%= "#{golfer_team_record.outing_golfer.golfer.first_name} #{golfer_team_record.outing_golfer.golfer.last_name}" %>
+                                  </td>
+                                  <td class="text-center">
+                                    <%= golfer_team_record.rank_letter %>
+                                  </td>
+                                  <td class="text-center">
+                                    <%= "#{golfer_team_record.points_actual}/#{golfer_team_record.scores.sum(:strokes)}" %>
+                                  </td>
+                                  <td class="text-right" style="color: <%= get_points_plus_minus_color(golfer_team_record.points_plus_minus) %>">
+                                    <%= "#{'+' if golfer_team_record.points_plus_minus.to_i > 0}#{golfer_team_record.points_plus_minus}" %>
+                                  </td>
+                                </tr>
+                                <!-- Collapsible element for golfers' scores -->
+                                <tr class="collapse golfer-scores-table-collapse" role="row" id="team_<%= golfer_team_record.id %>">
+                                  <td colspan="5">
+                                    <table class="table table-borderless table-striped">
+                                      <tbody>
+                                      <tr class="col-12">
+                                        <% (1..9).each do |front_nine_hole| %>
+                                          <td class="text-center">
+                                            <%= front_nine_hole %>
+                                          </td>
+                                        <% end %>
+                                        <td class="text-center border-left border-dark" style="font-weight: bold;">
+                                          OUT
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <% golfer_team_record.scores.each.with_index do |score, index| %>
+                                          <% if index < 9 %>
+                                            <td class="text-center">
+                                              <span class="<%= get_strokes_class(score.points) %>">
+                                                <%= score.strokes %>
+                                              </span>
+                                            </td>
+                                          <% end %>
+                                        <% end %>
+                                        <% score_ids = golfer_team_record.scores.limit(9).pluck("scores.id") %>
+                                        <% score = Score.where(id: score_ids) %>
+                                        <td class="text-center border-left border-dark">
+                                          <%= "#{score.sum(:points)}/#{score.sum(:strokes)}" %>
+                                        </td>
+                                      </tr>
 
-    <% @outing.get_dates.each do |outing_date| %>
-      <div class="mdl-tabs__panel" id="tab-for-<%= outing_date %>">
-        <div class="mdl-grid center-items">
-          <% teams_ranking = get_teams_ranking_by_date(@outing.id, outing_date) %>
-
-          <% if teams_ranking.size > 0 %>
-            <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
-              <thead>
-              <tr>
-                <th>Rank</th>
-                <th>Team</th>
-                <th>Expected Pts</th>
-                <th>Actual Pts</th>
-                <th>+/-</th>
-              </tr>
-              </thead>
-              <tbody>
-              <% teams_ranking.each.with_index do |team, index| %>
-                <tr>
-                  <td class="center-text"><%= index + 1 %></td>
-                  <td class="center-text"><%= team.team_number %></td>
-                  <td><%= team.team_points_expected %></td>
-                  <td><%= team.team_points_actual %></td>
-                  <%= content_tag(:td, style: "color: #{get_points_plus_minus_color(team.team_points_plus_minus)}") do %>
-                    <%= "#{'+' if team.team_points_plus_minus.to_i > 0}#{team.team_points_plus_minus}" %>
+                                      <tr>
+                                        <% (10..18).each do |back_nine_hole| %>
+                                          <td class="text-center">
+                                            <%= back_nine_hole %>
+                                          </td>
+                                        <% end %>
+                                        <td class="text-center border-left border-dark" style="font-weight: bold;">
+                                          IN
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <% golfer_team_record.scores.each.with_index do |score, index| %>
+                                          <% if index >= 9 %>
+                                            <td class="text-center">
+                                              <span class="<%= get_strokes_class(score.points) %>">
+                                                <%= score.strokes %>
+                                              </span>
+                                            </td>
+                                          <% end %>
+                                        <% end %>
+                                        <% score_ids = golfer_team_record.scores.offset(9).limit(9).pluck("scores.id") %>
+                                        <% score = Score.where(id: score_ids) %>
+                                        <td class="text-center border-left border-dark">
+                                          <%= "#{score.sum(:points)}/#{score.sum(:strokes)}" %>
+                                        </td>
+                                      </tr>
+                                      </tbody>
+                                    </table>
+                                  </td>
+                                </tr>
+                              <% end %>
+                              </tbody>
+                            </table>
+                          </td>
+                        </tr>
+                      <% end %>
+                      </tbody>
+                    </table>
+                  <% else %>
+                    <h6>Teams have not been established yet, please check back later.</h6>
                   <% end %>
-                </tr>
-              <% end %>
-              </tbody>
-            </table>
-          <% else %>
-            <h6>No teams for <%= outing_date.strftime("%A") %> yet, please check back later.</h6>
+                </div>
+              </div>
+            </div> <!-- Outing date tab -->
           <% end %>
-        </div>
-      </div>
-    <% end %>
 
-    <div class="mdl-tabs__panel" id="tab-for-overall">
-      <div class="mdl-grid center-items">
-        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
-          <thead>
-          <tr>
-            <th>Rank</th>
-            <th class="mdl-data-table__cell--non-numeric">Golfer</th>
-            <% @outing.get_dates.each do |outing_date| %>
-              <th><%= outing_date.strftime("%a") %></th>
-            <% end %>
-            <th>Totals</th>
-            <th>Averages</th>
-            <th>+/-</th>
-          </tr>
-          </thead>
-          <tbody>
-          <% @teams_overall.each.with_index do |team, index| %>
-            <tr>
-              <td class="center-text"><%= index + 1 %></td>
-              <td class="mdl-data-table__cell--non-numeric"><%= team.golfer_name %></td>
+          <div class="tab-pane" id="tab-for-overall" role="tabpanel">
+            <h5 class="text-center">Overall Stats</h5>
+            <div class="row d-flex justify-content-center">
+              <div class="col-md-10">
+                <% if @teams_overall.size > 0 %>
+                  <table id="overallTable" class="table table-sm table-hover table-responsive">
+                    <thead>
+                    <tr>
+                      <th>Rank</th>
+                      <th>Golfer</th>
+                      <% @outing.get_dates.each do |outing_date| %>
+                        <th><%= outing_date.strftime("%a") %></th>
+                      <% end %>
+                      <th>Totals</th>
+                      <th>Averages</th>
+                      <th class="text-right">+/-</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% @teams_overall.each.with_index do |team, index| %>
+                      <tr>
+                        <td class="text-center"><%= index + 1 %></td>
+                        <td><%= team.golfer_name %></td>
 
-              <% teams_by_golfer = get_teams_by_golfer(team.outing_golfer_id) %>
-              <% (0..@outing.get_dates.size - 1).each do |index| %>
-                <% if teams_by_golfer[index].nil? || teams_by_golfer[index].points_actual.nil? %>
-                  <td>-</td>
+                        <% teams_by_golfer = get_teams_by_golfer(team.outing_golfer_id) %>
+                        <% (0..@outing.get_dates.size - 1).each do |index| %>
+                          <% if teams_by_golfer[index].nil? || teams_by_golfer[index].points_actual.nil? %>
+                            <td>-</td>
+                          <% else %>
+                            <% daily_points = teams_by_golfer[index].scores.sum("scores.points") %>
+                            <% daily_strokes = teams_by_golfer[index].scores.sum("scores.strokes") %>
+                            <td><%= "#{sprintf("%02i", daily_points)}/#{daily_strokes}" %></td>
+                          <% end %>
+                        <% end %>
+
+                        <td><%= "#{sprintf("%02i", team.total_points_actual)}/#{team.total_strokes}" %></td>
+                        <td>
+                          <%= "#{(team.total_points_actual/team.outing_days_counted.to_f).to_s.rjust(4, "0")}/#{(team.total_strokes/team.outing_days_counted.to_f).round(2)}" %>
+                        </td>
+                        <td class="text-center" style="color: <%= get_points_plus_minus_color(team.total_points_plus_minus) %>">
+                          <%= "#{'+' if team.total_points_plus_minus.to_i > 0}#{team.total_points_plus_minus}" %>
+                        </td>
+                      </tr>
+                    <% end %>
+                    </tbody>
+                  </table>
                 <% else %>
-                  <% daily_points = teams_by_golfer[index].scores.sum("scores.points") %>
-                  <% daily_strokes = teams_by_golfer[index].scores.sum("scores.strokes") %>
-                  <td><%= "#{daily_points} / #{daily_strokes}" %></td>
+                  <h6 class="text-center">No stats yet, please check back later.</h6>
                 <% end %>
-              <% end %>
+              </div>
+            </div>
+          </div> <!-- Overall tab -->
+        </div> <!-- tab-content -->
 
-              <td><%= "#{team.total_points_actual} / #{team.total_strokes}" %></td>
-              <td><%= "#{team.avg_points_actual} / #{team.total_strokes/team.outing_days_counted.to_f}" %></td>
-              <%= content_tag(:td, style: "color: #{get_points_plus_minus_color(team.total_points_plus_minus)}") do %>
-                <%= "#{'+' if team.total_points_plus_minus.to_i > 0}#{team.total_points_plus_minus}" %>
-              <% end %>
-            </tr>
-          <% end %>
-          </tbody>
-        </table>
       </div>
     </div>
-
   </div>
-
 </div>

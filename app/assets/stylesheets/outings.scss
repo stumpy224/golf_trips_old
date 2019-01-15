@@ -2,7 +2,52 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.lodging-card {
-  height: 340px;
-  width: 340px;
+.outing-details-card {
+  padding: 0.5em !important;
+  padding-bottom: 0.5em !important;
+}
+
+div.tab-pane {
+  padding-top: 1em;
+}
+
+.eagle {
+  background: black;
+  border-radius: 0.8em;
+  -moz-border-radius: 0.8em;
+  -webkit-border-radius: 0.8em;
+  color: #fff;
+  display: inline-block;
+  font-weight: bold;
+  line-height: 1.6em;
+  text-align: center;
+  width: 1.6em;
+}
+
+.birdie {
+  @extend .eagle;
+  background: white;
+  border: solid black 1px;
+  color: black;
+  margin-top: -1em;
+}
+
+.par {
+  text-decoration: underline;
+}
+
+.bogey {
+  border: 1px solid;
+  padding: 3px 5px 3px 5px;
+}
+
+.double-bogey {
+  text-decoration-line: underline;
+  text-decoration-style: double;
+  //border-style: double solid;
+  //padding: 3px 5px 3px 5px;
+}
+
+.table {
+  margin-bottom: 0 !important;
 }

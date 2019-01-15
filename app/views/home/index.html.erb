@@ -1,54 +1,47 @@
 <% if logged_in? %>
-    <% @outings.each do |outing| %>
-  <div class="mdl-grid center-items">
-      <div class="mdl-cell mdl-cell--5-col-desktop mdl-cell--4-col-phone">
-        <div class="mdl-card mdl-shadow--6dp outing-card">
-          <div class="mdl-card__title">
-            <div class="mdl-card__title-text" style="padding-right: 1em;">
+  <% @outings.each do |outing| %>
+    <div class="row justify-content-center">
+      <div class="col-sm-4 col-md-7">
+        <div class="card">
+          <img class="<%= outing.course.name.include?('Peninsula') ? 'peninsula-image-background' : 'generic-image-background' %>" height="300" width="100%">
+          <div class="card-body">
+            <h5 class="card-title">
               <%= outing.name %>
-            </div>
+            </h5>
 
-            <div class="mdl-layout-spacer"></div>
-
-            <div class="mdl-card__subtitle-text" style="margin-right: 2em;">
+            <div class="card-subtitle mb-2 text-muted">
               <div>
                 <%= outing.course.name %>
               </div>
-              <div>
+              <small>
                 <%= outing.course.address %>
+                <a href="https://maps.google.com/?q=<%= outing.course.address %>" target="_blank">
+                  <i class="fas fa-map-marker"></i>
+                </a>
+              </small>
+            </div>
+
+            <div class="card-text">
+              <div>
+                <%= outing.start_date.strftime("%a") %> (<%= outing.start_date.strftime("%m/%d/%y") %>)
+                through
+                <%= outing.end_date.strftime("%a") %> (<%= outing.end_date.strftime("%m/%d/%y") %>)
+              </div>
+              <div>
+                <%= outing.outing_golfers.size %> Golfers
               </div>
             </div>
-          </div>
 
-          <div class="mdl-card__media">
-            <img class="<%= outing.course.name.include?('Peninsula') ? 'peninsula-image-background' : 'generic-image-background' %>" height="300" width="100%">
-          </div>
-
-          <div class="mdl-card__supporting-text">
-            <div>
-              <%= outing.start_date.strftime("%a") %> (<%= outing.start_date.strftime("%m/%d/%y") %>)
-              through
-              <%= outing.end_date.strftime("%a") %> (<%= outing.end_date.strftime("%m/%d/%y") %>)
+            <div class="text-right">
+              <%= link_to outing_path(outing.id), class: "btn btn-primary" do %>
+                View Outing <i class="fas fa-angle-double-right"></i>
+              <% end %>
             </div>
-            <div>
-              <%= outing.outing_golfers.size %> Golfers
-            </div>
-          </div>
-
-          <div class="mdl-grid mdl-card__actions mdl-card--border">
-            <div class="mdl-layout-spacer"></div>
-            <%= link_to "View Outing", outing_path(outing.id), class: "mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" %>
-          </div>
-
-          <div class="mdl-card__menu">
-            <a class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" href="https://maps.google.com/?q=<%= outing.course.address %>" target="_blank">
-              <i class="material-icons">place</i>
-            </a>
           </div>
         </div>
       </div>
-  </div>
-    <% end %>
+    </div>
+  <% end %>
 <% else %>
   <%= render partial: 'common/login' %>
 <% end %>

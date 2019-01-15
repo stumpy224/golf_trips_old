@@ -1,52 +1,68 @@
 <% provide(:title, title) %>
 
-<div class="mdl-grid center-items">
-  <div class="mdl-card mdl-shadow--6dp">
+<div class="row justify-content-center">
+  <div class="col-sm-4 col-md-7">
+    <div class="card">
+      <div class="container">
+        <h2 class="card-title text-center">
+          <i class="fas fa-user-circle text-primary"></i> My Account
+        </h2>
+        <div class="card-body">
+          <%= form_with model: @user, local: true do |form| %>
+            <%= render partial: 'common/error_messages', locals: { object: @user } %>
 
-    <div class="mdl-card__title mdl-color--primary mdl-color-text--white">
-      <%= content_tag :div, heading, class: "mdl-card__title-text" %>
+            <div class="form-group">
+              <%= form.label :first_name, class: "bmd-label-floating" %>
+              <%= form.text_field :first_name, class: "form-control", pattern: "[A-Z,a-z'-]*" %>
+  <!--            <small class="error form-text text-muted">Whoa, what kind of name is that?!</small>-->
+            </div>
+            <div class="form-group">
+              <%= form.label :last_name, class: "bmd-label-floating" %>
+              <%= form.text_field :last_name, class: "form-control", pattern: "[A-Z,a-z'-]*" %>
+            </div>
+            <div class="form-group">
+              <%= form.label :nickname, class: "bmd-label-floating" %>
+              <%= form.text_field :nickname, class: "form-control" %>
+              <small class="form-text text-muted">Optional</small>
+            </div>
+            <div class="form-group">
+              <%= form.label :email, class: "bmd-label-floating" %>
+              <%= form.text_field :email, class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= form.label :password, class: "bmd-label-floating" %>
+              <%= form.password_field :password, class: "form-control" %>
+              <small class="form-text text-muted">Minimum of 6 characters</small>
+            </div>
+            <div class="form-group">
+              <%= form.label :password_confirmation, class: "bmd-label-floating" %>
+              <%= form.password_field :password_confirmation, class: "form-control" %>
+              <small class="form-text text-muted">Minimum of 6 characters</small>
+            </div>
+
+            <div class="row justify-content-between">
+              <%= link_to root_path, class: "btn btn-link" do %>
+                <i class="fas fa-angle-double-left"></i> Back
+              <% end %>
+              <%= button_tag type: "submit", class: "btn btn-primary" do %>
+                <% if title.include?("Create") %>
+                  <i class="fas fa-user-plus"></i> Create
+                <% else %>
+                  <i class="fas fa-save"></i> Save
+                <% end %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+
+        <% if title.include?("Create") %>
+          <div class="card-footer">
+            <%= link_to login_path, class: "btn btn-light" do %>
+              <i class="fas fa-user-check"></i> Already registered?
+            <% end %>
+          </div>
+        <% end %>
+      </div>
     </div>
-
-    <%= form_with model: @user, local: true do |form| %>
-      <%= render partial: 'common/error_messages', locals: { object: @user } %>
-
-      <div class="mdl-card__supporting-text">
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <%= form.text_field :first_name, class: "mdl-textfield__input", pattern: "[A-Z,a-z'-]*" %>
-          <%= form.label :first_name, class: "mdl-textfield__label" %>
-          <span class="mdl-textfield__error">Whoa, what kind of name is that?!</span>
-        </div>
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <%= form.text_field :last_name, class: "mdl-textfield__input", pattern: "[A-Z,a-z'-]*" %>
-          <%= form.label :last_name, class: "mdl-textfield__label" %>
-          <span class="mdl-textfield__error">Whoa, what kind of name is that?!</span>
-        </div>
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <%= form.text_field :nickname, class: "mdl-textfield__input" %>
-          <%= form.label "Nickname (optional)", class: "mdl-textfield__label" %>
-        </div>
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <%= form.text_field :email, class: "mdl-textfield__input" %>
-          <%= form.label :email, class: "mdl-textfield__label" %>
-          <span class="mdl-textfield__error">Email is invalid</span>
-        </div>
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <%= form.text_field :password, class: "mdl-textfield__input", type: "password" %>
-          <%= form.label "Password (minimum 6 characters)", class: "mdl-textfield__label" %>
-        </div>
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <%= form.text_field :password_confirmation, class: "mdl-textfield__input", type: "password" %>
-          <%= form.label :password_confirmation, class: "mdl-textfield__label" %>
-        </div>
-        <%= form.submit title.include?("Create") ? "Create" : "Update", class: "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored mdl-color-text--white", style: "width: 100%;" %>
-      </div>
-    <% end %>
-
-    <% if title.include?("Create") %>
-      <div class="mdl-grid mdl-card__actions mdl-card--border">
-        <%= link_to "Already registered?", login_path, class: "mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" %>
-      </div>
-    <% end %>
-
   </div>
 </div>

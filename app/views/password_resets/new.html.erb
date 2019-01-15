@@ -1,23 +1,31 @@
 <% provide(:title, "Forgot Password") %>
 
-<div class="mdl-grid center-items">
-  <div class="mdl-card mdl-shadow--6dp">
-    <div class="mdl-card__title mdl-color--primary mdl-color-text--white">
-      <div class="mdl-card__title-text">Forgot password</div>
-    </div>
-    <%= form_with scope: :password_reset, url: password_resets_path, local: true do |form| %>
-      <div class="mdl-card__supporting-text">
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <%= form.text_field :email, class: "mdl-textfield__input" %>
-          <%= form.label :email, class: "mdl-textfield__label" %>
-          <span class="mdl-textfield__error">Email is invalid</span>
+<div class="row justify-content-center">
+  <div class="col-sm-4 col-md-7">
+    <div class="card">
+      <div class="container">
+        <h2 class="card-title text-center">
+          <i class="fas fa-user-lock text-primary"></i> Forgot Password
+        </h2>
+        <div class="card-body">
+          <%= form_with scope: :password_reset, url: password_resets_path, local: true do |form| %>
+            <div class="form-group">
+              <%= form.label :email, class: "bmd-label-floating" %>
+              <%= form.text_field :email, class: "form-control" %>
+              <!-- TODO: implement error message -->
+            </div>
+
+            <div class="row justify-content-between">
+              <%= link_to root_path, class: "btn btn-link" do %>
+                <i class="fas fa-ban"></i> Cancel
+              <% end %>
+              <%= button_tag type: "submit", class: "btn btn-primary" do %>
+                <i class="fas fa-paper-plane"></i> Submit
+              <% end %>
+            </div>
+          <% end %>
         </div>
       </div>
-      <div class="mdl-grid mdl-card__actions mdl-card--border">
-        <%= link_to "Cancel", root_path, class: "mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" %>
-        <div class="mdl-layout-spacer"></div>
-        <%= form.submit "Submit", class: "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored mdl-color-text--white" %>
-      </div>
-    <% end %>
+    </div>
   </div>
 </div>
