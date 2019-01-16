@@ -29,13 +29,10 @@
 
 <div class="container">
   <%= render partial: 'layouts/partials/flash_messages', flash: flash %>
-
-  <main class="mdl-layout__content">
-    <div class="page-content">
-      <%= yield %>
-    </div>
-  </main>
+  <%= yield %>
 </div>
+
+<%= render partial: 'layouts/partials/footer' %>
 
 </body>
 </html>

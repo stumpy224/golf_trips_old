@@ -1,0 +1,68 @@
+<footer class="page-footer font-small elegant-color-dark pt-3">
+  <div class="container-fluid">
+    <% if @board_members.size > 0 %>
+      <h6 class="text-center text-uppercase pb-1">Board Members</h6>
+      <div class="row d-flex justify-content-center">
+        <div class="col-10">
+          <!--Carousel Wrapper-->
+          <div id="carousel" class="carousel slide carousel-fade" data-ride="carousel">
+            <!--Indicators-->
+            <ol class="carousel-indicators">
+              <% @board_members.each.with_index do |board_member, index| %>
+                <li data-target="#carousel" data-slide-to="<%= index %>" class="<%= index == 0 ? 'active' : '' %>"></li>
+              <% end %>
+            </ol>
+            <!--/.Indicators-->
+            <!--Slides-->
+            <div class="carousel-inner" role="listbox">
+              <% @board_members.each.with_index do |board_member, index| %>
+                <div class="carousel-item <%= index == 0 ? 'active' : '' %>">
+                  <div class="col-12 m-auto text-center">
+                    <div class="row justify-content-center">
+                      <i class="fas fa-user mt-1 pr-2"></i><%= "#{board_member.first_name} #{board_member.last_name}" %>
+                    </div>
+                    <div class="row justify-content-center">
+                      <i class="fas fa-phone mt-1 pr-2"></i><%= board_member.phone %>
+                    </div>
+                    <div class="row justify-content-center">
+                      <a href="mailto:<%= board_member.email %>">
+                        <i class="fas fa-envelope mt-1 pr-2"></i><%= board_member.email %>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+            <!--/.Slides-->
+            <!--Controls-->
+            <div class="pt-5">
+              <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
+                <i class="fas fa-angle-left"></i>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
+                <i class="fas fa-angle-right"></i>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
+            <!--/.Controls-->
+          </div>
+          <!--/.Carousel Wrapper-->
+        </div>
+      </div>
+    <% end %>
+
+    <div class="row d-flex justify-content-center">
+      <a class="btn btn-outline elegant-color" href="mailto:golfhackerclub@gmail.com">
+        <i class="fas fa-envelope mt-1 pr-2"></i>Contact Site Administrator
+      </a>
+    </div>
+  </div>
+
+  <!-- Copyright -->
+  <div class="footer-copyright text-center mt-3 py-3">
+    © <%= "#{Date.today.year}" %> Golf Hacker Club <small>v1.0</small>
+  </div>
+  <!-- Copyright -->
+
+</footer>
