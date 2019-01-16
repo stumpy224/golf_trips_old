@@ -20,6 +20,7 @@ class GolferDashboard < Administrate::BaseDashboard
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
     is_registered: Field::Boolean,
+    is_board_member: Field::Boolean,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -35,6 +36,7 @@ class GolferDashboard < Administrate::BaseDashboard
     :email,
     :is_active,
     :is_registered,
+    :is_board_member,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -50,6 +52,7 @@ class GolferDashboard < Administrate::BaseDashboard
     :created_at,
     :updated_at,
     :is_registered,
+    :is_board_member,
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -62,6 +65,7 @@ class GolferDashboard < Administrate::BaseDashboard
     :email,
     :phone,
     :is_active,
+    :is_board_member,
     # :is_registered,
   ].freeze
 
