@@ -197,7 +197,7 @@ where outings.id = :outing_id
   and teams.team_date = :team_date
   and teams.team_number is not null
 group by teams.team_number
-order by team_points_plus_minus desc, HDCP_1_PTS desc, HDCP_2_PTS desc, HDCP_3_PTS desc,
+order by team_points_plus_minus desc, teams.team_number, HDCP_1_PTS desc, HDCP_2_PTS desc, HDCP_3_PTS desc,
          HDCP_4_PTS desc, HDCP_5_PTS desc,
          HDCP_6_PTS desc, HDCP_7_PTS desc, HDCP_8_PTS desc,
          HDCP_9_PTS desc, HDCP_10_PTS desc, HDCP_11_PTS desc, HDCP_12_PTS desc, HDCP_13_PTS desc, HDCP_14_PTS desc,
