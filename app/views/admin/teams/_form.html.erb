@@ -39,7 +39,7 @@ and renders all form fields for a resource's editable attributes.
     </div>
   <% end %>
 
-  <% page.resource.scores.each do |score, index| %>
+  <% page.resource.scores.joins(:hole).order("holes.number").each do |score, index| %>
     <% hole = Hole.find(score.hole_id) %>
     <div class="field-unit field-unit__field">
       <div class="field-unit">
