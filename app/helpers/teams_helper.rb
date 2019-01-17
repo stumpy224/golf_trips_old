@@ -114,7 +114,7 @@ order by teams.points_actual desc, HDCP_1_PTS desc, HDCP_2_PTS desc, HDCP_3_PTS 
   end
 
   def get_teams_ranking_by_date(outing_id, team_date)
-    sql = "select teams.*,
+    sql = "select teams.team_number,
        sum(teams.points_expected)                                                       AS team_points_expected,
        sum(teams.points_actual)                                                         AS team_points_actual,
        sum(teams.points_actual) - sum(teams.points_expected)                            AS team_points_plus_minus,
@@ -195,6 +195,7 @@ from teams
        join outings on outing_golfers.outing_id = outings.id
 where outings.id = :outing_id
   and teams.team_date = :team_date
+  and teams.team_number is not null
 group by teams.team_number
 order by team_points_plus_minus desc, HDCP_1_PTS desc, HDCP_2_PTS desc, HDCP_3_PTS desc,
          HDCP_4_PTS desc, HDCP_5_PTS desc,
