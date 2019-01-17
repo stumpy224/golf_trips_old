@@ -5,7 +5,7 @@
     <div class="card">
       <div class="container">
         <h2 class="card-title text-center">
-          <i class="fas fa-user-lock text-primary"></i> Forgot Password
+          <i class="fas fa-user-lock text-primary pr-2"></i>Forgot Password
         </h2>
         <div class="card-body">
           <%= form_with scope: :password_reset, url: password_resets_path, local: true do |form| %>
@@ -17,10 +17,10 @@
 
             <div class="row justify-content-between">
               <%= link_to root_path, class: "btn btn-link" do %>
-                <i class="fas fa-ban"></i> Cancel
+                <i class="fas fa-ban pr-2"></i>Cancel
               <% end %>
               <%= button_tag type: "submit", class: "btn btn-primary" do %>
-                <i class="fas fa-paper-plane"></i> Submit
+                <i class="fas fa-paper-plane pr-2"></i>Submit
               <% end %>
             </div>
           <% end %>

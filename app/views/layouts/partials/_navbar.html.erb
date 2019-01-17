@@ -10,10 +10,20 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <div class="navbar-nav ml-auto">
       <% if logged_in? %>
-        <%= link_to "Outings", root_path, class: "nav-item nav-link" %>
-        <%= link_to "My Account", user_path(current_user), class: "nav-item nav-link" %>
-        <%= link_to "Admin", admin_root_path, class: "nav-item nav-link", target: "_blank" if current_user.is_admin? %>
-        <%= link_to "Logout", logout_path, class: "nav-item nav-link text-danger", method: :delete %>
+        <%= link_to root_path, class: "nav-item nav-link" do %>
+          <i class="fas fa-golf-ball pr-2"></i>Outings
+        <% end %>
+        <%= link_to user_path(current_user), class: "nav-item nav-link" do %>
+          <i class="fas fa-user-circle pr-2"></i>My Account
+        <% end %>
+        <% if current_user.is_admin? %>
+          <%= link_to admin_root_path, class: "nav-item nav-link", target: "_blank" do %>
+            <i class="fas fa-lock pr-2"></i>Admin
+          <% end %>
+        <% end %>
+        <%= link_to logout_path, class: "nav-item nav-link text-danger", method: :delete do %>
+          <i class="fas fa-sign-out-alt pr-2"></i>Logout
+        <% end %>
       <% end %>
     </div>
   </div>

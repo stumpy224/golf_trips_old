@@ -5,7 +5,7 @@
     <div class="card">
       <div class="container">
         <h2 class="card-title text-center">
-          <i class="fas fa-user-circle text-primary"></i> My Account
+          <i class="fas fa-user-circle text-primary pr-2"></i>My Account
         </h2>
         <div class="card-body">
           <%= form_with model: @user, local: true do |form| %>
@@ -42,13 +42,13 @@
 
             <div class="row justify-content-between">
               <%= link_to root_path, class: "btn btn-link" do %>
-                <i class="fas fa-angle-double-left"></i> Back
+                <i class="fas fa-angle-double-left pr-2"></i>Back
               <% end %>
               <%= button_tag type: "submit", class: "btn btn-primary" do %>
                 <% if title.include?("Create") %>
-                  <i class="fas fa-user-plus"></i> Create
+                  <i class="fas fa-user-plus pr-2"></i>Create
                 <% else %>
-                  <i class="fas fa-save"></i> Save
+                  <i class="fas fa-save pr-2"></i>Save
                 <% end %>
               <% end %>
             </div>
@@ -56,9 +56,9 @@
         </div>
 
         <% if title.include?("Create") %>
-          <div class="card-footer">
+          <div class="card-footer text-center">
             <%= link_to login_path, class: "btn btn-light" do %>
-              <i class="fas fa-user-check"></i> Already registered?
+              <i class="fas fa-user-check pr-2"></i>Already registered?
             <% end %>
           </div>
         <% end %>
