@@ -16,7 +16,7 @@ module TeamsHelper
   end
 
   def get_teams_by_golfer(outing_golfer_id)
-    Team.where(outing_golfer_id: outing_golfer_id).includes(:scores).references(:scores)
+    Team.where(outing_golfer_id: outing_golfer_id).includes(:scores).references(:scores).order(:team_date)
   end
 
   def get_golfers_by_team_and_date(team_number, team_date)
