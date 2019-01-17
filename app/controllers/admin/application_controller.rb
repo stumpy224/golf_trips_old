@@ -7,12 +7,16 @@
 module Admin
   class ApplicationController < Administrate::ApplicationController
     include ApplicationHelper
+    include SessionsHelper
     include TeamsHelper
 
     before_action :authenticate_admin
 
     def authenticate_admin
-      # TODO Add authentication logic here.
+      unless is_admin?
+        flash[:error] = "You are unauthorized!"
+        redirect_to root_path
+      end
     end
 
     # Override this value to specify the number of elements to display at a time

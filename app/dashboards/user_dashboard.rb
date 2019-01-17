@@ -22,6 +22,7 @@ class UserDashboard < Administrate::BaseDashboard
     activated_at: Field::DateTime,
     reset_digest: Field::String,
     reset_sent_at: Field::DateTime,
+    is_admin: Field::Boolean,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -36,6 +37,7 @@ class UserDashboard < Administrate::BaseDashboard
     :nickname,
     :email,
     :is_activated,
+    :is_admin,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -49,12 +51,10 @@ class UserDashboard < Administrate::BaseDashboard
     :phone,
     :created_at,
     :updated_at,
-    :password_digest,
-    :activation_digest,
     :is_activated,
     :activated_at,
-    :reset_digest,
     :reset_sent_at,
+    :is_admin
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -66,6 +66,7 @@ class UserDashboard < Administrate::BaseDashboard
     :nickname,
     :email,
     :phone,
+    :is_admin
   ].freeze
 
   # Overwrite this method to customize how users are displayed

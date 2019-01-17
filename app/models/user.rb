@@ -22,13 +22,6 @@ class User < ApplicationRecord
     self.is_activated
   end
 
-  def is_admin?
-    # TODO: since switching to Administrate, need to figure out how to manage and authenticate Admin users
-    # see blog: https://medium.com/@andrewmtodd/how-to-set-up-thoughtbot-s-administrate-gem-in-a-new-rails-project-15f09ffd0f5d
-    true
-    # AdminUser.find_by(email: self.email).present?
-  end
-
   def is_authenticated?(attribute, token)
     digest = send("#{attribute}_digest")
     return false if digest.nil?

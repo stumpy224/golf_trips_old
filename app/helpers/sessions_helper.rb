@@ -19,4 +19,8 @@ module SessionsHelper
     session.delete(:user_id)
     @current_user = nil
   end
+
+  def is_admin?
+    return logged_in? && current_user.is_admin?
+  end
 end
