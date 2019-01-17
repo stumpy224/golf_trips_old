@@ -207,7 +207,7 @@ order by team_points_plus_minus desc, HDCP_1_PTS desc, HDCP_2_PTS desc, HDCP_3_P
   end
 
   def get_overall_stats_by_outing(outing_id)
-    sql = "select teams.*,
+    sql = "select teams.outing_golfer_id,
        golfers.first_name || ' ' || golfers.last_name                                 AS golfer_name,
        sum(teams.points_expected)                                                     AS total_points_expected,
        sum(teams.points_actual)                                                       AS total_points_actual,
@@ -225,7 +225,7 @@ from teams
        join golfers on outing_golfers.golfer_id = golfers.id
 where outings.id = :outing_id
   and teams.points_actual is not null
-group by teams.outing_golfer_id
+group by teams.outing_golfer_id, golfer_name
 order by total_points_actual desc, avg_points_actual desc, total_strokes"
 
     Team.find_by_sql([sql, {outing_id: outing_id}])
