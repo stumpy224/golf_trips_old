@@ -1,7 +1,7 @@
 <% if logged_in? %>
   <% @outings.each do |outing| %>
     <div class="row justify-content-center">
-      <div class="col-sm-4 col-md-7">
+      <div class="col-sm-12 col-md-7">
         <div class="card">
           <img class="<%= outing.course.name.include?('Peninsula') ? 'peninsula-image-background' : 'generic-image-background' %>" height="300" width="100%">
           <div class="card-body">
