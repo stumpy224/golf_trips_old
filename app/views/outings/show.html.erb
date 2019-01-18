@@ -163,10 +163,13 @@
                                             </td>
                                           <% end %>
                                         <% end %>
-                                        <% score_ids = golfer_team_record.scores.limit(9).pluck("scores.id") %>
-                                        <% score = Score.where(id: score_ids) %>
+                                        <% scores_front_nine = golfer_team_record.scores.first(9) %>
+                                        <% points_front_nine = 0 %>
+                                        <% scores_front_nine.pluck(:points).each { |i| points_front_nine += i unless i.nil? } %>
+                                        <% strokes_front_nine = 0 %>
+                                        <% scores_front_nine.pluck(:strokes).each { |i| strokes_front_nine += i unless i.nil? } %>
                                         <td class="text-center border-left border-dark">
-                                          <%= "#{score.sum(:points)}/#{score.sum(:strokes)}" %>
+                                          <%= "#{points_front_nine}/#{strokes_front_nine}" %>
                                         </td>
                                       </tr>
 
@@ -190,10 +193,13 @@
                                             </td>
                                           <% end %>
                                         <% end %>
-                                        <% score_ids = golfer_team_record.scores.offset(9).limit(9).pluck("scores.id") %>
-                                        <% score = Score.where(id: score_ids) %>
+                                        <% scores_back_nine = golfer_team_record.scores.last(9) %>
+                                        <% points_back_nine = 0 %>
+                                        <% scores_back_nine.pluck(:points).each { |i| points_back_nine += i unless i.nil? } %>
+                                        <% strokes_back_nine = 0 %>
+                                        <% scores_back_nine.pluck(:strokes).each { |i| strokes_back_nine += i unless i.nil? } %>
                                         <td class="text-center border-left border-dark">
-                                          <%= "#{score.sum(:points)}/#{score.sum(:strokes)}" %>
+                                          <%= "#{points_back_nine}/#{strokes_back_nine}" %>
                                         </td>
                                       </tr>
                                       </tbody>
@@ -241,6 +247,7 @@
                         <td><%= team.golfer_name %></td>
 
                         <% teams_by_golfer = get_teams_by_golfer(team.outing_golfer_id) %>
+
                         <% (0..@outing.get_dates.size - 1).each do |index| %>
                           <% if teams_by_golfer[index].nil? || teams_by_golfer[index].points_actual.nil? %>
                             <td>-</td>

@@ -48,7 +48,7 @@ function notifyOfSuccess(message) {
 function notifyOfWarning(message) {
     setupDefaultOptions();
     toastr.options.closeButton = true;
-    toastr.options.timeOut = 0;
+    toastr.options.timeOut = 3000;
     toastr.options.extendedTimeOut = 0;
     toastr.warning(message[0].innerText);
 }

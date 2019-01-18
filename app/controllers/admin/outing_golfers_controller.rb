@@ -1,5 +1,28 @@
 module Admin
   class OutingGolfersController < Admin::ApplicationController
+    def create
+      resource = resource_class.new(resource_params)
+      authorize_resource(resource)
+
+      if resource.save
+        outing = Outing.find(resource.outing_id)
+        team = Team.create(outing_golfer_id: resource.id, team_date: outing.start_date)
+
+        outing.course.holes.each do |hole|
+          Score.create(team_id: team.id, hole_id: hole.id)
+        end
+
+        redirect_to(
+            [namespace, resource],
+            notice: translate_with_resource("create.success"),
+            )
+      else
+        render :new, locals: {
+            page: Administrate::Page::Form.new(dashboard, resource),
+        }
+      end
+    end
+
     def index
       search_term = params[:search].to_s.strip
       resources = Administrate::Search.new(scoped_resource,
