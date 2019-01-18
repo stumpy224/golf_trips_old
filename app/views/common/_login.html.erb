@@ -26,12 +26,12 @@
 
         <div class="card-footer">
           <div class="row justify-content-between">
-            <%= link_to new_password_reset_path, class: "btn btn-light" do %>
-              <i class="fas fa-user-lock pr-2"></i>Forgot Password?
-            <% end %>
-            <%= link_to new_user_path, class: "btn btn-light" do %>
-              <i class="fas fa-user-plus pr-2"></i>New User?
-            <% end %>
+            <div class="col-sm-1 col-md-6">
+              <%= link_to "Forgot Password?", new_password_reset_path, class: "btn btn-link btn-block" %>
+            </div>
+            <div class="col-sm-1 col-md-6">
+              <%= link_to "New User?", new_user_path, class: "btn btn-link btn-block" %>
+            </div>
           </div>
         </div>
       </div>

@@ -41,9 +41,7 @@
             </div>
 
             <div class="row justify-content-between">
-              <%= link_to root_path, class: "btn btn-link" do %>
-                <i class="fas fa-angle-double-left pr-2"></i>Back
-              <% end %>
+              <%= link_to "Cancel", root_path, class: "btn btn-light" %>
               <%= button_tag type: "submit", class: "btn btn-primary" do %>
                 <% if title.include?("Create") %>
                   <i class="fas fa-user-plus pr-2"></i>Create
@@ -57,7 +55,7 @@
 
         <% if title.include?("Create") %>
           <div class="card-footer text-center">
-            <%= link_to login_path, class: "btn btn-light" do %>
+            <%= link_to login_path, class: "btn btn-link" do %>
               <i class="fas fa-user-check pr-2"></i>Already registered?
             <% end %>
           </div>
