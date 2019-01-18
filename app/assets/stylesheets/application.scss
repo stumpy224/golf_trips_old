@@ -13,10 +13,32 @@
  *= require_tree .
  *= require_self
  */
-
 @import "bootstrap.min";
 @import "mdb";
 @import "datatables.min";
+
+@media print {
+  .no-print, .no-print * {
+    display: none !important;
+  }
+
+  .yes-print, .yes-print * {
+    display: inline !important;
+  }
+
+  .page-break {
+    display: block;
+    page-break-before: always;
+  }
+
+  /*     https://css-tricks.com/almanac/properties/p/page-break/ */
+}
+
+@media screen {
+  .yes-print {
+    display: none !important;
+  }
+}
 
 body {
   background-color: lightgray;

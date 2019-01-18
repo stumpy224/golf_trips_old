@@ -1,12 +1,12 @@
 <div class="row justify-content-center">
   <div class="col-sm-4 col-md-10">
     <div class="card">
-      <h3 class="card-title text-center pt-2">
+      <h3 class="card-title text-center pt-2 no-print">
         <%= @outing.name %>
       </h3>
 
       <div class="card-body outing-details-card">
-        <ul class="nav nav-pills justify-content-center">
+        <ul class="nav nav-pills justify-content-center no-print">
           <li class="nav-item pr-md-5">
             <a class="nav-link active" data-toggle="tab" role="tab" href="#tab-for-golfers">
               <i class="fas fa-users fa-2x pl-2"></i><br/>Golfers
@@ -67,9 +67,21 @@
           <% @outing.get_dates.each do |outing_date| %>
             <div class="tab-pane" id="tab-for-<%= outing_date %>" role="tabpanel">
               <h5 class="text-center"><%= outing_date.strftime("%A, %b %d") %></h5>
+
               <% teams_ranking = get_teams_ranking_by_date(@outing.id, outing_date) %>
+
               <div class="row d-flex justify-content-center">
                 <div class="col-md-9">
+
+                  <div class="row d-flex justify-content-between ml-1 mr-1 no-print">
+                    <button type="button" class="btn special-color btn-sm expand-all">
+                      <i class="fas fa-angle-right pr-1"></i>Expand All
+                    </button>
+                    <button type="button" class="btn special-color btn-sm no-print" onclick="window.print();">
+                      <i class="fas fa-print pr-1"></i>Print
+                    </button>
+                  </div>
+
                   <% if teams_ranking.size > 0 %>
                     <table class="table table-sm">
                       <thead>
@@ -103,44 +115,49 @@
                         <!-- Collapsible element for team -->
                         <tr class="collapse golfer-table-collapse border border-top-0 border-grey" role="row" id="team_<%= team.team_number %>_on_<%= outing_date %>">
                           <td colspan="6">
-                            <h6 class="text-center"><%= "#{(index + 1).ordinalize} Place: Team #{team.team_number}" %></h6>
-                            <table class="table table-sm">
-                              <thead class="black white-text">
-                              <tr>
-                                <th></th>
-                                <th>Golfer</th>
-                                <th class="text-center">Rank</th>
-                                <th class="text-center">Pts/Str</th>
-                                <th class="text-right">+/-</th>
-                              </tr>
-                              </thead>
+                            <% unless team.team_points_actual.nil? %>
+                              <h6 class="text-center"><%= "#{(index + 1).ordinalize} Place: Team #{team.team_number}" %></h6>
+                            <% end %>
+
+                            <table class="table table-sm table-borderless">
                               <tbody>
                               <% golfer_team_records = get_golfers_by_team_and_date(team.team_number, outing_date) %>
                               <% golfer_team_records.each do |golfer_team_record| %>
                                 <tr>
-                                  <td>
+                                  <td class="text-center">
                                     <a class="expansion-button" data-toggle="collapse" aria-expanded="false"
                                        href="#team_<%= golfer_team_record.id %>"
                                        aria-controls="team_<%= golfer_team_record.id %>">
                                       <i class="fas fa-angle-right pl-sm-1 pr-1"></i>
                                     </a>
                                   </td>
-                                  <td width="50%">
-                                    <%= "#{golfer_team_record.outing_golfer.golfer.first_name} #{golfer_team_record.outing_golfer.golfer.last_name}" %>
-                                  </td>
-                                  <td class="text-center">
+                                  <td>
                                     <%= golfer_team_record.rank_letter %>
                                   </td>
+                                  <td width="30%">
+                                    <%= "#{golfer_team_record.outing_golfer.golfer.first_name} #{golfer_team_record.outing_golfer.golfer.last_name}" %>
+                                  </td>
+                                  <td>
+                                    <%= golfer_team_record.points_expected %>
+                                  </td>
                                   <td class="text-center">
-                                    <%= "#{golfer_team_record.points_actual}/#{golfer_team_record.scores.sum(:strokes)}" %>
+                                    <% if golfer_team_record.points_actual.nil? %>
+                                      &nbsp;
+                                    <% else %>
+                                      <%= "#{golfer_team_record.points_actual}/#{golfer_team_record.scores.sum(:strokes)}" %>
+                                    <% end %>
                                   </td>
                                   <td class="text-right" style="color: <%= get_points_plus_minus_color(golfer_team_record.points_plus_minus) %>">
-                                    <%= "#{'+' if golfer_team_record.points_plus_minus.to_i > 0}#{golfer_team_record.points_plus_minus}" %>
+                                    <% if golfer_team_record.points_plus_minus.nil? %>
+                                      &nbsp;
+                                    <% else %>
+                                      <%= "#{'+' if golfer_team_record.points_plus_minus.to_i > 0}#{golfer_team_record.points_plus_minus}" %>
+                                    <% end %>
                                   </td>
                                 </tr>
                                 <!-- Collapsible element for golfers' scores -->
                                 <tr class="collapse golfer-scores-table-collapse" role="row" id="team_<%= golfer_team_record.id %>">
-                                  <td colspan="5">
+                                  <td colspan="6">
                                     <table class="table table-borderless table-striped">
                                       <tbody>
                                       <tr class="col-12">
