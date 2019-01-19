@@ -8,16 +8,18 @@ var columns = {
 };
 
 var selectors = {
-    btn_expand_all: "button.expand-all",
+    btn_show_hide_golfers: "button.show-hide-golfers",
     btn_expansion: "a.expansion-button",
-    icon_collapse: "fa-angle-down",
     icon: "i.fas",
-    icon_expand: "fa-angle-right"
+    icon_collapse: "fa-angle-down",
+    icon_expand: "fa-angle-right",
+    icon_plus: "fa-plus",
+    icon_minus: "fa-minus"
 };
 
 $(document).on('turbolinks:load', function() {
     setupTables();
-    setupExpandAllBtn();
+    setupShowHideGolfersBtn();
     setupExpansionGolferTables();
 });
 
@@ -48,20 +50,24 @@ function setupTables() {
     });
 }
 
-function setupExpandAllBtn() {
-    $(selectors.btn_expand_all).click(function () {
-        var btnText = $(this)[0].innerText.indexOf('EXPAND') > -1 ? "COLLAPSE ALL" : "EXPAND ALL";
-        setExpandCollapseIcon($(this).find(selectors.icon)[0]);
-        $(this)[0].innerHTML = $(this).find(selectors.icon)[0].outerHTML + btnText;
+function setupShowHideGolfersBtn() {
+    $(selectors.btn_show_hide_golfers).click(function () {
+        var isShowGolfers = $(this)[0].innerText.indexOf('SHOW') > -1;
+        var btnText = isShowGolfers ? "HIDE GOLFERS" : "SHOW GOLFERS";
+        $(this)[0].innerHTML = btnText;
 
         var tabId = $(this).closest('div.tab-pane')[0].id;
         var outingDate = tabId.substring(tabId.indexOf("tab-for-") + "tab-for-".length, tabId.length);
 
-        $(selectors.btn_expand_all).closest('div.row').next('table').find('tr.team-row').each(function () {
-            // find all anchors whose href ends with the outingDate, and click them to expand / collapse
-            $(this).find('[href$=' + outingDate + ']').click();
-        });
+        toggleTeamExpansionButtons(isShowGolfers, outingDate);
     });
+
+    function toggleTeamExpansionButtons(isShowGolfers, outingDate) {
+        $(selectors.btn_show_hide_golfers).closest('div.row').next('table').find('tr.team-row').each(function () {
+            // find all anchors whose href ends with the outingDate, and click them to expand / collapse
+            $(this).find('a.expansion-button[href$=' + outingDate + '][aria-expanded=' + !isShowGolfers + ']').click();
+        });
+    }
 }
 
 function setupExpansionGolferTables() {

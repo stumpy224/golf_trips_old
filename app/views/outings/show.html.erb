@@ -74,8 +74,8 @@
                 <div class="col-md-9">
 
                   <div class="row d-flex justify-content-between ml-1 mr-1 no-print">
-                    <button type="button" class="btn special-color btn-sm expand-all">
-                      <i class="fas fa-angle-right pr-1"></i>Expand All
+                    <button type="button" class="btn special-color btn-sm show-hide-golfers">
+                      Show Golfers
                     </button>
                     <button type="button" class="btn special-color btn-sm no-print" onclick="window.print();">
                       <i class="fas fa-print pr-1"></i>Print
@@ -96,6 +96,7 @@
                       </thead>
                       <tbody>
                       <% teams_ranking.each.with_index do |team, index| %>
+                        <%#= 6 % (index + 1) == 0 ? 'page-break' : '' %>
                         <tr class="team-row">
                           <td class="text-center">
                             <a class="expansion-button" data-toggle="collapse" aria-expanded="false"
@@ -116,7 +117,9 @@
                         <tr class="collapse golfer-table-collapse border border-top-0 border-grey" role="row" id="team_<%= team.team_number %>_on_<%= outing_date %>">
                           <td colspan="6">
                             <% unless team.team_points_actual.nil? %>
-                              <h6 class="text-center"><%= "#{(index + 1).ordinalize} Place: Team #{team.team_number}" %></h6>
+                              <h6 class="text-center" style="font-weight: bold;">
+                                <%= "#{(index + 1).ordinalize} Place: Team #{team.team_number}" %>
+                              </h6>
                             <% end %>
 
                             <table class="table table-sm table-borderless">
