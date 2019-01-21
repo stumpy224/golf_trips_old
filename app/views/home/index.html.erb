@@ -3,7 +3,8 @@
     <div class="row justify-content-center">
       <div class="col-sm-12 col-md-7">
         <div class="card">
-          <img class="<%= outing.course.name.include?('Peninsula') ? 'peninsula-image-background' : 'generic-image-background' %>" height="300" width="100%">
+          <img class="<%= outing.course.name.include?('Peninsula') ? 'peninsula-image-background' : 'generic-image-background' %>"
+               height="300" width="100%" style="border-radius: .25rem .25rem 0 0;">
           <div class="card-body">
             <h5 class="card-title">
               <%= outing.name %>

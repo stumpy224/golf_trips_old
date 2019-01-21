@@ -13,4 +13,12 @@ class Golfer < ApplicationRecord
     nickname = "(#{self.nickname})"
     self.nickname.blank? ? full_name : full_name + ' ' + nickname
   end
+
+  def nickname_or_first_name_w_last_initial
+    self.nickname.blank? ? "#{self.first_name} #{self.last_name.slice(0)}." : nickname
+  end
+
+  def nickname_or_full_name
+    self.nickname.blank? ? full_name : nickname
+  end
 end

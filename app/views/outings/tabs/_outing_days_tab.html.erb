@@ -1,0 +1,117 @@
+<% @outing.get_dates.each do |outing_date| %>
+  <div class="tab-pane" id="tab-for-<%= outing_date %>" role="tabpanel">
+    <h5 class="text-center"><%= outing_date.strftime("%A, %b %d") %></h5>
+
+    <% teams_ranking = get_teams_ranking_by_date(@outing.id, outing_date) %>
+
+    <div class="row d-flex justify-content-center">
+      <div class="col-sm-12 col-md-8">
+        <% if teams_ranking.size > 0 %>
+
+          <% teams_ranking.each.with_index do |team, index| %>
+            <% if index == 0 %>
+              <div class="row d-flex pb-2 ml-1 mr-1 no-print justify-content-center">
+                <% unless team.team_points_actual.nil? %>
+                  <button type="button" class="btn special-color btn-sm show-hide-golfers">
+                    <i class="fas fa-plus pr-2"></i>Show Golfers
+                  </button>
+                <% end %>
+                <button type="button" class="btn special-color btn-sm" onclick="window.print();">
+                  <i class="fas fa-print pr-2"></i>Print
+                </button>
+              </div>
+            <% end %>
+
+            <% if team.team_points_actual.nil? %>
+              <% if index == 0 %>
+                <div class="alert alert-dark text-center no-print" role="alert">
+                  <strong>Note:</strong> Points shown are to break even.
+                </div>
+              <% end %>
+
+              <% golfer_team_records = get_golfers_by_team_and_date(team.team_number, outing_date) %>
+
+              <table class="table table-sm table-borderless border border-grey">
+                <tbody>
+                  <% golfer_team_records.each.with_index do |golfer_team_record, index| %>
+                    <tr>
+                      <td width="10%">&nbsp;</td>
+                      <% if index == 0 %>
+                        <!-- Team number -->
+                        <td width="25%" style="font-weight: bold;"
+                            <%= index == 0 ? 'rowspan="' + golfer_team_records.size.to_s + '"' : '' %>>
+                          <%= "Team: #{team.team_number}" %>
+                        </td>
+                      <% elsif index == 1 %>
+                        <!-- team expected points -->
+                        <td><%= "#{team.team_points_expected} points" %></td>
+                      <% else %>
+                        <td>&nbsp;</td>
+                      <% end %>
+                      <td class="text-center" width="5%">
+                        <%= golfer_team_record.rank_letter %>
+                      </td>
+                      <td class="text-nowrap" width="40%">
+                        <%= "#{golfer_team_record.outing_golfer.golfer.nickname_or_first_name_w_last_initial}" %>
+                      </td>
+                      <td>
+                        <%= golfer_team_record.points_expected %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+
+            <% else %>
+              <% if index == 0 %>
+                <table class="table table-sm table-hover outing-day-table">
+                  <thead>
+                  <tr>
+                    <th class="text-center"></th>
+                    <th class="text-center">Rank</th>
+                    <th class="text-center">Team</th>
+                    <th class="text-center">Expected</th>
+                    <th class="text-center">Actual</th>
+                    <th class="text-right">+/-</th>
+                  </tr>
+                  </thead>
+              <% end %>
+              <tbody>
+              <tr class="team-row" style="cursor: pointer;">
+                <td class="text-center">
+                  <a class="expansion-button" data-toggle="collapse" aria-expanded="false"
+                     href="#team_<%= team.team_number %>_on_<%= outing_date %>"
+                     aria-controls="team_<%= team.team_number %>_on_<%= outing_date %>">
+                    <i class="fas fa-angle-right pl-sm-1"></i>
+                  </a>
+                </td>
+                <td class="text-center"><%= index + 1 %></td>
+                <td class="text-center"><%= team.team_number %></td>
+                <td class="text-center"><%= team.team_points_expected %></td>
+                <% unless team.team_points_actual.nil? %>
+                  <td class="text-center"><%= team.team_points_actual %></td>
+                  <td class="text-right" style="color: <%= get_points_plus_minus_color(team.team_points_plus_minus) %>">
+                    <%= "#{'+' if team.team_points_plus_minus.to_i > 0}#{team.team_points_plus_minus}" %>
+                  </td>
+                <% end %>
+              </tr>
+              <!-- Collapsible element for team -->
+              <tr class="collapse golfer-table-collapse border border-top-0 border-grey" role="row" id="team_<%= team.team_number %>_on_<%= outing_date %>">
+                <td colspan="6">
+                  <%= render partial: 'outings/golfers', locals: {team: team, team_index: index, outing_date: outing_date} %>
+                </td>
+              </tr>
+            <% end %>
+            </tbody>
+            <% if (index + 1) == teams_ranking.size %>
+              </table>
+            <% end %>
+          <% end %>
+        <% else %>
+          <br/>
+          <h6 class="text-center">Teams have not been established yet, please check back later.</h6>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

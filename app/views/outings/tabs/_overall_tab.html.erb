@@ -1,0 +1,54 @@
+<div class="tab-pane" id="tab-for-overall" role="tabpanel">
+  <h5 class="text-center">Overall Stats</h5>
+
+  <% if @teams_overall.size > 0 %>
+    <div class="row d-flex justify-content-center">
+      <div class="col-12">
+        <table id="overallTable" class="table table-sm table-hover table-responsive-sm table-responsive-md">
+          <thead>
+          <tr>
+            <th class="text-center">Rank</th>
+            <th>Golfer</th>
+            <% @outing.get_dates.each do |outing_date| %>
+              <th><%= outing_date.strftime("%a") %></th>
+            <% end %>
+            <th>Totals</th>
+            <th>Averages</th>
+            <th class="text-right">+/-</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @teams_overall.each.with_index do |team, index| %>
+            <tr>
+              <td class="text-center"><%= index + 1 %></td>
+              <td><%= team.golfer_name %></td>
+
+              <% teams_by_golfer = get_teams_by_golfer(team.outing_golfer_id) %>
+
+              <% (0..@outing.get_dates.size - 1).each do |index| %>
+                <% if teams_by_golfer[index].nil? || teams_by_golfer[index].points_actual.nil? %>
+                  <td>-</td>
+                <% else %>
+                  <% daily_points = teams_by_golfer[index].scores.sum("scores.points") %>
+                  <% daily_strokes = teams_by_golfer[index].scores.sum("scores.strokes") %>
+                  <td><%= "#{sprintf("%02i", daily_points)}/#{daily_strokes}" %></td>
+                <% end %>
+              <% end %>
+
+              <td><%= "#{sprintf("%02i", team.total_points_actual)}/#{team.total_strokes}" %></td>
+              <td>
+                <%= "#{(team.total_points_actual/team.outing_days_counted.to_f).to_s.rjust(4, "0")}/#{(team.total_strokes/team.outing_days_counted.to_f).round(2)}" %>
+              </td>
+              <td class="text-center" style="color: <%= get_points_plus_minus_color(team.total_points_plus_minus) %>">
+                <%= "#{'+' if team.total_points_plus_minus.to_i > 0}#{team.total_points_plus_minus}" %>
+              </td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% else %>
+    <h6 class="text-center">No stats yet, please check back later.</h6>
+  <% end %>
+</div>

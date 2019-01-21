@@ -14,7 +14,7 @@
           <i class="fas fa-golf-ball pr-2"></i>Outings
         <% end %>
         <%= link_to user_path(current_user), class: "nav-item nav-link" do %>
-          <i class="fas fa-user-circle pr-2"></i>My Account
+          <i class="fas fa-user-circle pr-2"></i>Profile
         <% end %>
         <% if current_user.is_admin? %>
           <%= link_to admin_root_path, class: "nav-item nav-link", target: "_blank" do %>

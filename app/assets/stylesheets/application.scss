@@ -31,6 +31,22 @@
     page-break-before: always;
   }
 
+  table {
+    page-break-inside: avoid;
+  }
+
+  tbody {
+    page-break-inside: avoid;
+  }
+
+  tr {
+    page-break-inside: avoid;
+  }
+
+  td {
+    page-break-inside: avoid;
+  }
+
   /*     https://css-tricks.com/almanac/properties/p/page-break/ */
 }
 

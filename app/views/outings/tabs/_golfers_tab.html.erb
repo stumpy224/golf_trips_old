@@ -1,0 +1,23 @@
+<div class="tab-pane active" id="tab-for-golfers" role="tabpanel">
+  <h5 class="text-center"><%= @outing_golfers.size %> Golfers</h5>
+  <div class="row d-flex justify-content-center">
+    <div class="col-sm-12 col-md-9">
+      <table id="golfersTable" class="table table-hover">
+        <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Room</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @outing_golfers.each do |outing_golfer| %>
+          <tr>
+            <td><%= "#{outing_golfer.golfer.full_name_with_nickname}" %></td>
+            <td><%= outing_golfer.lodging.room if !outing_golfer.lodging.nil? %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

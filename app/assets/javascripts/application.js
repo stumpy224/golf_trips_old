@@ -37,7 +37,7 @@ function enableBlockUI() {
     $(document).ajaxStart($.blockUI()).ajaxStop($.unblockUI());
 
     // enable on all form submissions
-    $("form").submit(function() {
+    $("form").submit(function () {
         $.blockUI();
     });
 }

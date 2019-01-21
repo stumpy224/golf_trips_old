@@ -1,0 +1,63 @@
+<table class="table table-borderless">
+  <tbody>
+    <tr class="special-color text-white">
+      <% (1..9).each do |front_nine_hole| %>
+        <td class="text-center">
+          <%= front_nine_hole %>
+        </td>
+      <% end %>
+      <td class="text-center border-left border-dark" style="font-weight: bold;">
+        OUT
+      </td>
+    </tr>
+    <tr>
+      <% golfer_team_record.scores.each.with_index do |score, index| %>
+        <% if index < 9 %>
+          <td class="text-center">
+            <span class="<%= get_strokes_class(score.points) %>">
+              <%= score.strokes %>
+            </span>
+          </td>
+        <% end %>
+      <% end %>
+      <% scores_front_nine = golfer_team_record.scores.first(9) %>
+      <% points_front_nine = 0 %>
+      <% scores_front_nine.pluck(:points).each { |i| points_front_nine += i unless i.nil? } %>
+      <% strokes_front_nine = 0 %>
+      <% scores_front_nine.pluck(:strokes).each { |i| strokes_front_nine += i unless i.nil? } %>
+      <td class="text-center border-left border-dark">
+        <%= "#{points_front_nine}/#{strokes_front_nine}" %>
+      </td>
+    </tr>
+
+    <tr class="special-color text-white">
+      <% (10..18).each do |back_nine_hole| %>
+        <td class="text-center">
+          <%= back_nine_hole %>
+        </td>
+      <% end %>
+      <td class="text-center border-left border-dark" style="font-weight: bold;">
+        IN
+      </td>
+    </tr>
+    <tr>
+      <% golfer_team_record.scores.each.with_index do |score, index| %>
+        <% if index >= 9 %>
+          <td class="text-center">
+            <span class="<%= get_strokes_class(score.points) %>">
+              <%= score.strokes %>
+            </span>
+          </td>
+        <% end %>
+      <% end %>
+      <% scores_back_nine = golfer_team_record.scores.last(9) %>
+      <% points_back_nine = 0 %>
+      <% scores_back_nine.pluck(:points).each { |i| points_back_nine += i unless i.nil? } %>
+      <% strokes_back_nine = 0 %>
+      <% scores_back_nine.pluck(:strokes).each { |i| strokes_back_nine += i unless i.nil? } %>
+      <td class="text-center border-left border-dark">
+        <%= "#{points_back_nine}/#{strokes_back_nine}" %>
+      </td>
+    </tr>
+  </tbody>
+</table>

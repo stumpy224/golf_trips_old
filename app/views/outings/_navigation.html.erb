@@ -1,0 +1,43 @@
+<ul class="nav nav-pills nav-fill justify-content-center fixed-bottom stylish-color-dark no-print">
+  <li class="nav-item">
+    <a class="nav-link active" data-toggle="tab" role="tab" href="#tab-for-golfers">
+      <i class="fas fa-users fa-2x pl-1"></i><br/>Golfers
+    </a>
+  </li>
+  <% if outing.get_dates.size > 1 %>
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-calendar-week fa-2x pl-2"></i><br/>Days
+      </a>
+      <div class="dropdown-menu">
+        <% outing.get_dates.each do |outing_date| %>
+          <a class="dropdown-item" data-toggle="tab" role="tab" href="#tab-for-<%= outing_date %>">
+            <%= outing_date.strftime("%A, %b %d") %>
+          </a>
+        <% end %>
+      </div>
+    </li>
+  <% else %>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" role="tab" href="#tab-for-<%= outing.start_date %>">
+        <i class="fas fa-calendar-day fa-2x pl-2"></i><br/><%= outing.start_date.strftime("%a") %>
+      </a>
+    </li>
+  <% end %>
+
+  <%# if outing.get_dates.size > 1 %>
+    <%# outing.get_dates.each do |outing_date| %>
+<!--      <li class="nav-item">-->
+<!--        <a class="nav-link" data-toggle="tab" role="tab" href="#tab-for-<%#= outing_date %>">-->
+<!--          <i class="fas fa-calendar-day pl-1"></i><br/><%#= outing_date.strftime("%a") %>-->
+<!--        </a>-->
+<!--      </li>-->
+    <%# end %>
+  <%# end %>
+
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" role="tab" href="#tab-for-overall">
+      <i class="fas fa-list-ol fa-2x pl-1"></i><br/>Overall
+    </a>
+  </li>
+</ul>

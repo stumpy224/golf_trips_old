@@ -1,0 +1,60 @@
+<table class="table table-sm table-borderless table-hover golfers-by-team-table">
+  <% unless team.team_points_actual.nil? %>
+    <thead>
+      <tr>
+        <th class="text-center" colspan="6">
+          <h6 style="font-weight: bold;">
+            <%= "#{(team_index + 1).ordinalize} Place: Team #{team.team_number}" %>
+          </h6>
+        </th>
+      </tr>
+    </thead>
+  <% end %>
+  <tbody>
+    <% golfer_team_records = get_golfers_by_team_and_date(team.team_number, outing_date) %>
+    <% golfer_team_records.each do |golfer_team_record| %>
+      <tr class="golfer-row" style="cursor: pointer;">
+        <% if golfer_team_record.points_actual.nil? %>
+          <td class="text-center">
+            <%= golfer_team_record.rank_letter %>
+          </td>
+          <td class="text-nowrap" width="48%">
+            <%= "#{golfer_team_record.outing_golfer.golfer.nickname_or_first_name_w_last_initial}" %>
+          </td>
+          <td>
+            <%= golfer_team_record.points_expected %>
+          </td>
+        <% else %>
+          <td class="text-center">
+            <a class="expansion-button" data-toggle="collapse" aria-expanded="false"
+               href="#team_<%= golfer_team_record.id %>"
+               aria-controls="team_<%= golfer_team_record.id %>">
+              <i class="fas fa-angle-right pl-sm-1 pr-1"></i>
+            </a>
+          </td>
+          <td>
+            <%= golfer_team_record.rank_letter %>
+          </td>
+          <td class="text-nowrap" width="30%">
+            <%= "#{golfer_team_record.outing_golfer.golfer.nickname_or_first_name_w_last_initial}" %>
+          </td>
+          <td>
+            <%= golfer_team_record.points_expected %>
+          </td>
+          <td class="text-center">
+            <%= "#{golfer_team_record.points_actual}/#{golfer_team_record.scores.sum(:strokes)}" %>
+          </td>
+          <td class="text-right" style="color: <%= get_points_plus_minus_color(golfer_team_record.points_plus_minus) %>">
+            <%= "#{'+' if golfer_team_record.points_plus_minus.to_i > 0}#{golfer_team_record.points_plus_minus}" %>
+          </td>
+          </tr>
+          <!-- Collapsible element for golfers' scores -->
+          <tr class="collapse golfer-scores-table-collapse no-print" role="row" id="team_<%= golfer_team_record.id %>">
+            <td colspan="6">
+              <%= render partial: 'outings/golfer_scores', locals: {golfer_team_record: golfer_team_record} %>
+            </td>
+        <% end %>
+      </tr>
+    <% end %> <!-- golfer_team_records loop -->
+  </tbody>
+</table>
