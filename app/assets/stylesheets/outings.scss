@@ -11,6 +11,10 @@ div.tab-pane {
   padding-top: 1em;
 }
 
+ul.outing-nav > li.nav-item > a.nav-link {
+  color: white;
+}
+
 table.outing-day-table th {
   font-weight: bold;
 }
@@ -48,8 +52,6 @@ table.outing-day-table th {
 .double-bogey {
   text-decoration-line: underline;
   text-decoration-style: double;
-  //border-style: double solid;
-  //padding: 3px 5px 3px 5px;
 }
 
 .table {

@@ -1,17 +1,13 @@
 <% if !object.nil? && object.errors.any? %>
-  <div class="mdl-grid center-items">
-    <div class="mdl-card">
-      <div class="mdl-card__title mdl-color--red-600 mdl-color-text--white">
-        <div class="mdl-card__title-text">Hold up - we have issues!</div>
-      </div>
-      <ul class="mdl-list">
-        <% object.errors.full_messages.each do |msg| %>
-          <li class="mdl-list__item">
-            <i class="material-icons">arrow_right</i>
-            <%= msg %>
-          </li>
-        <% end %>
-      </ul>
+  <div>
+    <div class="alert alert-danger">
+      <i class="fas fa-exclamation-circle pr-1"></i>
+      The form contains <%= pluralize(object.errors.count, "error") %>.
     </div>
+    <ul>
+      <% object.errors.full_messages.each do |msg| %>
+        <li class="text-danger"><%= msg %></li>
+      <% end %>
+    </ul>
   </div>
 <% end %>

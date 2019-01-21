@@ -13,7 +13,7 @@
  *= require_tree .
  *= require_self
  */
-@import "bootstrap.min";
+@import "bootstrap";
 @import "mdb";
 @import "datatables.min";
 
@@ -71,6 +71,12 @@ body {
 
 .card-footer {
   background-color: inherit !important;
+}
+
+.field_with_errors {
+  .form-control {
+    border-color: var(--danger);
+  }
 }
 
 #toast-container > div {
