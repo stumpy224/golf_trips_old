@@ -26,6 +26,10 @@ RSpec.describe User, type: :model do
     expect(@user.valid?).to be_falsey
   end
 
+  it "should not be authenticated for a user with nil remember token" do
+    expect(@user.is_authenticated?(:remember, nil)).to be_falsey
+  end
+
   describe "email" do
     it "should be invalid when blank" do
       @user.email = ""

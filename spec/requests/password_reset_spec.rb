@@ -35,7 +35,7 @@ RSpec.describe "Password reset" do
     end
 
     it "should create reset digest" do
-      expect(jeremiah.reset_digest).not_to eq jeremiah.reload.reset_digest
+      expect(jeremiah.reset_digest).to_not eq jeremiah.reload.reset_digest
     end
 
     it "should notify the user" do

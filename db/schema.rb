@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_16_233346) do
+ActiveRecord::Schema.define(version: 2019_01_23_174532) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -136,6 +136,7 @@ ActiveRecord::Schema.define(version: 2019_01_16_233346) do
     t.string "reset_digest"
     t.datetime "reset_sent_at"
     t.boolean "is_admin", default: false, null: false
+    t.string "remember_digest"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

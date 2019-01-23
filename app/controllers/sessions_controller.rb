@@ -8,6 +8,7 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:session][:password])
       if user.is_activated?
         login(user)
+        params[:session][:remember_me] == "on" ? remember(user) : forget(user)
         redirect_to root_url
       else
         message = "Account not activated.<br>"
@@ -16,13 +17,13 @@ class SessionsController < ApplicationController
         render "sessions/new"
       end
     else
-      flash.now[:error] = "Email and password are incorrect"
+      flash.now[:error] = "Email and/or password are incorrect"
       render "sessions/new"
     end
   end
 
   def destroy
-    logout
+    logout if logged_in?
     flash[:success] = "You have been logged out"
     redirect_to root_url
   end
