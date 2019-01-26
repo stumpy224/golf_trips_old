@@ -1,0 +1,72 @@
+<style>
+  .match-table-padding {
+    padding-left: 10px;
+  }
+</style>
+
+<h3 class="match-table-padding">
+  Your team results for <%= @team_members_today.first.team_date.strftime("%a %b %d, %Y") %>:
+</h3>
+
+<table cellspacing="10">
+  <tbody>
+    <tr>
+      <th align="left" colspan="2">
+        Team #<%= @team_members_today.first.team_number %><%= @golfers_team_placing.nil? ? "" : ", #{@golfers_team_placing.ordinalize} Place" %>
+      </th>
+      <th>Points Needed</th>
+      <th>Actual Points</th>
+      <th style="padding-left: 1em;">+/-</th>
+    </tr>
+    <% @team_members_today.each do |team_member_today| %>
+      <tr>
+        <td><%= team_member_today.rank_number %>&nbsp;&nbsp;<%= team_member_today.rank_letter %></td>
+        <td><%= team_member_today.outing_golfer.golfer.full_name_with_nickname %></td>
+        <td align="right"><%= team_member_today.points_expected %></td>
+        <td align="right"><%= team_member_today.points_actual %></td>
+        <% points_plus_minus = team_member_today.points_plus_minus %>
+        <td align="right" style="color: <%= get_points_plus_minus_color(points_plus_minus) %>">
+          <%= "#{'+' if points_plus_minus.to_i > 0}#{points_plus_minus}" %>
+        </td>
+      </tr>
+    <% end %>
+    <tr style="font-weight: bold;">
+      <td colspan="2"/>
+      <td align="right"><%= @team_members_today.sum(:points_expected) %></td>
+      <td align="right"><%= @team_members_today.sum(:points_actual) %></td>
+      <% team_points_plus_minus = @team_members_today.sum(:points_plus_minus) %>
+      <td align="right" style="color: <%= get_points_plus_minus_color(team_points_plus_minus) %>">
+        <%= "#{'+' if team_points_plus_minus.to_i > 0}#{team_points_plus_minus}" %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5">
+        <h3>
+          Your teammates for <%= @team_members_tomorrow.first.team_date.strftime("%a %b %d, %Y") %>:
+        </h3>
+      </td>
+    </tr>
+    <tr>
+      <th align="left" colspan="2">
+        Team #<%= @team_members_tomorrow.first.team_number %>
+      </th>
+      <th>Points Needed</th>
+    </tr>
+    <% @team_members_tomorrow.each do |team_member_tomorrow| %>
+      <tr>
+        <td><%= team_member_tomorrow.rank_number %>&nbsp;&nbsp;<%= team_member_tomorrow.rank_letter %></td>
+        <td><%= team_member_tomorrow.outing_golfer.golfer.full_name_with_nickname %></td>
+        <td align="right"><%= team_member_tomorrow.points_expected %></td>
+      </tr>
+    <% end %>
+    <tr style="font-weight: bold;">
+      <td colspan="2"/>
+      <td align="right"><%= @team_members_tomorrow.sum(:points_expected) %></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>
+  <% url = "#{outing_url(id: @outing_id)}#tab-for-#{@team_members_today.first.team_date}" %>
+  Click <%= link_to "here", url, target: "_blank" %> here to see complete results for <%= @team_members_today.first.team_date.strftime("%a %b %d, %Y") %>.
+</p>

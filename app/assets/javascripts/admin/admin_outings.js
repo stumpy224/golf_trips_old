@@ -1,16 +1,16 @@
 //= require jquery
 
-var selectors = {
+let admin_outing_selectors = {
     outingStartDate: "#outing_start_date",
     outingEndDate: "#outing_end_date",
 };
 
 $(document).ready(function () {
-    $(selectors.outingStartDate).change(function () {
-        var startDateValue = $(this).val();
+    $(admin_outing_selectors.outingStartDate).change(function () {
+        let startDateValue = $(this).val();
 
-        if (startDateValue && $(selectors.outingEndDate).val() == "") {
-            $(selectors.outingEndDate).val(startDateValue);
+        if (startDateValue && $(admin_outing_selectors.outingEndDate).val() == "") {
+            $(admin_outing_selectors.outingEndDate).val(startDateValue);
         }
     });
 });

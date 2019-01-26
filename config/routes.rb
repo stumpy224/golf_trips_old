@@ -10,9 +10,12 @@ Rails.application.routes.draw do
     resources :teams
     resources :scores
     resources :users
+    resources :admin_controls
+    resources :email_logs
 
     get 'outings/:id/get_dates', to: 'outings#get_dates', as: 'get_outing_dates'
     get 'outings/:id/teams/:team_date/generate', to: 'teams#generate', as: 'generate_teams'
+    get 'outings/:id/teams/:team_date/email', to: 'teams#email_registered_users', as: 'email_registered_users'
 
     root to: "golfers#index"
   end

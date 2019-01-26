@@ -11,19 +11,23 @@ class OutingsController < ApplicationController
   private
 
   def authenticate_user_attendance
-    golfer = Golfer.find_by_email(current_user.email)
+    if logged_in?
+      golfer = Golfer.find_by_email(current_user.email)
 
-    if golfer.nil?
-      flash[:error] = "Please contact the Site Administrator"
-      redirect_to root_path
-    end
+      if golfer.nil?
+        flash[:error] = "Please contact the Site Administrator"
+        redirect_to root_path
+      end
 
-    # golfer found, determine if they attended the outing in question
-    outing_ids = OutingGolfer.where(golfer_id: golfer.id).pluck(:outing_id)
+      # golfer found, determine if they attended the outing in question
+      outing_ids = OutingGolfer.where(golfer_id: golfer.id).pluck(:outing_id)
 
-    unless outing_ids.include?(params[:id].to_i)
-      flash[:warning] = "Could not find Outing"
-      redirect_to root_path
+      unless outing_ids.include?(params[:id].to_i)
+        flash[:warning] = "Could not find Outing"
+        redirect_to root_path
+      end
+    else
+      redirect_to login_path
     end
   end
 end

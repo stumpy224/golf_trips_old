@@ -91,6 +91,59 @@ module Admin
       flash[:notice] = "Teams generated for #{(params[:team_date].to_date + 1).strftime("%a %b %d, %Y")}"
     end
 
+    def email_registered_users
+      @admin_control_value = AdminControl.find_by_name("team_generation_emails").value
+
+      case @admin_control_value
+      when "OFF"
+        render html: "<div>Team generation emails are turned off (see Admin Control for team_generation_emails).</div>".html_safe
+      when "ON"
+        users_notified = 0
+
+        User.all.each do |user|
+          golfer = Golfer.find_by_email(user.email)
+
+          if !golfer.nil?
+            today = params[:team_date]
+            tomorrow = params[:team_date].to_date + 1
+            golfers_team_placing = 0
+
+            golfers_team_today = Team.joins(:outing_golfer).includes(:outing_golfer)
+                              .where(team_date: today)
+                              .where("outing_golfers.golfer_id = #{golfer.id}")
+                              .first
+
+            team_rankings = get_teams_ranking_by_date(params[:id], today)
+
+            team_rankings.each.with_index do |team_rankings, index|
+              golfers_team_placing = index + 1 if team_rankings.team_number == golfers_team_today.team_number
+            end
+
+            team_members_today = Team.where(team_date: today)
+                                      .where(team_number: golfers_team_today.team_number)
+                                      .order(:rank_letter)
+
+            golfers_team_tomorrow = Team.joins(:outing_golfer).includes(:outing_golfer)
+                              .where(team_date: tomorrow)
+                              .where("outing_golfers.golfer_id = #{golfer.id}")
+                              .first
+
+            team_members_tomorrow = Team.where(team_date: tomorrow)
+                                      .where(team_number: golfers_team_tomorrow.team_number)
+                                      .order(:rank_letter)
+
+            UserMailer.team_results_and_next_day_team(user, golfer, params[:id], golfers_team_placing, team_members_today, team_members_tomorrow).deliver_now
+
+            users_notified += 1
+          end
+
+        end # end of User loop
+
+        render html: "<div>#{users_notified} #{'email'.pluralize(users_notified)} sent</div>".html_safe
+      end
+
+    end
+
     private
 
     def team_params

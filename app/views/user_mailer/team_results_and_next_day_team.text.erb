@@ -1,0 +1,23 @@
+Golf Hacker Club
+
+Your team results for <%= @team_members_today.first.team_date.strftime("%a %b %d, %Y") %>:
+
+Team #<%= @team_members_today.first.team_number %><%= @golfers_team_placing.nil? ? "" : ", #{@golfers_team_placing.ordinalize} Place" %>
+
+<% @team_members_today.each do |team_member_today| %>
+  <%= team_member_today.rank_number %> <%= team_member_today.rank_letter %>  <%= team_member_today.outing_golfer.golfer.full_name_with_nickname %>  <%= team_member_today.points_expected %>  <%= team_member_today.points_actual %>  <%= team_member_today.points_plus_minus %>
+<% end %>
+                              <%= @team_members_today.sum(:points_expected) %>  <%= @team_members_today.sum(:points_actual) %>  <%= @team_members_today.sum(:points_plus_minus) %>
+
+Your teammates for <%= @team_members_tomorrow.first.team_date.strftime("%a %b %d, %Y") %>:
+
+Team #<%= @team_members_tomorrow.first.team_number %>
+
+<% @team_members_tomorrow.each do |team_member_tomorrow| %>
+  <%= team_member_tomorrow.rank_number %> <%= team_member_tomorrow.rank_letter %>  <%= team_member_tomorrow.outing_golfer.golfer.full_name_with_nickname %>  <%= team_member_tomorrow.points_expected %>
+<% end %>
+                              <%= @team_members_tomorrow.sum(:points_expected) %>
+
+Please copy and paste this link in your browser:
+
+<%#= edit_account_activation_url(@user.activation_token, email: @user.email) %>

@@ -1,7 +1,9 @@
 //= require jquery
 
-var selectors = {
-    generateTeamsDialogButton: "#generate_teams_dialog_button",
+let admin_team_selectors = {
+    generateTeamsShowDialogBtn: "#generate_teams_show_dialog_btn",
+    closeDialogBtn: "button.close-dialog",
+    generateTeamsBtn: "#generate_teams_btn",
     outingSelect: "#outing_select",
     outingDatesDiv: "#outing_dates_div",
     outingDatesSelect: "#outing_dates_select",
@@ -9,30 +11,38 @@ var selectors = {
 };
 
 $(document).ready(function () {
-    var dialog = document.querySelector('dialog');
+    let dialog = document.querySelector('dialog');
 
     if (dialog != undefined) {
         setupDialog(dialog);
-        setupOutingOnChangeEvent();
+        setupGenerateTeamsButtonClick();
     }
 });
 
 function setupDialog(dialog) {
-    var showDialogButton = document.querySelector(selectors.generateTeamsDialogButton);
+    let showDialogButton = $(admin_team_selectors.generateTeamsShowDialogBtn);
+    let closeDialogButton = $(admin_team_selectors.closeDialogBtn);
 
     if (!dialog.showModal) {
         dialogPolyfill.registerDialog(dialog);
     }
-    showDialogButton.addEventListener('click', function () {
+
+    $(showDialogButton).click(function () {
         dialog.showModal();
+        setupGenerateTeamsButtonClick();
+        setupOutingOnChangeEvent();
     });
-    dialog.querySelector('.close').addEventListener('click', function () {
+
+    $(closeDialogButton).click(function () {
         dialog.close();
     });
-    $(selectors.generateTeamsButton).click(function () {
-        $(selectors.generateTeamsButton).prop('disabled', true);
+}
+
+function setupGenerateTeamsButtonClick() {
+    $(admin_team_selectors.generateTeamsBtn).click(function () {
+        $(admin_team_selectors.generateTeamsBtn).prop('disabled', true);
         $.get({
-            url: "/admin/outings/" + $(selectors.outingSelect).val() + "/teams/" + $(selectors.outingDatesSelect).val() + "/generate",
+            url: "/admin/outings/" + $(admin_team_selectors.outingSelect).val() + "/teams/" + $(admin_team_selectors.outingDatesSelect).val() + "/generate",
             success: function () {
                 dialog.close();
                 window.location.reload();
@@ -42,16 +52,16 @@ function setupDialog(dialog) {
 }
 
 function setupOutingOnChangeEvent() {
-    $(selectors.outingSelect).change(function () {
-        if ($(selectors.outingSelect).val() > 0) {
+    $(admin_team_selectors.outingSelect).change(function () {
+        if ($(admin_team_selectors.outingSelect).val() > 0) {
             $.get({
-                url: "/admin/outings/" + $(selectors.outingSelect).val() + "/get_dates",
+                url: "/admin/outings/" + $(admin_team_selectors.outingSelect).val() + "/get_dates",
                 dataType: "json",
                 success: function (outingDates) {
-                    $(selectors.outingDatesSelect).empty().append($("<option></option>"));
+                    $(admin_team_selectors.outingDatesSelect).empty().append($("<option></option>"));
 
                     $.each(outingDates, function (index, outingDate) {
-                        $(selectors.outingDatesSelect)
+                        $(admin_team_selectors.outingDatesSelect)
                             .append($("<option></option>")
                                 .attr("value", outingDate)
                                 .text(moment(outingDate).format("ddd MMM DD, YYYY")))
@@ -59,9 +69,9 @@ function setupOutingOnChangeEvent() {
                 }
             });
 
-            $(selectors.outingDatesDiv).show();
+            $(admin_team_selectors.outingDatesDiv).show();
         } else {
-            $(selectors.outingDatesDiv).hide();
+            $(admin_team_selectors.outingDatesDiv).hide();
         }
     });
 }
