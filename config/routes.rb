@@ -1,15 +1,16 @@
 Rails.application.routes.draw do
   namespace :admin do
+    resources :outings
+    resources :outing_golfers
+    resources :teams
+    resources :scores
     resources :golfers
     resources :courses
     resources :holes
     resources :lodging_types
     resources :lodgings
-    resources :outings
-    resources :outing_golfers
-    resources :teams
-    resources :scores
     resources :users
+    resources :user_email_opt_outs
     resources :admin_controls
     resources :email_logs
 
@@ -17,7 +18,7 @@ Rails.application.routes.draw do
     get 'outings/:id/teams/:team_date/generate', to: 'teams#generate', as: 'generate_teams'
     get 'outings/:id/teams/:team_date/email', to: 'teams#email_registered_users', as: 'email_registered_users'
 
-    root to: "golfers#index"
+    root to: "outings#index"
   end
 
   root 'home#index'
@@ -28,6 +29,9 @@ Rails.application.routes.draw do
 
   get 'password_resets/new'
   get 'password_resets/edit'
+
+  get '/users/:uuid/unsubscribe/:email_template', to: 'users#unsubscribe', as: 'user_unsubscribe'
+  post '/user_email_prefs', to: 'users#email_prefs', as: 'user_email_prefs'
 
   resources :account_activations, only: [:edit]
   resources :password_resets, only: [:new, :create, :edit, :update]

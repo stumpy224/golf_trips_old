@@ -1,6 +1,6 @@
 require "administrate/base_dashboard"
 
-class EmailLogDashboard < Administrate::BaseDashboard
+class UserEmailOptOutDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
   # a hash that describes the type of each of the model's fields.
   #
@@ -8,13 +8,9 @@ class EmailLogDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    outing: Field::BelongsTo,
-    golfer: Field::BelongsTo,
+    user: Field::BelongsTo,
     id: Field::Number,
-    template: Field::String,
-    subject: Field::String,
-    body: Field::String,
-    sent_to: Field::String,
+    email_template: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -25,11 +21,8 @@ class EmailLogDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
-    :template,
-    :subject,
-    :sent_to,
-    :outing,
-    :golfer,
+    :user,
+    :email_template,
     :created_at,
   ].freeze
 
@@ -37,31 +30,24 @@ class EmailLogDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
     :id,
-    :template,
-    :subject,
-    :body,
-    :sent_to,
-    :outing,
-    :golfer,
+    :user,
+    :email_template,
     :created_at,
+    :updated_at,
   ].freeze
 
   # FORM_ATTRIBUTES
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
-  # FORM_ATTRIBUTES = [
-  #   :outing,
-  #   :golfer,
-  #   :template,
-  #   :subject,
-  #   :body,
-  #   :sent_to,
-  # ].freeze
+  FORM_ATTRIBUTES = [
+    :user,
+    :email_template,
+  ].freeze
 
-  # Overwrite this method to customize how email logs are displayed
+  # Overwrite this method to customize how user email opt outs are displayed
   # across all pages of the admin dashboard.
   #
-  # def display_resource(email_log)
-  #   "EmailLog ##{email_log.id}"
+  # def display_resource(user_email_opt_out)
+  #   "UserEmailOptOut ##{user_email_opt_out.id}"
   # end
 end

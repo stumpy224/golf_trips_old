@@ -26,10 +26,11 @@ $(document).ready(function () {
 });
 
 function enableBlockUI() {
-    $.blockUI.defaults.message = '<h4 class="p-2">Please wait...</h4>';
+    $.blockUI.defaults.message = '<h3>Please wait...</h3>';
     $.blockUI.defaults.css.border = 'none';
-    $.blockUI.defaults.css.opacity = '.8';
     $.blockUI.defaults.css.left = '25%';
+    $.blockUI.defaults.css.opacity = '.8';
+    $.blockUI.defaults.css.padding = '1em';
     $.blockUI.defaults.css.width = '50%';
     $.blockUI.defaults.baseZ = '10000';
 

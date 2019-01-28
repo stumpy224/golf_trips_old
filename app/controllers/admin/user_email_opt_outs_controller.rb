@@ -1,5 +1,5 @@
 module Admin
-  class EmailLogsController < Admin::ApplicationController
+  class UserEmailOptOutsController < Admin::ApplicationController
     def index
       search_term = params[:search].to_s.strip
       resources = Administrate::Search.new(scoped_resource,

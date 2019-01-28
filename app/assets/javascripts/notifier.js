@@ -33,7 +33,7 @@ function notifyOfError(message) {
 function notifyOfInfo(message) {
     setupDefaultOptions();
     toastr.options.closeButton = true;
-    toastr.options.timeOut = 0;
+    toastr.options.timeOut = 5000;
     toastr.options.extendedTimeOut = 0;
     toastr.info(message[0].innerText);
 }

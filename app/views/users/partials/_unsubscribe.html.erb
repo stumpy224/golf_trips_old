@@ -1,0 +1,24 @@
+<div class="row justify-content-center">
+  <div class="col-sm-12 col-md-7">
+    <div class="card">
+      <div class="container">
+        <h2 class="card-title text-center">
+          <i class="fas fa-user-circle text-primary pr-2"></i>Email Preferences
+        </h2>
+        <div class="card-body">
+          <div class="custom-control custom-switch">
+            <% checked_or_blank = @user_email_opt_outs.nil? ? '' :
+                                      (@user_email_opt_outs.any? {|opt_out| opt_out.email_template == ApplicationHelper::EMAIL_TEMPLATE_FOR_TEAM_RESULTS} ? '' : 'checked') %>
+            <input type="checkbox" class="custom-control-input" id="team_results_and_next_day_team_switch" <%= checked_or_blank %>>
+            <label class="custom-control-label" for="team_results_and_next_day_team_switch">
+              Team Results
+            </label>
+            <small class="form-text text-muted">
+              Receive an email each day of the outing that includes your team results and your teammates for the next day.
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

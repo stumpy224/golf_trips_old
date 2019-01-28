@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   attr_accessor :activation_token, :remember_token, :reset_token
-  before_create :create_activation_digest
+  before_create :create_activation_digest, :create_uuid
   before_save :downcase_email
   validates(:first_name, presence: true)
   validates(:last_name, presence: true)
@@ -70,6 +70,10 @@ class User < ApplicationRecord
   def create_activation_digest
     self.activation_token = User.new_token
     self.activation_digest = User.digest(activation_token)
+  end
+
+  def create_uuid
+    self.uuid = SecureRandom.uuid
   end
 
   def downcase_email

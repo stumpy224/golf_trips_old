@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_25_204452) do
+ActiveRecord::Schema.define(version: 2019_01_27_140727) do
 
   create_table "admin_controls", force: :cascade do |t|
     t.string "name"
@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 2019_01_25_204452) do
   create_table "email_logs", force: :cascade do |t|
     t.string "template"
     t.string "subject"
-    t.string "body"
+    t.text "body"
     t.string "sent_to"
     t.integer "outing_id"
     t.integer "golfer_id"
@@ -130,6 +130,14 @@ ActiveRecord::Schema.define(version: 2019_01_25_204452) do
     t.index ["outing_golfer_id"], name: "index_teams_on_outing_golfer_id"
   end
 
+  create_table "user_email_opt_outs", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "email_template"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_email_opt_outs_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
@@ -146,7 +154,9 @@ ActiveRecord::Schema.define(version: 2019_01_25_204452) do
     t.datetime "reset_sent_at"
     t.boolean "is_admin", default: false, null: false
     t.string "remember_digest"
+    t.string "uuid"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["uuid"], name: "index_users_on_uuid"
   end
 
 end

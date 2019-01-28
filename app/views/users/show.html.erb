@@ -1,1 +1,7 @@
-<%= render partial: 'users/partials/form', locals: {title: "My Account", heading: "My Account"} %>
+<% provide(:title, "Profile") %>
+
+<%= render partial: 'users/partials/form', locals: {title: "My Account"} %>
+
+<% unless @user.id.nil? %>
+  <%= render partial: 'users/partials/unsubscribe' %>
+<% end %>

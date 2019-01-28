@@ -33,6 +33,7 @@ class UserMailerPreview < ActionMailer::Preview
     team_members_today = Team.where(team_date: golfers_team_today.team_date)
                              .where(team_number: golfers_team_today.team_number)
                              .order(:rank_letter)
+
     team_members_tomorrow = Team.where(team_date: golfers_team_tomorrow.team_date)
                              .where(team_number: golfers_team_tomorrow.team_number)
                              .order(:rank_letter)

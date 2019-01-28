@@ -1,5 +1,3 @@
-<% provide(:title, title) %>
-
 <div class="row justify-content-center">
   <div class="col-sm-12 col-md-7">
     <div class="card">
@@ -14,7 +12,6 @@
             <div class="form-group">
               <%= form.label :first_name, class: "bmd-label-floating" %>
               <%= form.text_field :first_name, class: "form-control", pattern: "[A-Z,a-z'-]*" %>
-  <!--            <small class="error form-text text-muted">Whoa, what kind of name is that?!</small>-->
             </div>
             <div class="form-group">
               <%= form.label :last_name, class: "bmd-label-floating" %>

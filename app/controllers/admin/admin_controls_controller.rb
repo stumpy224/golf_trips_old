@@ -1,21 +1,30 @@
 module Admin
   class AdminControlsController < Admin::ApplicationController
-    # To customize the behavior of this controller,
-    # you can overwrite any of the RESTful actions. For example:
-    #
-    # def index
-    #   super
-    #   @resources = AdminControl.
-    #     page(params[:page]).
-    #     per(10)
-    # end
+    def index
+      search_term = params[:search].to_s.strip
+      resources = Administrate::Search.new(scoped_resource,
+                                           dashboard_class,
+                                           search_term).run
+      resources = apply_resource_includes(resources)
 
-    # Define a custom finder by overriding the `find_resource` method:
-    # def find_resource(param)
-    #   AdminControl.find_by!(slug: param)
-    # end
+      resources = order.apply(resources)
 
-    # See https://administrate-prototype.herokuapp.com/customizing_controller_actions
-    # for more information
+      if params[:order]
+        resources = order.apply(resources)
+      else
+        resources = resources.order(:name)
+      end
+
+      resources = resources.page(params[:page]).per(records_per_page)
+      page = Administrate::Page::Collection.new(dashboard, order: order)
+
+      render locals: {
+          resources: resources,
+          search_term: search_term,
+          page: page,
+          show_search_bar: false,
+          show_search_bar: show_search_bar?,
+      }
+    end
   end
 end

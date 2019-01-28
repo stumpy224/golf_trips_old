@@ -1,0 +1,18 @@
+let selectors = {
+    receive_email_for_team_results: "#team_results_and_next_day_team_switch"
+};
+
+$(document).on('turbolinks:load', function () {
+    handleTeamResultsEmailSwitch();
+});
+
+function handleTeamResultsEmailSwitch() {
+    $(selectors.receive_email_for_team_results).click(function () {
+        $.post("/user_email_prefs",
+            {
+                is_checked: $(this).prop("checked"),
+                email_template: "<%= ApplicationHelper::EMAIL_TEMPLATE_FOR_TEAM_RESULTS %>"
+            }
+        );
+    });
+}

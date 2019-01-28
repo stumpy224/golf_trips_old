@@ -1,4 +1,6 @@
 module ApplicationHelper
+  EMAIL_TEMPLATE_FOR_TEAM_RESULTS = "team_results_and_next_day_team"
+
   def email_regex
     /([^\s;*'"():!]{1,})([@]{1,1})([^\s;*'"():!]{1,})([.]{1,1})([\w]{2,})/
   end

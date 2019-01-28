@@ -12,11 +12,11 @@
             <% if index == 0 %>
               <div class="row d-flex pb-2 ml-1 mr-1 no-print justify-content-center">
                 <% unless team.team_points_actual.nil? %>
-                  <button type="button" class="btn special-color btn-sm show-hide-golfers">
+                  <button type="button" class="btn btn-primary btn-sm show-hide-golfers">
                     <i class="fas fa-plus pr-2"></i>Show Golfers
                   </button>
                 <% end %>
-                <button type="button" class="btn special-color btn-sm" onclick="window.print();">
+                <button type="button" class="btn btn-primary btn-sm" onclick="window.print();">
                   <i class="fas fa-print pr-2"></i>Print
                 </button>
               </div>

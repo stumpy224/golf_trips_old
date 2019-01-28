@@ -91,52 +91,37 @@ module Admin
       flash[:notice] = "Teams generated for #{(params[:team_date].to_date + 1).strftime("%a %b %d, %Y")}"
     end
 
+    # called via /admin/outings/:id/teams/:team_date/email
     def email_registered_users
       @admin_control_value = AdminControl.find_by_name("team_generation_emails").value
 
       case @admin_control_value
       when "OFF"
-        render html: "<div>Team generation emails are turned off (see Admin Control for team_generation_emails).</div>".html_safe
+        render html: "<div>Team generation emails are turned off (see Admin Control entry for team_generation_emails).</div>".html_safe
       when "ON"
         users_notified = 0
 
+        # TODO: check if user has already received the email before sending
         User.all.each do |user|
-          golfer = Golfer.find_by_email(user.email)
+          if is_user_receiving_team_results_email?(user.id)
+            golfer = Golfer.find_by_email(user.email)
 
-          if !golfer.nil?
-            today = params[:team_date]
-            tomorrow = params[:team_date].to_date + 1
-            golfers_team_placing = 0
+            if !golfer.nil?
+              today = params[:team_date]
+              tomorrow = params[:team_date].to_date + 1
 
-            golfers_team_today = Team.joins(:outing_golfer).includes(:outing_golfer)
-                              .where(team_date: today)
-                              .where("outing_golfers.golfer_id = #{golfer.id}")
-                              .first
+              golfers_team_today = get_golfers_team(golfer.id, today)
+              team_members_today = get_golfers_team_members(golfers_team_today)
+              golfers_team_placing = get_golfers_team_placing(params[:id], golfers_team_today)
 
-            team_rankings = get_teams_ranking_by_date(params[:id], today)
+              golfers_team_tomorrow = get_golfers_team(golfer.id, tomorrow)
+              team_members_tomorrow = get_golfers_team_members(golfers_team_tomorrow)
 
-            team_rankings.each.with_index do |team_rankings, index|
-              golfers_team_placing = index + 1 if team_rankings.team_number == golfers_team_today.team_number
+              UserMailer.team_results_and_next_day_team(user, golfer, params[:id], golfers_team_placing, team_members_today, team_members_tomorrow).deliver_now
+
+              users_notified += 1
             end
-
-            team_members_today = Team.where(team_date: today)
-                                      .where(team_number: golfers_team_today.team_number)
-                                      .order(:rank_letter)
-
-            golfers_team_tomorrow = Team.joins(:outing_golfer).includes(:outing_golfer)
-                              .where(team_date: tomorrow)
-                              .where("outing_golfers.golfer_id = #{golfer.id}")
-                              .first
-
-            team_members_tomorrow = Team.where(team_date: tomorrow)
-                                      .where(team_number: golfers_team_tomorrow.team_number)
-                                      .order(:rank_letter)
-
-            UserMailer.team_results_and_next_day_team(user, golfer, params[:id], golfers_team_placing, team_members_today, team_members_tomorrow).deliver_now
-
-            users_notified += 1
           end
-
         end # end of User loop
 
         render html: "<div>#{users_notified} #{'email'.pluralize(users_notified)} sent</div>".html_safe
@@ -148,6 +133,34 @@ module Admin
 
     def team_params
       params.require(:team).permit(:outing_golfer_id, :team_number, :rank_number, :rank_letter, :points_expected, :points_actual, :points_plus_minus, :team_date, :scores)
+    end
+
+    def is_user_receiving_team_results_email?(user_id)
+      !UserEmailOptOut.where(user_id: user_id).where(email_template: EMAIL_TEMPLATE_FOR_TEAM_RESULTS).present?
+    end
+
+    def get_golfers_team_placing(outing_id, golfers_team)
+      golfers_team_placing = 0
+
+      team_rankings = get_teams_ranking_by_date(outing_id, golfers_team.team_date)
+      team_rankings.each.with_index do |team_rankings, index|
+        golfers_team_placing = index + 1 if team_rankings.team_number == golfers_team.team_number
+      end
+
+      golfers_team_placing
+    end
+
+    def get_golfers_team(golfer_id, team_date)
+      Team.joins(:outing_golfer).includes(:outing_golfer)
+          .where(team_date: team_date)
+          .where("outing_golfers.golfer_id = #{golfer_id}")
+          .first
+    end
+
+    def get_golfers_team_members(golfers_team)
+      Team.where(team_date: golfers_team.team_date)
+          .where(team_number: golfers_team.team_number)
+          .order(:rank_letter)
     end
 
     def score_needs_updated?(existing_scores, score)

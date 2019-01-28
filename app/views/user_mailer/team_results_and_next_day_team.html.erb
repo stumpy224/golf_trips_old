@@ -70,3 +70,9 @@
   <% url = "#{outing_url(id: @outing_id)}#tab-for-#{@team_members_today.first.team_date}" %>
   Click <%= link_to "here", url, target: "_blank" %> here to see complete results for <%= @team_members_today.first.team_date.strftime("%a %b %d, %Y") %>.
 </p>
+
+<br/>
+
+<p>
+  <small>To unsubscribe from these emails, please click <%= link_to "here", user_unsubscribe_url(uuid: @user.uuid, email_template: @email_template) %>.</small>
+</p>

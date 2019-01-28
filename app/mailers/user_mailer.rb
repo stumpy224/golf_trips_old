@@ -21,12 +21,14 @@ class UserMailer < ApplicationMailer
   end
 
   def team_results_and_next_day_team(user, golfer, outing_id, golfers_team_placing, team_members_today, team_members_tomorrow)
+    @email_template = __method__.to_s
+    @user = user
     @outing_id = outing_id
     @golfers_team_placing = golfers_team_placing
     @team_members_today = team_members_today
     @team_members_tomorrow = team_members_tomorrow
     @mail = mail(to: user.email, subject: "#{SUBJECT_PREFIX} Results for #{team_members_today.first.team_date.strftime("%a %b %d, %Y")}")
-    EmailLog.create(template: __method__.to_s,
+    EmailLog.create(template: @email_template,
                     subject: @mail.subject,
                     body: @mail.html_part.body.decoded,
                     sent_to: @mail.to,
