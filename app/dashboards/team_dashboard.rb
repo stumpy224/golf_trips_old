@@ -13,7 +13,8 @@ class TeamDashboard < Administrate::BaseDashboard
           searchable_field: 'id'
       ),
       scores: Field::HasMany.with_options(
-          limit: 18
+          limit: 18,
+          sort_by: "hole_id"
       ),
       id: Field::Number,
       team_number: Field::Number,
