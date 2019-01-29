@@ -37,4 +37,9 @@ module ApplicationHelper
 
     return 0
   end
+
+  def under_maintenance?
+    site_maintenance = AdminControl.find_by_name("site_maintenance")
+    site_maintenance.nil? || site_maintenance.value == "ON"
+  end
 end

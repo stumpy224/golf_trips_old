@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
   include TeamsHelper
 
-  before_action :logged_in?
+  before_action :under_maintenance?, :logged_in?
 
   add_flash_types :success, :info, :warning, :error
 
