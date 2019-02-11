@@ -1,0 +1,38 @@
+<div class="tab-pane" id="tab-for-docs" role="tabpanel">
+  <h5 class="text-center">Documents</h5>
+
+  <% if @outing_docs.size > 0 %>
+    <div class="row d-flex justify-content-center">
+      <div class="col-sm-12 col-md-9">
+        <table id="docsTable" class="table table-hover">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Name</th>
+              <th>Modified</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @outing_docs.each do |outing_doc| %>
+              <tr>
+                <td width="1%">
+                  <a href="https://docs.google.com/feeds/download/documents/export/Export?exportFormat=pdf&id=<%= outing_doc.id %>">
+                    <i class="fas fa-file-download"></i>
+                  </a>
+                </td>
+                <td>
+                  <%= outing_doc.name %>
+                </td>
+                <td>
+                  <%= outing_doc.modified_time.strftime("%D") %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% else %>
+    <h6 class="text-center">No documents yet, please check back later.</h6>
+  <% end %>
+</div>

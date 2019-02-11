@@ -67,6 +67,18 @@ function setupTables() {
         lengthMenu: [[-1, 10, 25, 50], ["All", 10, 25, 50]]
     });
 
+    $("#docsTable").DataTable({
+        destroy: true,
+        info: false,
+        paging: false,
+        dom: "<'row' <'col-12 d-flex justify-content-center't>>",
+        order: [[ 1, "asc" ]],
+        columnDefs: [{
+            targets: 0,
+            orderable: false
+        }]
+    });
+
     $("table.outing-day-table tbody").on("click", "tr.team-row", function () {
         $(this).find(outing_selectors.btn_expansion)[0].click();
     });

@@ -10,10 +10,11 @@
           <%= render partial: 'outings/tabs/golfers_tab' %>
           <%= render partial: 'outings/tabs/outing_days_tab' %>
           <%= render partial: 'outings/tabs/overall_tab' %>
+          <%= render partial: 'outings/tabs/docs_tab' %>
         </div>
       </div>
 
-      <%= render partial: "outings/navigation", locals: { outing: @outing } %>
+      <%= render partial: "outings/tab_nav", locals: {outing: @outing } %>
     </div>
   </div>
 </div>

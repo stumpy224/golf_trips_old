@@ -30,6 +30,9 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
+# Ignore Google Drive API credentials
+/vendor/drive/*
+
 /.idea/*
 
 # For now, ignore the erd generated diagram based on models via 'rake erd'
