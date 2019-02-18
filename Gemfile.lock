@@ -131,6 +131,10 @@ GEM
       representable (~> 3.0)
       retriable (>= 2.0, < 4.0)
       signet (~> 0.10)
+    google_drive (3.0.1)
+      google-api-client (>= 0.11.0, < 0.26.0)
+      googleauth (>= 0.5.0, < 1.0.0)
+      nokogiri (>= 1.5.3, < 2.0.0)
     googleauth (0.6.7)
       faraday (~> 0.12)
       jwt (>= 1.4, < 3.0)
@@ -374,6 +378,7 @@ DEPENDENCIES
   chromedriver-helper
   coffee-rails (~> 4.2)
   google-api-client (~> 0.8)
+  google_drive (= 3.0.1)
   irbtools
   irbtools-more
   jbuilder (~> 2.5)

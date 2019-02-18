@@ -1,18 +1,7 @@
 require 'google/apis/drive_v3'
 require 'googleauth'
-require 'googleauth/stores/file_token_store'
-require 'fileutils'
-require 'json'
 
 module GoogleDriveHelper
-  DRIVE_LOCATION = "vendor/drive/"
-  CREDENTIALS_PATH = DRIVE_LOCATION + "credentials.json".freeze
-  CREDENTIALS_JSON = JSON.parse(File.read(CREDENTIALS_PATH)).freeze
-  OOB_URI = CREDENTIALS_JSON["installed"]["oob_uri"].freeze
-  REFRESH_TOKEN = CREDENTIALS_JSON["installed"]["refresh_token"].freeze
-  SCOPE = Google::Apis::DriveV3::AUTH_DRIVE_READONLY
-  TOKEN_PATH = DRIVE_LOCATION + "token.yaml".freeze
-
   MIME_TYPE_FOLDER = "application/vnd.google-apps.folder"
   MIME_TYPE_GOOGLE_DOC = "application/vnd.google-apps.document"
 
@@ -55,18 +44,15 @@ module GoogleDriveHelper
   def google_drive_service
     drive_service = Google::Apis::DriveV3::DriveService.new
 
-    client_id = Google::Auth::ClientId.from_file(CREDENTIALS_PATH)
-    token_store = Google::Auth::Stores::FileTokenStore.new(file: TOKEN_PATH)
-    authorizer = Google::Auth::UserAuthorizer.new(client_id, SCOPE, token_store)
-    user_id = 'default'
-    credentials = authorizer.get_credentials(user_id)
-
-    if credentials.nil?
-      puts "credentials are nil"
-      credentials = authorizer.get_and_store_credentials_from_code(
-          user_id: user_id, code: REFRESH_TOKEN, base_url: OOB_URI
-      )
-    end
+    # source: https://www.rubydoc.info/github/gimite/google-drive-ruby/GoogleDrive
+    credentials = Google::Auth::UserRefreshCredentials.new(
+        client_id: Rails.application.credentials.google_drive[:client_id],
+        client_secret: Rails.application.credentials.google_drive[:client_secret],
+        scope: [Google::Apis::DriveV3::AUTH_DRIVE_READONLY],
+        redirect_uri: "urn:ietf:wg:oauth:2.0:oob")
+    credentials.refresh_token = Rails.application.credentials.google_drive[:refresh_token]
+    credentials.fetch_access_token!
+    GoogleDrive.login_with_oauth(credentials.access_token)
 
     drive_service.authorization = credentials
     drive_service

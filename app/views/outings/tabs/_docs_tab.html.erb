@@ -16,9 +16,12 @@
             <% @outing_docs.each do |outing_doc| %>
               <tr>
                 <td width="1%">
-                  <a href="https://docs.google.com/feeds/download/documents/export/Export?exportFormat=pdf&id=<%= outing_doc.id %>">
-                    <i class="fas fa-file-download"></i>
+                  <a href="https://docs.google.com/document/d/<%= outing_doc.id %>/edit?usp=sharing" target="_blank">
+                    <i class="fas fa-file-alt fa-2x"></i>
                   </a>
+<!--                  <a href="https://docs.google.com/feeds/download/documents/export/Export?exportFormat=pdf&id=<%#= outing_doc.id %>">-->
+<!--                    <i class="fas fa-file-download"></i>-->
+<!--                  </a>-->
                 </td>
                 <td>
                   <%= outing_doc.name %>
