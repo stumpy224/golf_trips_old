@@ -16,11 +16,11 @@ class GolferDashboard < Administrate::BaseDashboard
     nickname: Field::String,
     email: Field::String,
     phone: Field::String,
-    is_active: Field::Boolean,
+    is_active: Field::BooleanToYesNo,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
-    is_registered: Field::Boolean,
-    is_board_member: Field::Boolean,
+    is_registered: Field::BooleanToYesNo,
+    is_board_member: Field::BooleanToYesNo,
   }.freeze
 
   # COLLECTION_ATTRIBUTES

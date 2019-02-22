@@ -36,6 +36,7 @@ gem 'jbuilder', '~> 2.5'
 
 # Use Administrate for administration
 gem 'administrate'
+gem 'administrate-field-boolean_to_yes_no'
 
 # Use bcrypt for password encryption
 gem 'bcrypt', '3.1.12'

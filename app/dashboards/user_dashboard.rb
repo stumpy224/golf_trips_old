@@ -18,11 +18,11 @@ class UserDashboard < Administrate::BaseDashboard
     updated_at: Field::DateTime,
     password_digest: Field::String,
     activation_digest: Field::String,
-    is_activated: Field::Boolean,
+    is_activated: Field::BooleanToYesNo,
     activated_at: Field::DateTime,
     reset_digest: Field::String,
     reset_sent_at: Field::DateTime,
-    is_admin: Field::Boolean,
+    is_admin: Field::BooleanToYesNo,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
