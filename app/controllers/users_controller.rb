@@ -36,13 +36,20 @@ class UsersController < ApplicationController
     orig_email = @user.email
 
     if @user.update(user_params)
-      # update the Golfer email if the email address matches
+      # synchronize Golfer info with User info if the email address matches
+      #  fyi - leaving out first_name / last_name as bogus updates could lead to confusion
       golfer = Golfer.find_by(email: orig_email)
-      golfer.update(email: user_params[:email]) if golfer.present?
+      golfer.update(
+          # first_name: user_params[:first_name],
+          # last_name: user_params[:last_name],
+          nickname: user_params[:nickname],
+          email: user_params[:email],
+          phone: user_params[:phone]
+      ) if golfer.present?
       flash.now[:success] = "Profile has been updated"
     end
 
-    render 'users/show'
+    render "users/show"
   end
 
   def email_prefs
