@@ -118,6 +118,11 @@ GEM
     every_day_irb (2.0.0)
       cd (~> 1.0)
     execjs (2.7.0)
+    factory_bot (5.0.2)
+      activesupport (>= 4.2.0)
+    factory_bot_rails (5.0.1)
+      factory_bot (~> 5.0.0)
+      railties (>= 4.2.0)
     fancy_irb (1.1.0)
       paint (>= 0.9, < 3.0)
       unicode-display_width (~> 1.1)
@@ -381,6 +386,7 @@ DEPENDENCIES
   capybara (>= 2.15)
   chromedriver-helper
   coffee-rails (~> 4.2)
+  factory_bot_rails
   google-api-client (~> 0.8)
   google_drive (= 3.0.1)
   irbtools
