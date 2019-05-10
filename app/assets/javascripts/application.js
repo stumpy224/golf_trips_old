@@ -11,7 +11,9 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery.blockUI.min
 //= require popper.min
+//= require toastr.min
 //= require bootstrap.min
 //= require mdb
 //= require datatables.min

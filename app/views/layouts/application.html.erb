@@ -9,17 +9,12 @@
 
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  <%= javascript_include_tag 'jquery.blockUI.min' %>
-  <%= javascript_include_tag 'popper.min' %>
 
   <!-- Flash messages -->
-  <%= stylesheet_link_tag 'toastr.min' %>
-  <%= javascript_include_tag 'toastr.min' %>
   <%= javascript_include_tag 'notifier' %>
 
+  <!-- Fonts -->
   <%= stylesheet_link_tag 'https://fonts.googleapis.com/css?family=Noto+Sans' %>
-
-  <!-- Font Awesome -->
   <%= stylesheet_link_tag 'https://use.fontawesome.com/releases/v5.6.3/css/all.css' %>
 
   <% if Rails.env.production? %>
