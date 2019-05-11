@@ -12,5 +12,7 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
 Rails.application.config.assets.precompile += %w(
-  toastr.min.css
-  admin/admin_outings.js admin/admin_teams.js jquery.blockUI.min.js notifier.js popper.min.js toastr.min.js )
+  jquery.modal.min.css toastr.min.css
+  jquery.blockUI.min.js jquery.modal.min.js notifier.js popper.min.js toastr.min.js
+  admin/admin_outings.js admin/admin_teams.js
+)

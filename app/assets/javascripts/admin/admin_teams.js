@@ -1,42 +1,19 @@
 //= require jquery
+//= require jquery.modal.min
 
 let admin_team_selectors = {
-    generateTeamsShowDialogBtn: "#generate_teams_show_dialog_btn",
-    closeDialogBtn: "button.close-dialog",
     generateTeamsBtn: "#generate_teams_btn",
     outingSelect: "#outing_select",
     outingDatesDiv: "#outing_dates_div",
     outingDatesSelect: "#outing_dates_select",
-    generateTeamsButton: "#generate_teams_button"
+    teamGenerationDiv: "#team-generation",
+    pleaseWaitDiv: "#please-wait"
 };
 
 $(document).ready(function () {
-    let dialog = document.querySelector('dialog');
-
-    if (dialog != undefined) {
-        setupDialog(dialog);
-        setupGenerateTeamsButtonClick();
-    }
+    setupGenerateTeamsButtonClick();
+    setupOutingOnChangeEvent();
 });
-
-function setupDialog(dialog) {
-    let showDialogButton = $(admin_team_selectors.generateTeamsShowDialogBtn);
-    let closeDialogButton = $(admin_team_selectors.closeDialogBtn);
-
-    if (!dialog.showModal) {
-        dialogPolyfill.registerDialog(dialog);
-    }
-
-    $(showDialogButton).click(function () {
-        dialog.showModal();
-        setupGenerateTeamsButtonClick();
-        setupOutingOnChangeEvent();
-    });
-
-    $(closeDialogButton).click(function () {
-        dialog.close();
-    });
-}
 
 function setupGenerateTeamsButtonClick() {
     $(admin_team_selectors.generateTeamsBtn).click(function () {
@@ -44,7 +21,8 @@ function setupGenerateTeamsButtonClick() {
         $.get({
             url: "/admin/outings/" + $(admin_team_selectors.outingSelect).val() + "/teams/" + $(admin_team_selectors.outingDatesSelect).val() + "/generate",
             success: function () {
-                dialog.close();
+                $(admin_team_selectors.teamGenerationDiv).hide();
+                $(admin_team_selectors.pleaseWaitDiv).show();
                 window.location.reload();
             }
         });

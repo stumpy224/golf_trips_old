@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery.blockUI.min
+//= require jquery.modal.min
 //= require popper.min
 //= require toastr.min
 //= require bootstrap.min
@@ -24,7 +25,7 @@
 
 $(document).ready(function () {
     enableBlockUI();
-    enablePopoversAndTooltips();
+    enableBootstrapDataToggles();
 });
 
 function enableBlockUI() {
@@ -45,10 +46,9 @@ function enableBlockUI() {
     });
 }
 
-function enablePopoversAndTooltips() {
+function enableBootstrapDataToggles() {
     $('[data-toggle="popover"]').popover({
-        html: true,
-        // trigger: "focus"
+        html: true
     });
 
     $('[data-toggle="tooltip"]').tooltip({

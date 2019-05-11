@@ -72,7 +72,7 @@ module Admin
     end
 
     def generate
-      teams_by_date = get_teams_by_date_ordered_by_points(params[:id], params[:team_date])
+      teams_by_date = get_teams_by_date_ordered_by_strokes(params[:id], params[:team_date])
 
       number_of_groups = (teams_by_date.size / 4.to_f).ceil
 
@@ -92,6 +92,7 @@ module Admin
     end
 
     # called via /admin/outings/:id/teams/:team_date/email
+    # :team_date refers to the current date (not tomorrow's)
     def email_registered_users
       @admin_control_value = AdminControl.find_by_name("team_generation_emails").value
 
