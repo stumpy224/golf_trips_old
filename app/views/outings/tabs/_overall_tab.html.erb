@@ -37,7 +37,7 @@
 
               <td><%= "#{sprintf("%02i", team.total_points_actual)}/#{team.total_strokes}" %></td>
               <td>
-                <%= "#{team.avg_points_actual.to_s.rjust(4, "0")}/#{(team.total_strokes/(@outing.get_dates_for_overall.size).to_f).round(1)}" %>
+                <%= "#{team.avg_points_actual.to_s.rjust(4, "0")}/#{(team.total_strokes/(@outing.get_dates_for_overall.size).to_f).round(1) unless team.total_strokes.nil?}" %>
               </td>
               <td class="text-center" style="color: <%= get_points_plus_minus_color(team.total_points_plus_minus) %>">
                 <%= "#{'+' if team.total_points_plus_minus.to_i > 0}#{team.total_points_plus_minus}" %>
