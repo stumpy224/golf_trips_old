@@ -12,4 +12,8 @@ class Outing < ApplicationRecord
   def get_dates
     (self.start_date..self.end_date).to_a
   end
+
+  def get_dates_for_overall
+    (self.start_date..(self.end_date - 1)).to_a
+  end
 end

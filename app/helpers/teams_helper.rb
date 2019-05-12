@@ -319,13 +319,13 @@ order by team_points_plus_minus desc, HDCP_1_PTS desc, HDCP_2_PTS desc, HDCP_3_P
        sum(teams.points_expected)                                                     AS total_points_expected,
        sum(teams.points_actual)                                                       AS total_points_actual,
        sum(teams.points_plus_minus)                                                   AS total_points_plus_minus,
-       avg(teams.points_actual)                                                       AS avg_points_actual,
+       #{Rails.env.production? ? "to_char(avg(teams.points_actual), 'FM99900.0')"
+                        : "printf('%2.1f', avg(teams.points_actual))"} AS avg_points_actual,
        (select sum(scores.strokes)
         from scores
         where scores.team_id in (select id
                                  from teams t2
-                                 where t2.outing_golfer_id = teams.outing_golfer_id)) AS total_strokes,
-       count(teams.team_date)                                                         AS outing_days_counted
+                                 where t2.outing_golfer_id = teams.outing_golfer_id)) AS total_strokes
 from teams
        join outing_golfers on teams.outing_golfer_id = outing_golfers.id
        join outings on outing_golfers.outing_id = outings.id
