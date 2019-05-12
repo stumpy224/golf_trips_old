@@ -79,11 +79,11 @@ function setupTables() {
         }]
     });
 
-    $("table.outing-day-table tbody").on("click", "tr.team-row", function () {
+    $("table.outing-day-table tbody tr.team-row").on("click", function () {
         $(this).find(outing_selectors.btn_expansion)[0].click();
     });
 
-    $("table.golfers-by-team-table tbody").on("click", "tr.golfer-row", function () {
+    $("table.golfers-by-team-table tbody tr.golfer-row").on("click", function () {
         $(this).find(outing_selectors.btn_expansion)[0].click();
     });
 }
