@@ -52,6 +52,7 @@ module Admin
 
     def update
       total_points = 0
+      total_strokes = 0
       team = Team.find(params[:id])
 
       params[:team][:scores].each do |score|
@@ -59,11 +60,12 @@ module Admin
         strokes = score[:strokes].to_i
         points = get_points(par, strokes)
         Score.find(score[:id]).update(points: points, strokes: strokes) if !strokes.zero? && score_needs_updated?(team.scores, score)
-        total_points += points
+        total_points += points unless strokes.zero?
+        total_strokes += strokes unless strokes.zero?
       end
 
-      params[:team][:points_actual] = total_points
-      params[:team][:points_plus_minus] = params[:team][:points_actual].to_i - params[:team][:points_expected].to_i
+      params[:team][:points_actual] = total_points unless total_strokes.zero?
+      params[:team][:points_plus_minus] = total_points.to_i - params[:team][:points_expected].to_i unless total_strokes.zero?
       team.update(team_params)
 
       flash[:notice] = "Team record for #{team.outing_golfer.golfer.full_name_with_nickname} has been updated"
