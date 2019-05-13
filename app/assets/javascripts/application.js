@@ -12,12 +12,21 @@
 //
 //= require jquery
 //= require jquery.blockUI.min
+//= require jquery.dataTables.min
 //= require jquery.modal.min
 //= require popper.min
 //= require toastr.min
 //= require bootstrap.min
 //= require mdb
 //= require datatables.min
+//= require dataTables.bootstrap4.min
+//= require datatables.buttons.min
+//= require jszip.min
+//= require pdfmake.min
+//= require vfs_fonts
+//= require buttons.html5.min
+//= require buttons.print.min
+//= require buttons.bootstrap4.min
 //= require rails-ujs
 //= require activestorage
 //= require turbolinks

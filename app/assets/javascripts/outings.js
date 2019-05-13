@@ -64,7 +64,25 @@ function setupTables() {
 
     $("#overallTable").DataTable({
         destroy: true,
-        lengthMenu: [[-1, 10, 25, 50], ["All", 10, 25, 50]]
+        lengthMenu: [[-1, 10, 25, 50], ["All", 10, 25, 50]],
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'print',
+                text: 'Print',
+                title: 'Golf Hacker Club Overall Stats'
+            },
+            {
+                extend: 'excelHtml5',
+                text: 'Excel',
+                title: 'Golf Hacker Club Overall Stats'
+            },
+            {
+                extend: 'pdfHtml5',
+                text: 'PDF',
+                title: 'Golf Hacker Club Overall Stats'
+            }
+        ]
     });
 
     $("#docsTable").DataTable({
