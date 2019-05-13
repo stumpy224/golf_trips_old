@@ -11,7 +11,7 @@
           <% teams_ranking.each.with_index do |team, index| %>
             <% if index == 0 %>
               <div class="row d-flex pb-2 ml-1 mr-1 no-print justify-content-center">
-                <% unless team.team_points_actual.nil? %>
+                <% unless team.team_points_actual.nil? || team.team_points_actual == 0 %>
                   <button type="button" class="btn btn-primary btn-sm show-hide-golfers">
                     <i class="fas fa-plus pr-2"></i>Show Golfers
                   </button>
@@ -19,7 +19,7 @@
               </div>
             <% end %>
 
-            <% if team.team_points_actual.nil? %>
+            <% if team.team_points_actual.nil? || team.team_points_actual == 0 %>
               <% if index == 0 %>
                 <div class="alert alert-dark text-center no-print" role="alert">
                   Points shown are to break even.
@@ -60,6 +60,7 @@
               </table>
 
             <% else %>
+
               <% if index == 0 %>
                 <table class="table table-sm table-hover outing-day-table">
                   <thead>
