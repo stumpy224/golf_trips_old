@@ -1,4 +1,5 @@
 let outing_selectors = {
+    outing_header: "#outingHeader",
     nav_link: "a.nav-link",
     nav_dropdown: "a.dropdown-item",
     btn_show_hide_golfers: "button.show-hide-golfers",
@@ -53,6 +54,8 @@ function scrollToTop() {
 }
 
 function setupTables() {
+    let outingName = $.trim($(outing_selectors.outing_header).text());
+
     $("#golfersTable").DataTable({
         destroy: true,
         info: false,
@@ -71,17 +74,17 @@ function setupTables() {
             {
                 extend: 'print',
                 text: 'Print',
-                title: 'Golf Hacker Club Overall Stats'
+                title: outingName + ' Overall Stats'
             },
             {
                 extend: 'excelHtml5',
                 text: 'Excel',
-                title: 'Golf Hacker Club Overall Stats'
+                title: outingName + ' Overall Stats'
             },
             {
                 extend: 'pdfHtml5',
                 text: 'PDF',
-                title: 'Golf Hacker Club Overall Stats'
+                title: outingName + ' Overall Stats'
             }
         ]
     });
