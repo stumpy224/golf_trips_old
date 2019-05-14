@@ -64,8 +64,9 @@ function setupTables() {
 
     $("#overallTable").DataTable({
         destroy: true,
-        lengthMenu: [[-1, 10, 25, 50], ["All", 10, 25, 50]],
-        dom: 'Bfrtip',
+        paging: false,
+        // lengthMenu: [[-1, 10, 25, 50], ["All", 10, 25, 50]],
+        dom: 'Bfti',
         buttons: [
             {
                 extend: 'print',
