@@ -50,8 +50,9 @@ table.outing-day-table th {
 }
 
 .double-bogey {
-  text-decoration-line: underline;
-  text-decoration-style: double;
+  @extend .bogey;
+  outline: 1px solid;
+  outline-offset: 2px;
 }
 
 .table {
