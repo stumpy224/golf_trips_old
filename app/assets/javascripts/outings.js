@@ -8,7 +8,8 @@ let outing_selectors = {
     icon_collapse: "fa-angle-down",
     icon_expand: "fa-angle-right",
     icon_plus: "fa-plus",
-    icon_minus: "fa-minus"
+    icon_minus: "fa-minus",
+    sticky: ".sticky"
 };
 
 $(document).on('turbolinks:load', function () {
@@ -17,6 +18,7 @@ $(document).on('turbolinks:load', function () {
     setupTables();
     setupShowHideGolfersBtn();
     setupExpansionGolferTables();
+    stickyOutingHeader();
 });
 
 function handleHashTagsInUrl() {
@@ -94,7 +96,7 @@ function setupTables() {
         info: false,
         paging: false,
         dom: "<'row' <'col-12 d-flex justify-content-center't>>",
-        order: [[ 1, "asc" ]],
+        order: [[1, "asc"]],
         columnDefs: [{
             targets: 0,
             orderable: false
@@ -182,5 +184,14 @@ function toggleTeamExpansionButtons(isShowGolfers, outingDate) {
         let teamExpansionButton = $(this).find(outing_selectors.btn_expansion + '[href$=' + outingDate + '][aria-expanded=' + !isShowGolfers + ']');
         $(teamExpansionButton).click();
         setExpandCollapseIcon($(teamExpansionButton).find(outing_selectors.icon)[0]);
+    });
+}
+
+function stickyOutingHeader() {
+    let stickyOffset = $(outing_selectors.sticky).offset().top;
+
+    $(window).scroll(function () {
+        $(window).scrollTop() >= stickyOffset ?
+            $(outing_selectors.sticky).addClass('fixed') : $(outing_selectors.sticky).removeClass('fixed');
     });
 }

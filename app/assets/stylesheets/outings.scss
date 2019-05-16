@@ -7,6 +7,17 @@
   padding-bottom: 0.5em !important;
 }
 
+#outingHeader {
+  z-index: 1;
+}
+
+.fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
 div.tab-pane {
   padding-top: 1em;
 }
