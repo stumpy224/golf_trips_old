@@ -2,6 +2,8 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+@import "mdb";
+
 .outing-details-card {
   padding: 0.5em !important;
   padding-bottom: 0.5em !important;
@@ -9,6 +11,22 @@
 
 #outingHeader {
   z-index: 1;
+}
+
+#scrollToTopBtn {
+  @extend .stylish-color;
+  display: none;
+  position: fixed;
+  bottom: 5em;
+  right: 3%;
+  z-index: 99; /* Make sure it does not overlap */
+  border: 1px solid white;
+  outline: none; /* Remove outline */
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
+  //padding: 15px;
+  //border-radius: 10px;
 }
 
 .fixed {

@@ -9,12 +9,14 @@ let outing_selectors = {
     icon_expand: "fa-angle-right",
     icon_plus: "fa-plus",
     icon_minus: "fa-minus",
+    scroll_to_top_btn: "#scrollToTopBtn",
     sticky: ".sticky"
 };
 
 $(document).on('turbolinks:load', function () {
     handleHashTagsInUrl();
     handleNavClicks();
+    handleScrollToTop();
     setupTables();
     setupShowHideGolfersBtn();
     setupExpansionGolferTables();
@@ -50,9 +52,11 @@ function handleNavClicks() {
     });
 }
 
-function scrollToTop() {
-    $("html, body").animate({scrollTop: 0}, "slow");
-    return false;
+function handleScrollToTop() {
+    $(window).scroll(function () {
+        $(window).scrollTop() >= 75 ?
+            $(outing_selectors.scroll_to_top_btn).show() : $(outing_selectors.scroll_to_top_btn).hide();
+    });
 }
 
 function setupTables() {
@@ -188,10 +192,12 @@ function toggleTeamExpansionButtons(isShowGolfers, outingDate) {
 }
 
 function stickyOutingHeader() {
-    let stickyOffset = $(outing_selectors.sticky).offset().top;
+    let stickyOffset = $(outing_selectors.sticky).offset();
 
-    $(window).scroll(function () {
-        $(window).scrollTop() >= stickyOffset ?
-            $(outing_selectors.sticky).addClass('fixed') : $(outing_selectors.sticky).removeClass('fixed');
-    });
+    if (stickyOffset) {
+        $(window).scroll(function () {
+            $(window).scrollTop() >= stickyOffset.top ?
+                $(outing_selectors.sticky).addClass('fixed') : $(outing_selectors.sticky).removeClass('fixed');
+        });
+    }
 }
